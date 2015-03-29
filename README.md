@@ -2,11 +2,6 @@
 
 The capital_one gem interfaces Ruby developers with the Capital One API.  Simply require 'capital_one' and gain access to the API methods.  Documentation for Capital One's API can be found at http://api.reimaginebanking.com/documentation.  See lib/capital_one.rb for method definitions in Ruby.
 
-#irb Example
-![alt tag](http://i.imgur.com/DwXjl2h.png)
-
-After requiring the Capital One gem, use CapitalOne.getCustomers to return a JSON object of the customers in Capital One's API.
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -23,9 +18,10 @@ Or install it yourself as:
 
     $ gem install capital_one
 
-## Usage
+## irb Example
+![alt tag](http://i.imgur.com/DwXjl2h.png)
 
-TODO: Write usage instructions here
+After requiring the Capital One gem, use CapitalOne.getCustomers to return a JSON object of the customers in Capital One's API.
 
 ## Development
 
