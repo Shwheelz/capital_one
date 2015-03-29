@@ -1,8 +1,11 @@
 # CapitalOne
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/capital_one`. To experiment with that code, run `bin/console` for an interactive prompt.
+The capital_one gem interfaces Ruby developers with the Capital One API.  Simply require 'capital_one' and gain access to the API methods.  Documentation for Capital One's API can be found at http://api.reimaginebanking.com/documentation.  See lib/capital_one.rb for method definitions in Ruby.
 
-TODO: Delete this and the text above, and describe your gem
+#irb Example
+![alt tag](http://i.imgur.com/DwXjl2h.png)
+
+After requiring the Capital One gem, use CapitalOne.getCustomers to return a JSON object of the customers in Capital One's API.
 
 ## Installation
 
