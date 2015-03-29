@@ -180,7 +180,6 @@ class CapitalOne
 			request = Net::HTTP::Put.new(uri.path+key)
 			request.set_form_data(myHash)
 			http.request(request)
-			puts(http.request(request))
 		end
 
 		# updateCustomer('5516c07ba520e0066c9ac53b', json)
@@ -200,7 +199,6 @@ class CapitalOne
 			request = Net::HTTP::Put.new(uri.path+key)
 			request.set_form_data(myHash)
 			http.request(request)
-			puts(http.request(request))
 		end
 
 
@@ -218,8 +216,6 @@ class CapitalOne
 			key = "?key=#{APIkey}"
 			puts(uri.path+key)
 			myHash = JSON.parse(json)
-			puts(myHash)
-			puts(Net::HTTP.post_form(uri, myHash))
 		#	getCustAccts('5516c07ba520e0066c9ac53b')
 		end
 		#getCustAccts("5516c07ba520e0066c9ac53b")
@@ -269,8 +265,6 @@ class CapitalOne
 			key="?key=#{APIkey}"
 			request = Net::HTTP::Delete.new(uri.path+key)
 			http.request(request)
-			puts('in del bill')
-			puts(http.request(request))
 		end
 
 		#deleteBill('546cd56d04783a02616859c9', '546cd56d04783a02616859c9')
@@ -283,8 +277,6 @@ class CapitalOne
 			key="?key=#{APIkey}"
 			request = Net::HTTP::Delete.new(uri.path+key)
 			http.request(request)
-			puts('in del acc')
-			puts(http.request(request))
 		end
 
 		#deleteAcc('546cd56d04783a02616859c9')
@@ -296,8 +288,6 @@ class CapitalOne
 			key="?key=#{APIkey}"
 			request = Net::HTTP::Delete.new(uri.path+key)
 			http.request(request)
-			puts('in del transaction')
-			puts(http.request(request))
 		end
 		#deleteTransaction('546cd56d04783a02616859c9', '546cd56d04783a02616859c9')
 
