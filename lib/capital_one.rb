@@ -45,7 +45,6 @@ class CapitalOne
 			url = "http://api.reimaginebanking.com:80/atms?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
 		end
 
 		def self.getATM(id)
@@ -58,21 +57,21 @@ class CapitalOne
 			url = "http://api.reimaginebanking.com:80/customers?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
+			
 		end
 
 		def self.getCustomer(id)
 			url = "http://api.reimaginebanking.com:80/customers/#{id}?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
+			
 		end
 
 		def self.getCustAccts(custID)
 			url = "http://api.reimaginebanking.com:80/customers/#{custID}/accounts?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
+			
 		end
 		#getCustAccts('5516c07ba520e0066c9ac53b')
 
@@ -81,7 +80,7 @@ class CapitalOne
 			url = "http://api.reimaginebanking.com:80/customers/#{custID}/bills?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
+			
 		end
 
 		#cust = 5516c07ba520e0066c9ac53b
@@ -90,7 +89,7 @@ class CapitalOne
 			 url = "http://api.reimaginebanking.com:80/customers/#{custID}/bills/#{billID}?key=#{APIkey}"
 			 resp = Net::HTTP.get_response(URI.parse(url))
 			 data = resp.body
-			 puts(data)
+			 
 		end
 
 		#Gets all accounts of a given type.
@@ -99,28 +98,27 @@ class CapitalOne
 			url = "http://api.reimaginebanking.com:80/accounts?type=#{type}&key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
+			
 		end
 
 		def self.getAccById(accID)
 			url = "http://api.reimaginebanking.com:80/accounts/#{accID}?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
+			
 		end
 		#Get the customer for the given account.
 		def self.getCustForAcc(accID)
 			url = "http://api.reimaginebanking.com:80/accounts/#{accID}/customer?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
+			
 		end
 		#Get all bills for a specific account
 		def self.getAccBills(accID)
 			url = "http://api.reimaginebanking.com:80/accounts/#{accID}/bills?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
 		end
 
 		#getAccBills('55173197c5749d260bb8d151')
@@ -130,21 +128,21 @@ class CapitalOne
 			url ="http://api.reimaginebanking.com:80/accounts/#{accID}/bills/#{billID}?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
+			
 		end
 		#Find all transactions associated with an account
 		def self.getAccTransactions(accID)
 			url = "http://api.reimaginebanking.com:80/accounts/#{accID}/transactions?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
+			
 		end
 		#Find a transaction by id for a specific accoutnt id
 		def self.findAccTransaction(accID, tranID)
 			url = "http://api.reimaginebanking.com:80/accounts/#{accID}/transactions/#{tranID}?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
+			
 		end
 
 		#get all branches
@@ -152,7 +150,7 @@ class CapitalOne
 			url = "http://api.reimaginebanking.com:80/branches?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
+			
 		end
 
 		#find branch by id
@@ -160,7 +158,7 @@ class CapitalOne
 			url = "http://api.reimaginebanking.com:80/branches/#{APIkey}?key=#{APIkey}"
 			resp = Net::HTTP.get_response(URI.parse(url))
 			data = resp.body
-			puts(data)
+			
 		end
 
 
