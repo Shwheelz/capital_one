@@ -1,6 +1,5 @@
 require 'net/http'
 require 'json'
-require 'uri'
 
 require 'capital_one/accounts'
 require 'capital_one/atms'
