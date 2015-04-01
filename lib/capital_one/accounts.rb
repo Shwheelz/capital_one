@@ -58,6 +58,21 @@ class Account
 	end
 
 
+	# *** POST ***
+
+	#creates a new account
+	def self.createAcct(custID, json)
+		url = "#{self.url}/customers/#{custID}/accounts?key=#{self.apiKey}"
+		uri = URI.parse(url)
+		http = Net::HTTP.new(uri.host, uri.port)
+		request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' =>'application/json'})
+		request.body = json
+		resp = http.request(request)
+		puts(resp.body)
+		getCustAccts('5516c07ba520e0066c9ac53b')
+	end
+
+
 	# *** DELETE ***
 
 	#delete a given account with some ID
