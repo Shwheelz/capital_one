@@ -132,13 +132,4 @@ Json for creating a new transaction:
 
 #deleteTransaction('546cd56d04783a02616859c9', '546cd56d04783a02616859c9')
 
-# Do we need these anymore?
-
-	def self.setAPIKey(key)
-	#	APIkey = key
-	end
-
-	def self.getAPIKey
-		return APIkey
-	end
 end
