@@ -6,8 +6,8 @@ require 'capital_one/version'
 Gem::Specification.new do |spec|
   spec.name          = "capital_one"
   spec.version       = CapitalOne::VERSION
-  spec.authors       = ["Shwheelz"]
-  spec.email         = ["sfbesong@gmail.com"]
+  spec.authors       = ["Shane Besong", "Tom Pazamickas"]
+  spec.email         = ["sfbesong@gmail.com", "tpazamickas@gmail.com"]
 
   spec.summary       = %q{Connects to the Capital One API}
   spec.description   = %q{Simply require 'capital_one' to work with the API}
