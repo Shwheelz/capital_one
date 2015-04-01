@@ -2,6 +2,13 @@ require 'net/http'
 require 'json'
 require 'uri'
 
+require 'capital_one/accounts'
+require 'capital_one/atms'
+require 'capital_one/bills'
+require 'capital_one/branches'
+require 'capital_one/customers'
+require 'capital_one/config'
+
 class CapitalOne
 
 =begin 
@@ -50,7 +57,7 @@ Json for updating Account data:
 Json for creating a new account:
 {
   "type": "Savings",
-  "nickname": "TomP",
+  "nickname": "TomP"1,
   "rewards": 2,
   "balance": 300
 }
@@ -110,40 +117,9 @@ Json for creating a new transaction:
 
 #End Test Data
 
-		#GET requests
 
-		def self.getATMS
-			url = "http://api.reimaginebanking.com:80/atms?key=#{APIkey}"
-			resp = Net::HTTP.get_response(URI.parse(url))
-			data = resp.body
-		end
 
-		def self.getATM(id)
-			url = "http://api.reimaginebanking.com:80/atms/#{id}?key=#{APIkey}"
-			resp = Net::HTTP.get_response(URI.parse(url))
-			data = resp.body
-		end
-
-		def self.getCustomers
-			url = "http://api.reimaginebanking.com:80/customers?key=#{APIkey}"
-			resp = Net::HTTP.get_response(URI.parse(url))
-			data = resp.body
-			
-		end
-
-		def self.getCustomer(id)
-			url = "http://api.reimaginebanking.com:80/customers/#{id}?key=#{APIkey}"
-			resp = Net::HTTP.get_response(URI.parse(url))
-			data = resp.body
-			
-		end
-
-		def self.getCustAccts(custID)
-			url = "http://api.reimaginebanking.com:80/customers/#{custID}/accounts?key=#{APIkey}"
-			resp = Net::HTTP.get_response(URI.parse(url))
-			data = resp.body
-			
-		end
+		
 		#getCustAccts('5516c07ba520e0066c9ac53b')
 
 		#get all 
@@ -163,58 +139,7 @@ Json for creating a new transaction:
 			 
 		end
 
-		#Gets all accounts of a given type.
-		#Possible arguments are: Savings, Credit Card, or Checking.
-		def self.getAllAccounts(type)
-			url = "http://api.reimaginebanking.com:80/accounts?type=#{type}&key=#{APIkey}"
-			resp = Net::HTTP.get_response(URI.parse(url))
-			data = resp.body
-			
-		end
 
-		def self.getAccById(accID)
-			url = "http://api.reimaginebanking.com:80/accounts/#{accID}?key=#{APIkey}"
-			resp = Net::HTTP.get_response(URI.parse(url))
-			data = resp.body
-			
-		end
-		#Get the customer for the given account.
-		def self.getCustForAcc(accID)
-			url = "http://api.reimaginebanking.com:80/accounts/#{accID}/customer?key=#{APIkey}"
-			resp = Net::HTTP.get_response(URI.parse(url))
-			data = resp.body
-			
-		end
-		#Get all bills for a specific account
-		def self.getAccBills(accID)
-			url = "http://api.reimaginebanking.com:80/accounts/#{accID}/bills?key=#{APIkey}"
-			resp = Net::HTTP.get_response(URI.parse(url))
-			data = resp.body
-		end
-
-		#getAccBills('55173197c5749d260bb8d151')
-
-		#get a specific bill from a specific account
-		def self.findAccBill(accID, billID)
-			url ="http://api.reimaginebanking.com:80/accounts/#{accID}/bills/#{billID}?key=#{APIkey}"
-			resp = Net::HTTP.get_response(URI.parse(url))
-			data = resp.body
-			
-		end
-		#Find all transactions associated with an account
-		def self.getAccTransactions(accID)
-			url = "http://api.reimaginebanking.com:80/accounts/#{accID}/transactions?key=#{APIkey}"
-			resp = Net::HTTP.get_response(URI.parse(url))
-			data = resp.body
-			
-		end
-		#Find a transaction by id for a specific accoutnt id
-		def self.findAccTransaction(accID, tranID)
-			url = "http://api.reimaginebanking.com:80/accounts/#{accID}/transactions/#{tranID}?key=#{APIkey}"
-			resp = Net::HTTP.get_response(URI.parse(url))
-			data = resp.body
-			
-		end
 
 		#get all branches
 		def self.getBranches
@@ -238,32 +163,9 @@ Json for creating a new transaction:
 
 		#update customer info
 
-		def self.updateCustomer(custID, json)
-			url = "http://api.reimaginebanking.com:80/customers/#{custID}?key=#{APIkey}"
-			uri = URI.parse(url)
-			myHash = JSON.parse(json)
-			http = Net::HTTP.new(uri.host, uri.port)
-			key = "?key=#{APIkey}"
-			puts(uri.path+key)
-			request = Net::HTTP::Put.new(uri.path+key)
-			request.set_form_data(myHash)
-			http.request(request)
-		end
 
-		# updateCustomer('5516c07ba520e0066c9ac53b', json)
-		# getCustomer('5516c07ba520e0066c9ac53b')
 
-		#updates an account's nickname by id with given json data. 
-		def self.updateAccount(acctID, json)
-			url = "http://api.reimaginebanking.com:80/accounts/#{acctID}?key=#{APIkey}"
-			uri = URI.parse(url)
-			myHash = JSON.parse(json)
-			http = Net::HTTP.new(uri.host, uri.port)
-			key = "?key=#{APIkey}"
-			request = Net::HTTP::Put.new(uri.path+key)
-			request.set_form_data(myHash)
-			http.request(request)
-		end
+
 
 
 		#updateAccount('55173197c5749d260bb8d151', acctJson)
@@ -284,68 +186,96 @@ Json for creating a new transaction:
 
 		
 
+	#Get all bills for a specific account
+	def self.getBillsByAccountId(accID)
+		url = "#{self.urlWithEntity}/#{accID}/bills?key=#{self.apiKey}"
+		resp = Net::HTTP.get_response(URI.parse(url))
+		data = resp.body
+	end
+
+	#getAccBills('55173197c5749d260bb8d151')
+
+	#get a specific bill from a specific account
+	def self.getBillByAccountIdBillId(accID, billID)
+		url ="##{self.urlWithEntity}/#{accID}/bills/#{billID}?key=#{self.apiKey}"
+		resp = Net::HTTP.get_response(URI.parse(url))
+		data = resp.body
+	end
+	#Find all transactions associated with an account
+	def self.getTransactionsByAccountId(accID)
+		url = "#{self.urlWithEntity}/#{accID}/transactions?key=#{self.apiKey}"
+		resp = Net::HTTP.get_response(URI.parse(url))
+		data = resp.body
+	end
+
+	#Find a transaction by id for a specific accoutnt id
+	def self.getTransactionByAccountIdTransactionId(accID, tranID)
+		url = "#{self.urlWithEntity}/#{accID}/transactions/#{tranID}?key=#{self.apiKey}"
+		resp = Net::HTTP.get_response(URI.parse(url))
+		data = resp.body
+	end
+
+	# updateCustomer('5516c07ba520e0066c9ac53b', json)
+	# getCustomer('5516c07ba520e0066c9ac53b')
+
+
+
 		#create a new bill on an associated account ID
-		def createBill(acctID, json)
-			url = "http://api.reimaginebanking.com:80/accounts/#{acctID}/bills?key=#{APIkey}"
-			uri = URI.parse(url)
-			http = Net::HTTP.new(uri.host, uri.port)
-			request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' => 'application/json'})
-			request.body = json
-			resp = http.request(request)
-			puts(resp.body)
-			puts("in create bill")
-			getAccBills(acctID)
-		end
-		
+	def createBill(acctID, json)
+		url = "#{self.urlWithEntity}/#{acctID}/bills?key=#{self.apiKey}"
+		uri = URI.parse(url)
+		http = Net::HTTP.new(uri.host, uri.port)
+		request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' => 'application/json'})
+		request.body = json
+		resp = http.request(request)
+		puts(resp.body)
+		puts("in create bill")
+		getAccBills(acctID)
+	end
+	
 
-		#create a new transaction between 2 accounts
-		def createTransaction(toAcc, json)
-			url = "http://api.reimaginebanking.com:80/accounts/#{toAcc}/transactions?key=#{APIkey}"
-			uri = URI.parse(url)
-			http = Net::HTTP.new(uri.host, uri.port)
-			request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' => 'application/json'})
-			request.body = json
-			resp = http.request(request)
-			puts("Finished Creating Transaction")
-			puts(resp.body)
-			getAccTransactions(toAcc)
-		end
+	#create a new transaction between 2 accounts
+	def createTransaction(toAcc, json)
+		url = "#{self.urlWithEntity}/#{toAcc}/transactions?key=#{self.apiKey}"
+		uri = URI.parse(url)
+		http = Net::HTTP.new(uri.host, uri.port)
+		request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' => 'application/json'})
+		request.body = json
+		resp = http.request(request)
+		puts("Finished Creating Transaction")
+		puts(resp.body)
+		getAccTransactions(toAcc)
+	end
 
 
-		#DELETE requests
+	#DELETE requests
 
-		#delete a bill by id from a given account
-		def self.deleteBill(accID, billID)
-			url = "http://api.reimaginebanking.com:80/accounts/#{accID}/bills/#{billID}?key=#{APIkey}"
-			uri = URI.parse(url)
-			http = Net::HTTP.new(uri.host, uri.port)
-			key="?key=#{APIkey}"
-			request = Net::HTTP::Delete.new(uri.path+key)
-			http.request(request)
-		end
+	#delete a bill by id from a given account
+	def self.deleteBill(accID, billID)
+		url = "#{self.urlWithEntity}/#{accID}/bills/#{billID}?key=#{self.apiKey}"
+		uri = URI.parse(url)
+		http = Net::HTTP.new(uri.host, uri.port)
+		key="?key=#{self.apiKey}"
+		request = Net::HTTP::Delete.new(uri.path+key)
+		http.request(request)
+	end
 
-		#deleteBill('546cd56d04783a02616859c9', '546cd56d04783a02616859c9')
+	#deleteBill('546cd56d04783a02616859c9', '546cd56d04783a02616859c9')
 
-		#delete a given account with some ID
-		def self.deleteAcc(accID)
-			url = "http://api.reimaginebanking.com:80/accounts/#{accID}?key=#{APIkey}"
-			uri = URI.parse(url)
-			http = Net::HTTP.new(uri.host, uri.port)
-			key="?key=#{APIkey}"
-			request = Net::HTTP::Delete.new(uri.path+key)
-			http.request(request)
-		end
 
-		#deleteAcc('546cd56d04783a02616859c9')
 
-		def self.deleteTransaction(accID, transID)
-			url = "http://api.reimaginebanking.com:80/accounts/#{accID}/transactions/#{transID}?key=#{APIkey}"
-			uri = URI.parse(url)
-			http = Net::HTTP.new(uri.host, uri.port)
-			key="?key=#{APIkey}"
-			request = Net::HTTP::Delete.new(uri.path+key)
-			http.request(request)
-		end
+	#deleteAcc('546cd56d04783a02616859c9')
+
+	def self.deleteTransaction(accID, transID)
+		url = "#{self.urlWithEntity}/#{accID}/transactions/#{transID}?key=#{self.apiKey}"
+		uri = URI.parse(url)
+		http = Net::HTTP.new(uri.host, uri.port)
+		key="?key=#{self.apiKey}"
+		request = Net::HTTP::Delete.new(uri.path+key)
+		http.request(request)
+	end
+
+
 		#deleteTransaction('546cd56d04783a02616859c9', '546cd56d04783a02616859c9')
 
 
