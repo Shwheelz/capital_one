@@ -8,6 +8,7 @@ require 'capital_one/bills'
 require 'capital_one/branches'
 require 'capital_one/customers'
 require 'capital_one/config'
+require 'capital_one/transactions'
 
 class CapitalOne
 
