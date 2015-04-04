@@ -77,6 +77,6 @@ class Bill
 		http = Net::HTTP.new(uri.host, uri.port)
 		key="?key=#{self.apiKey}"
 		request = Net::HTTP::Delete.new(uri.path+key)
-		http.request(request)
+		resp = http.request(request)
 	end
 end

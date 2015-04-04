@@ -42,9 +42,6 @@ class Transactions
 		request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' => 'application/json'})
 		request.body = json
 		resp = http.request(request)
-		puts("Finished Creating Transaction")
-		puts(resp.body)
-		getAccTransactions(toAcc)
 	end
 
 
@@ -56,6 +53,6 @@ class Transactions
 		http = Net::HTTP.new(uri.host, uri.port)
 		key="?key=#{self.apiKey}"
 		request = Net::HTTP::Delete.new(uri.path+key)
-		http.request(request)
+		resp = http.request(request)
 	end
 end
