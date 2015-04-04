@@ -16,6 +16,7 @@ class Account
 
 	# *** GET ***
 
+	# This method doesn't work.  It expects an argument
 	def self.getAccounts
 		url = "#{self.urlWithEntity}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))

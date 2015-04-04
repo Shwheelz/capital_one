@@ -5,3 +5,4 @@ gemspec
 gem 'net/http'
 gem 'json'
 gem 'uri'
+gem 'rspec', '~> 3.0'
