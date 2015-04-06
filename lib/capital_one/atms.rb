@@ -15,16 +15,17 @@ class ATM
 	end
 
 	# *** GET ***
-
+		#tested
 	def self.getATMs
-		url = "#{self.urlWithEntity}?key=#{APIkey}"
+		url = "#{self.urlWithEntity}?key=#{apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
-		data = resp.body
+		data = JSON.parse(resp.body)
 	end
-
+		#tested
 	def self.getATMById(id)
-		url = "#{self.urlWithEntity}/#{id}?key=#{APIkey}"
+		url = "#{self.urlWithEntity}/#{id}?key=#{apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
-		data = resp.body
+		data = JSON.parse(resp.body)
 	end
 end
+

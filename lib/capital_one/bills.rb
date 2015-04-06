@@ -20,35 +20,35 @@ class Bill
 
 	# *** GET ***
 
-
+	#tested -returns array of hashes
 	# Get all bills for a specific customer
 	def self.getBills(custID)
-		url = "#{self.customerBaseUrl}/#{custID}/bills?key=#{APIkey}"
+		url = "#{self.customerBaseUrl}/#{custID}/bills?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
-		data = resp.body
+		data = JSON.parse(resp.body)
 		
 	end
-
+	#tested - returns array of hashes
 	# Get a specific bill
 	def self.getCustBill(custID, billID)
-		 url = "#{self.customerBaseUrl}/#{custID}/bills/#{billID}?key=#{APIkey}"
+		 url = "#{self.customerBaseUrl}/#{custID}/bills/#{billID}?key=#{self.apiKey}"
 		 resp = Net::HTTP.get_response(URI.parse(url))
-		 data = resp.body
+		data = JSON.parse(resp.body)
 		 
 	end
-
+	#tested - returns an array of hashes with the bills for that account in it.
 	#Get all bills for a specific account
 	def self.getBillsByAccountId(accID)
 		url = "#{self.accountBaseUrl}/#{accID}/bills?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
-		data = resp.body
+		data = JSON.parse(resp.body)
 	end
-
+	
 	#get a specific bill from a specific account
 	def self.getBillByAccountIdBillId(accID, billID)
 		url ="##{self.accountBaseUrl}/#{accID}/bills/#{billID}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
-		data = resp.body
+		data = JSON.parse(resp.body)
 	end
 
 

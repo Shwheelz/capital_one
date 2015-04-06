@@ -105,10 +105,10 @@ Json for creating a new transaction:
 		  "balance": 0
 		}'
 
-		newBillJson = '{
-		  "status": "Pending",
-		  "payment_amount": 1000
-		}'
+			newBillJson = '{
+			  "status": "Pending",
+			  "payment_amount": 1000
+			}'
 
 		newTranJson = '{
 		  "transaction type": "cash",

@@ -1,6 +1,6 @@
 require 'capital_one/config'
 
-class Transactions
+class Transaction
 
 	def self.urlWithEntity
 		return CONFIG::BASEURL + "/accounts"
@@ -18,17 +18,19 @@ class Transactions
 	# *** GET ***
 
 	# Get all transactions for a specific account
+	#tested - Returns an array of hashes.
 	def self.getTransactionsByAccountId(accID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
-		data = resp.body
+		data = JSON.parse(resp.body)
 	end
 
 	# Get a specific transaction
+	# tested - Returns a hash with the specified transaction
 	def self.getTransactionByAccountIdTransactionId(accID, tranID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions/#{tranID}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
-		data = resp.body
+		data = JSON.parse(resp.body)
 	end
 
 
