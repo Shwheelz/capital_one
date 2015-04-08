@@ -15,13 +15,12 @@ class Atm
 	end
 
 	# *** GET ***
-		#tested
 	def self.getAtms
 		url = "#{self.urlWithEntity}?key=#{apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
-		#tested
+	
 	def self.getAtm(id)
 		url = "#{self.urlWithEntity}/#{id}?key=#{apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
