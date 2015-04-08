@@ -20,17 +20,21 @@ describe Branch do
 
   describe 'GET' do
     it 'should get all Branches' do
-      branches = Branch.getAll
-      expect(branches.class).to be(Array)
-      expect(branches.length).to be > 0
-      expect(branches[0].class).to be(Hash)
+      VCR.use_cassette 'branches' do
+        branches = Branch.getAll
+        expect(branches.class).to be(Array)
+        expect(branches.length).to be > 0
+        expect(branches[0].class).to be(Hash)
+       end
     end
 
     it 'should get a single Branch' do
-      branch = Branch.getOne(Branch.getAll[0]["_id"])
-      expect(branch.class).to be(Hash)
-      expect(branch).to include("_id")
-      expect(branch).to include("name")
+      VCR.use_cassette 'branch' do
+        branch = Branch.getOne(Branch.getAll[0]["_id"])
+        expect(branch.class).to be(Hash)
+        expect(branch).to include("_id")
+        expect(branch).to include("name")
+      end
     end
   end
 
