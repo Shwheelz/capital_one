@@ -16,6 +16,13 @@ require 'capital_one/branch'
 require 'capital_one/customer'
 require 'capital_one/config'
 require 'capital_one/transaction'
+require 'capital_one/entAccount'
+require 'capital_one/entAtm'
+require 'capital_one/entBill'
+require 'capital_one/entBranch'
+require 'capital_one/entCustomer'
+require 'capital_one/entTransaction'
+
  
 =begin 
 
