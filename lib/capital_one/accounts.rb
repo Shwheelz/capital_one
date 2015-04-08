@@ -14,17 +14,10 @@ class Account
 		return CONFIG::APIKEY
 	end
 
-	# *** GET ***
-#http://api.reimaginebanking.com:80/customers/5516c07ba520e0066c9ac53b/accounts?key=CUSTf52dd79967987b3ba94904e83cc26e47
-	#tested - returns array of hashes
-	# Gets all accounts based on the customer ID.
-	def self.getCustAccounts(custID)
-		url = "#{self.url}/customers/#{custID}/accounts?key=#{self.apiKey}"
+	def self.getAccounts()
+		url = "#{self.urlWithEntity}?&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
-		puts("in get Accounts")
 		data = JSON.parse(resp.body)
-		puts(data)
-		return data
 	end
 
 	#Gets all accounts of a given type.
@@ -34,7 +27,6 @@ class Account
 		url = "#{self.urlWithEntity}?type=#{type}&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
-
 	end
 		#Returns the account specified by it's account ID.
 		#tested - returns a hash with the account info.
@@ -46,7 +38,7 @@ class Account
 		#Gets all accounts associated with a given customer ID. 
 		#tested - returns an array of hashes.
 	def self.getAccountsByCustomerId(custID)
-		url = "#{self.url}/customers/#{custID}/accounts?key=#{apiKey}"
+		url = "#{self.url}/customers/#{custID}/accounts?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
@@ -77,8 +69,6 @@ class Account
 		request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' =>'application/json'})
 		request.body = json
 		resp = http.request(request)
-		puts(resp.body)
-		getCustAccts('5516c07ba520e0066c9ac53b')
 	end
 
 

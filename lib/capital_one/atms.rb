@@ -1,12 +1,12 @@
 require 'capital_one/config'
 
-class ATM
+class Atm
 
 	def self.urlWithEntity
 		return CONFIG::BASEURL + "/atms"
 	end
 
-	def url
+	def self.url
 		return CONFIG::BASEURL
 	end
 
@@ -16,13 +16,13 @@ class ATM
 
 	# *** GET ***
 		#tested
-	def self.getATMs
+	def self.getAtms
 		url = "#{self.urlWithEntity}?key=#{apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
 		#tested
-	def self.getATMById(id)
+	def self.getAtm(id)
 		url = "#{self.urlWithEntity}/#{id}?key=#{apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
