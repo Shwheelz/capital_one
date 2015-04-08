@@ -14,7 +14,7 @@ class Account
 		return CONFIG::APIKEY
 	end
 
-	def self.getAccounts()
+	def self.getAll
 		url = "#{self.urlWithEntity}?&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
@@ -23,22 +23,22 @@ class Account
 	#Gets all accounts of a given type.
 	#Possible arguments are: Savings, Credit Card, or Checking.
 	#tested, credit card doesn't work, returns array of hashes.
-	def self.getAccounts(type)
+	def self.getAllByType(type)
 		url = "#{self.urlWithEntity}?type=#{type}&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
 		#Returns the account specified by it's account ID.
 		#tested - returns a hash with the account info.
-	def self.getAccount(accID)
-		url = "#{self.urlWithEntity}/#{accID}?key=#{self.apiKey}"
+	def self.getOne(id)
+		url = "#{self.urlWithEntity}/#{id}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
 		#Gets all accounts associated with a given customer ID. 
 		#tested - returns an array of hashes.
-	def self.getAccountsByCustomerId(custID)
-		url = "#{self.url}/customers/#{custID}/accounts?key=#{self.apiKey}"
+	def self.getAllByCustomerId(customerId)
+		url = "#{self.url}/customers/#{customerId}/accounts?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
