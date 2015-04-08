@@ -9,14 +9,14 @@ require 'net/http'
 require 'json'
 require 'uri'
 
-require 'capital_one/accounts'
-require 'capital_one/atms'
-require 'capital_one/bills'
-require 'capital_one/branches'
-require 'capital_one/customers'
+require 'capital_one/account'
+require 'capital_one/atm'
+require 'capital_one/bill'
+require 'capital_one/branch'
+require 'capital_one/customer'
 require 'capital_one/config'
-require 'capital_one/transactions'
-
+require 'capital_one/transaction'
+ 
 =begin 
 
 Depending on the access level/type of API key supplied, some of

@@ -20,14 +20,14 @@ describe Atm do
 
   describe 'GET' do
     it 'should get all ATMS' do
-      atms = Atm.getAtms
+      atms = Atm.getAll
       expect(atms.class).to be(Array)
       expect(atms.length).to be > 0
       expect(atms[0].class).to be(Hash)
     end
 
     it 'should get a single ATM' do
-      atm = Atm.getAtm(Atm.getAtms[0]["_id"])
+      atm = Atm.getOne(Atm.getAll[0]["_id"])
       expect(atm.class).to be(Hash)
       expect(atm).to include("_id")
       expect(atm).to include("name")

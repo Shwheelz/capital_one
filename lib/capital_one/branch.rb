@@ -2,12 +2,12 @@ require 'capital_one/config'
 
 class Branch
 
-	def self.urlWithEntity
-		return CONFIG::BASEURL + "/branches"
+	def self.url
+		return CONFIG::BASEURL
 	end
 
-	def url
-		return CONFIG::BASEURL
+	def self.urlWithEntity
+		return CONFIG::BASEURL + "/branches"
 	end
 
 	def self.apiKey
@@ -18,7 +18,7 @@ class Branch
 
 	# Get all the branches
 	#tested - returns an array of hashes. Each hash is a branch.
-	def self.getBranches
+	def self.getAll
 		url = "#{self.urlWithEntity}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
@@ -27,8 +27,8 @@ class Branch
 
 	# Get a branch by it's id
 	#tested - returns a hash with the specified branch.
-	def self.getBranch(branchID)
-		url = "#{self.urlWithEntity}/#{branchID}?key=#{self.apiKey}"
+	def self.getOne(id)
+		url = "#{self.urlWithEntity}/#{id}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 		
