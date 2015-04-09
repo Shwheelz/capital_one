@@ -77,12 +77,12 @@ class Account
 	# *** DELETE ***
 
 	#delete a given account with some ID
-	def self.deleteAcc(accID)
-		url = "#{self.urlWithEntity}/#{accID}?key=#{self.apiKey}"
+	def self.deleteAccount(accountId)
+		url = "#{self.urlWithEntity}/#{accountId}?key=#{self.apiKey}"
 		uri = URI.parse(url)
 		http = Net::HTTP.new(uri.host, uri.port)
 		key="?key=#{self.apiKey}"
 		request = Net::HTTP::Delete.new(uri.path+key)
-		resp = http.request(request)
+		response = http.request(request)
 	end
 end
