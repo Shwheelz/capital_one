@@ -9,6 +9,9 @@ describe Account do
     $accountPost["rewards"] = 100
     $accountPost["balance"] = 100
 
+    $accountPut = Hash.new
+    $accountPut["nickname"] = "test1"
+
     Config.apiKey = "CUSTf52dd79967987b3ba94904e83cc26e47"
   end
 
@@ -74,6 +77,30 @@ describe Account do
         expect(accounts[0]).to include("_id")
         expect(accounts[0]).to include("nickname")
         expect(accounts[0]).to include("customer" => "#{customerId}")
+      end
+    end
+  end
+
+  describe 'PUT' do
+    it 'should update an existing account' do
+      VCR.use_cassette 'account/updateAccount' do
+        # get an account we have permission to update
+        accountId = "";
+        customers = Customer.getAll
+        customers.each do |customer|
+          if customer["accounts"].length > 0 #find a customer with an account
+            accountId = customer["accounts"][0]
+            break
+          end
+        end
+
+        # update the account
+        if accountId != ""
+          response = Account.updateAccount(accountId, $accountPut)
+          expect(response.class).to be(Hash)
+          expect(response).to include("message")
+          expect(response).to include("code")
+        end
       end
     end
   end

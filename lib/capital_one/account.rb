@@ -12,6 +12,8 @@ class Account
 		return Config.apiKey
 	end
 
+	# *** GET ***
+
 	def self.getAll
 		url = "#{self.urlWithEntity}?&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
@@ -45,15 +47,15 @@ class Account
 	# *** PUT ***
 
 	#updates an account's nickname by id with given json data. 
-	def self.updateAccount(acctID, json)
-		url = "#{self.urlWithEntity}/#{acctID}?key=#{self.apiKey}"
+	def self.updateAccount(accountId, account)
+		url = "#{self.urlWithEntity}/#{accountId}?key=#{self.apiKey}"
 		uri = URI.parse(url)
-		myHash = JSON.parse(json)
 		http = Net::HTTP.new(uri.host, uri.port)
 		key = "?key=#{self.apiKey}"
 		request = Net::HTTP::Put.new(uri.path+key)
-		request.set_form_data(myHash)
-		http.request(request)
+		request.set_form_data(account)
+		response = http.request(request)
+		return JSON.parse(response.body)
 	end
 
 
@@ -67,8 +69,8 @@ class Account
 		http = Net::HTTP.new(uri.host, uri.port)
 		request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' =>'application/json'})
 		request.body = accountToCreate
-		resp = http.request(request)
-		return JSON.parse(resp.body)
+		response = http.request(request)
+		return JSON.parse(response.body)
 	end
 
 
