@@ -1,5 +1,3 @@
-require 'capital_one/config'
-
 class Bill
 
 	def self.accountBaseUrl

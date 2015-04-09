@@ -2,6 +2,10 @@ require 'capital_one'
 
 describe Account do
 
+  before(:all) do
+    Config.apiKey = "CUSTf52dd79967987b3ba94904e83cc26e47"
+  end
+
   describe 'Method' do
 
     it 'should get the correct base url' do

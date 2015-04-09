@@ -1,6 +1,3 @@
-require 'capital_one/config'
-
-
 class Customer
 
 	def self.urlWithEntity

@@ -1,17 +1,15 @@
-require 'capital_one/config'
-
 class Account
 
 	def self.urlWithEntity
-		return CONFIG::BASEURL + "/accounts"
+		return Config.baseUrl + "/accounts"
 	end
 
 	def self.url
-		return CONFIG::BASEURL
+		return Config.baseUrl
 	end
 
 	def self.apiKey
-		return CONFIG::APIKEY
+		return Config.apiKey
 	end
 
 	def self.getAll
