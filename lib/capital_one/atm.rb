@@ -1,28 +1,26 @@
-require 'capital_one/config'
-
 class Atm
 
 	def self.urlWithEntity
-		return CONFIG::BASEURL + "/atms"
+		return Config.baseUrl + "/atms"
 	end
 
 	def self.url
-		return CONFIG::BASEURL
+		return Config.baseUrl
 	end
 
 	def self.apiKey
-		return CONFIG::APIKEY
+		return Config.apiKey
 	end
 
 	# *** GET ***
 	def self.getAll
-		url = "#{self.urlWithEntity}?key=#{apiKey}"
+		url = "#{self.urlWithEntity}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
 	
 	def self.getOne(id)
-		url = "#{self.urlWithEntity}/#{id}?key=#{apiKey}"
+		url = "#{self.urlWithEntity}/#{id}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end

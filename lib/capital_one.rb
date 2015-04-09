@@ -5,6 +5,16 @@
   
 =end
 
+module Config
+  class << self
+    attr_accessor :apiKey
+
+    def baseUrl
+      @baseUrl = 'http://api.reimaginebanking.com:80'
+    end
+  end
+end
+
 require 'net/http'
 require 'json'
 require 'uri'
@@ -14,7 +24,6 @@ require 'capital_one/atm'
 require 'capital_one/bill'
 require 'capital_one/branch'
 require 'capital_one/customer'
-require 'capital_one/config'
 require 'capital_one/transaction'
  
 =begin 

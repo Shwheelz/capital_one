@@ -1,38 +1,34 @@
-require 'capital_one/config'
-
-
 class Customer
 
 	def self.urlWithEntity
-		return CONFIG::BASEURL + "/customers"
+		return Config.baseUrl + "/customers"
 	end
 
 	def self.urlWithAcctEntity
-		return CONFIG::BASEURL + "/accounts"
+		return Config.baseUrl + "/accounts"
 	end
 
-	def url
-		return CONFIG::BASEURL
+	def self.url
+		return Config.baseUrl
 	end
 
 	def self.apiKey
-		return CONFIG::APIKEY
+		return Config.apiKey
 	end
 
 	# *** GET ***
 
 	#Returns all customers that the API key used has access to.
 	#tested - Returns an array of hashes.
-	def self.getCustomers
+	def self.getAll
 		url = "#{self.urlWithEntity}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 		return data
-		
 	end
 	#Gets the specified customer's information.
 	#tested - Returns a hash.
-	def self.getCustomer(custId)
+	def self.getOne(custId)
 		url = "#{self.urlWithEntity}/#{custId}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
@@ -40,7 +36,7 @@ class Customer
 
 	#Get the customer for the given account.
 	#tested - Returns a hash with the specified customer data.
-	def self.getCustomerByAccountId(accID)
+	def self.getOneByAccountId(accID)
 		url = "#{self.urlWithAcctEntity}/#{accID}/customer?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
@@ -49,16 +45,15 @@ class Customer
 
 	# *** PUT ***
 
-	def self.updateCustomer(custID, json)
+	def self.updateCustomer(custID, customer)
 		url = "#{self.urlWithEntity}/#{custID}?key=#{self.apiKey}"
 		uri = URI.parse(url)
-		myHash = JSON.parse(json)
 		http = Net::HTTP.new(uri.host, uri.port)
 		key = "?key=#{self.apiKey}"
-		puts(uri.path+key)
 		request = Net::HTTP::Put.new(uri.path+key)
-		request.set_form_data(myHash)
-		http.request(request)
+		request.set_form_data(customer)
+		response = http.request(request)
+		return JSON.parse(response.body)
 	end
 
 	# 
