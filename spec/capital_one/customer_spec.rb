@@ -36,8 +36,8 @@ describe Customer do
 
 	describe 'GET' do 
 		it 'All customers' do
-			VCR.use_cassette 'customers' do
-				allCustomers = Customer.getCustomers
+			VCR.use_cassette 'customer/customers' do
+				allCustomers = Customer.getAll
 				expect(allCustomers.class).to be(Array)
 				expect(allCustomers.length).to be(3)
 				expect(allCustomers[0].class).to be(Hash)
@@ -45,9 +45,9 @@ describe Customer do
 		end
 
 		it 'Specific customers by customer ID' do
-			VCR.use_cassette 'customer' do
-				putCustID = Customer.getCustomers[0]["_id"]
-				customer = Customer.getCustomer(putCustID)
+			VCR.use_cassette 'customer/customer' do
+				putCustID = Customer.getAll[0]["_id"]
+				customer = Customer.getOne(putCustID)
 				expect(customer.class).to be(Hash)
 				expect(customer).to include("_id")
 				expect(customer).to include("accounts")
@@ -57,9 +57,9 @@ describe Customer do
 
 		it 'Specific customer by account ID' do
 			Config.apiKey = "ENTf52dd79967987b3ba94904e83cc26e47"
-			VCR.use_cassette 'customerByAccountId' do
+			VCR.use_cassette 'customer/customerByAccountId' do
 				accountId = Account.getAll[0]["_id"]
-				customer = Customer.getCustomerByAccountId(accountId)
+				customer = Customer.getOneByAccountId(accountId)
 				expect(customer.class).to be(Hash)
 				expect(customer).to include("_id")
 				expect(customer).to include("accounts")
@@ -70,8 +70,8 @@ describe Customer do
 
 	describe 'PUT' do
 		it 'Update customer information' do
-			VCR.use_cassette 'updateCustomer' do
-				putCustID = Customer.getCustomers[0]["_id"]
+			VCR.use_cassette 'customer/updateCustomer' do
+				putCustID = Customer.getAll[0]["_id"]
 				response = Customer.updateCustomer(putCustID, $customerPost)
 				expect(response.class).to be(Hash)
 				expect(response).to include("message")

@@ -20,7 +20,7 @@ class Customer
 
 	#Returns all customers that the API key used has access to.
 	#tested - Returns an array of hashes.
-	def self.getCustomers
+	def self.getAll
 		url = "#{self.urlWithEntity}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
@@ -28,7 +28,7 @@ class Customer
 	end
 	#Gets the specified customer's information.
 	#tested - Returns a hash.
-	def self.getCustomer(custId)
+	def self.getOne(custId)
 		url = "#{self.urlWithEntity}/#{custId}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
@@ -36,7 +36,7 @@ class Customer
 
 	#Get the customer for the given account.
 	#tested - Returns a hash with the specified customer data.
-	def self.getCustomerByAccountId(accID)
+	def self.getOneByAccountId(accID)
 		url = "#{self.urlWithAcctEntity}/#{accID}/customer?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)

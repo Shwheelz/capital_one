@@ -30,7 +30,7 @@ describe Account do
 
   describe 'GET' do
     it 'should get all Accounts' do
-      VCR.use_cassette 'accounts' do
+      VCR.use_cassette 'account/accounts' do
         accounts = Account.getAll
         expect(accounts.class).to be(Array)
         expect(accounts.length).to be > 0
@@ -39,7 +39,7 @@ describe Account do
     end
 
     it 'should get all Accounts with a Credit Card type' do
-      VCR.use_cassette 'accountsByType' do
+      VCR.use_cassette 'account/accountsByType' do
         accounts = Account.getAllByType("Credit%20Card")
         expect(accounts.class).to be(Array)
         expect(accounts.length).to be > 0
@@ -49,19 +49,39 @@ describe Account do
     end
 
     it 'should get a single Account' do
-      VCR.use_cassette 'account' do
+      VCR.use_cassette 'account/account' do
         account = Account.getOne(Account.getAll[0]["_id"])
         expect(account.class).to be(Hash)
         expect(account).to include("_id")
         expect(account).to include("nickname")
       end
     end
+
+    it 'should get all accounts for a customer' do
+      VCR.use_cassette 'account/accountsByCustomerId' do
+        customerId = "";
+        customers = Customer.getAll
+        customers.each do |customer|
+          if customer["accounts"].length > 0 #find a customer with an account
+            customerId = customer["_id"]
+            break
+          end
+        end
+
+        accounts = Account.getAllByCustomerId(customerId)
+        expect(accounts.class).to be(Array)
+        expect(accounts[0].class).to be(Hash)
+        expect(accounts[0]).to include("_id")
+        expect(accounts[0]).to include("nickname")
+        expect(accounts[0]).to include("customer" => "#{customerId}")
+      end
+    end
   end
 
   describe 'POST' do
     it 'should create a new account' do
-      VCR.use_cassette 'createAccount' do
-        custID = Customer.getCustomers[0]["_id"]
+      VCR.use_cassette 'account/createAccount' do
+        custID = Customer.getAll[0]["_id"]
         response = Account.createAccount(custID, $accountPost)
         expect(response.class).to be(Hash)
         expect(response).to include("message")

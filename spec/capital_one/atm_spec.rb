@@ -24,7 +24,7 @@ describe Atm do
 
   describe 'GET' do
     it 'should get all ATMS' do
-      VCR.use_cassette 'atms' do
+      VCR.use_cassette 'atm/atms' do
         atms = Atm.getAll
         expect(atms.class).to be(Array)
         expect(atms.length).to be > 0
@@ -33,7 +33,7 @@ describe Atm do
     end
 
     it 'should get a single ATM' do
-      VCR.use_cassette 'atm' do
+      VCR.use_cassette 'atm/atm' do
         atm = Atm.getOne(Atm.getAll[0]["_id"])
         expect(atm.class).to be(Hash)
         expect(atm).to include("_id")
