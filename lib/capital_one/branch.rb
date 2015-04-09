@@ -1,17 +1,15 @@
-require 'capital_one/config'
-
 class Branch
 
 	def self.url
-		return CONFIG::BASEURL
+		return Config.baseUrl
 	end
 
 	def self.urlWithEntity
-		return CONFIG::BASEURL + "/branches"
+		return Config.baseUrl + "/branches"
 	end
 
 	def self.apiKey
-		return CONFIG::APIKEY
+		return Config.apiKey
 	end
 
 	# *** GET ***

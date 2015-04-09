@@ -1,5 +1,3 @@
-require 'capital_one/config'
-
 class Transaction
 
 	def self.urlWithEntity
