@@ -60,13 +60,15 @@ class Account
 	# *** POST ***
 
 	#creates a new account
-	def self.createAcct(custID, json)
+	def self.createAccount(custID, account)
+		accountToCreate = account.to_json
 		url = "#{self.url}/customers/#{custID}/accounts?key=#{self.apiKey}"
 		uri = URI.parse(url)
 		http = Net::HTTP.new(uri.host, uri.port)
 		request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' =>'application/json'})
-		request.body = json
+		request.body = accountToCreate
 		resp = http.request(request)
+		return JSON.parse(resp.body)
 	end
 
 
