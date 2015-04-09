@@ -11,7 +11,7 @@ class Customer
 		return CONFIG::BASEURL + "/accounts"
 	end
 
-	def url
+	def self.url
 		return CONFIG::BASEURL
 	end
 
