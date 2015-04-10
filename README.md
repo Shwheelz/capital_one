@@ -33,14 +33,6 @@ Or install it yourself as:
 	**Enterprise Key** - Take on the role of a Capital One employee. Only GET requests are permitted.  
 	**Customer Key** - Take on the role of a Capital One customer. All requests involving your assigned customers and anything they own are permitted.
 
-
->>>>>>> 5851786c3a267cfb434cd836bda3b07bd88e5c74
-
-## irb Example
-![alt tag](http://i.imgur.com/DwXjl2h.png)
-
-After requiring the Capital One gem, use CapitalOne.getCustomers to return a JSON object of the customers in Capital One's API.
-
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
