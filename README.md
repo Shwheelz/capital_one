@@ -25,9 +25,7 @@ To setup, add the following lines of code to the top of your file
 require 'capital_one'
 Config.apiKey = "your_api_key"
 ```
-It is essential to set your API key before any calls to the API.  If you do not have an API key, you can request one from the [Capital One API website](http://api.reimaginebanking.com/) by signing in with GitHub.
 =======
-By simply adding `require 'capital_one'` to the top of a Ruby project and specifying your API Key, developers can gain access to Capital One's API in Ruby.  This will open the doors for Rails projects, Ruby scripts and more to interact with the Capital One API.  
 
 1. Require the gem  
 
