@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Connects to the Capital One API}
   spec.description   = %q{Simply require 'capital_one' to work with the API}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/Shwheelz/capital_one"
   spec.license       = "MIT"
 
   spec.files         = Dir['lib/capital_one.rb', 'lib/capital_one/*']
