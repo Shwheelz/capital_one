@@ -49,7 +49,17 @@ class Bill
 
 	# *** POST ***
 
-	# need PUT method here
+	#updates an account's nickname by id with given json data. 
+	def self.updateBill(accountId, billId, bill)
+		url = "#{self.accountBaseUrl}/#{accountId}/bills/#{billId}?key=#{self.apiKey}"
+		uri = URI.parse(url)
+		http = Net::HTTP.new(uri.host, uri.port)
+		key = "?key=#{self.apiKey}"
+		request = Net::HTTP::Put.new(uri.path+key)
+		request.set_form_data(bill)
+		response = http.request(request)
+		return JSON.parse(response.body)
+	end
 
 	# *** POST ***
 

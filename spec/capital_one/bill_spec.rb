@@ -78,6 +78,17 @@ describe Bill do
     end
   end
 
+  describe 'PUT' do
+    it 'should update a Bill' do
+      VCR.use_cassette 'bill/updateBill' do
+        response = Bill.updateBill($accountId, $billId, $billPost)
+        expect(response.class).to be(Hash)
+        expect(response).to include("message")
+        expect(response).to include("code")
+      end
+    end
+  end
+
   describe 'POST' do
     it 'should create a Bill' do
       VCR.use_cassette 'bill/createBill' do
