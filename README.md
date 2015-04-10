@@ -1,6 +1,6 @@
 # CapitalOne
 
-The capital_one gem interfaces Ruby developers with the Capital One API.  Simply require 'capital_one' and gain access to the API methods.  Documentation for Capital One's API can be found at http://api.reimaginebanking.com/documentation.  See lib/capital_one.rb for method definitions in Ruby.
+The capital_one gem interfaces Ruby developers with the Capital One API.  Simply require 'capital_one' and gain access to the API methods.  Documentation for Capital One's API can be found at [api.reimaginebanking.com/documentation](http://api.reimaginebanking.com/documentation).  See lib/capital_one.rb for method definitions in Ruby.
 
 ## Installation
 
@@ -19,7 +19,22 @@ Or install it yourself as:
     $ gem install capital_one
 
 ## Usage
-By simply adding `require 'capital_one'` to the top of a Ruby project, developers can gain access to Capital One's API in Ruby.  This will open the doors for Rails projects, Ruby scripts and more to interact with the Capital One API.
+By simply adding `require 'capital_one'` to the top of a Ruby project and specifying your API Key, developers can gain access to Capital One's API in Ruby.  This will open the doors for Rails projects, Ruby scripts and more to interact with the Capital One API.  
+
+1. Require the gem  
+
+	`require 'capital_one'`  
+
+2. Go to [api.reimaginebanking.com](http://api.reimaginebanking.com/documentation) and sign up for an API Key with your Github account.  Read the documentation on the API and go to your Profile page and retrieve your API key.  Once you retrive your key you must specify the key in your project to gain access to the API.  
+
+	`Config.apiKey = "API_KEY"`  
+	
+	You will see that you are assigned two api keys when signing up for the API.  These keys have different roles and permissions assigned to them.
+	
+	**Enterprise Key** - Take on the role of a Capital One employee. Only GET requests are permitted.  
+	**Customer Key** - Take on the role of a Capital One customer. All requests involving your assigned customers and anything they own are permitted.
+
+
 
 ## irb Example
 ![alt tag](http://i.imgur.com/DwXjl2h.png)
