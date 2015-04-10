@@ -14,9 +14,11 @@ class Transaction
 
 
 	# *** GET ***
-
-	# Get all transactions for a specific account
-	#tested - Returns an array of hashes.
+	#==getAllByAccountId
+	#Get all transactions for a specific account
+	#Returns an array of hashes.
+	#Parameters: AccountID
+	#Returns an array of hashes containing the transactions for that account.
 	def self.getAllByAccountId(accID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
@@ -24,8 +26,11 @@ class Transaction
 		return data
 	end
 
-	# Get a specific transaction
-	# tested - Returns a hash with the specified transaction
+	#==getOneByAccountIdTransactionId
+	# Get a specific transaction from a specific account.
+	#Parameters: AccountID, TransactionId
+	# Returns a hash with the specified transaction
+	
 	def self.getOneByAccountIdTransactionId(accID, tranID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions/#{tranID}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
@@ -36,6 +41,10 @@ class Transaction
 	# *** POST ***
 
 	# Create a new transaction between 2 accounts
+	#==createTransaction
+	#Creates a new transaction.
+	#Parameters: toAccountId, hashWithTransacionData
+	#Returns http response code. 
 	def self.createTransaction(toAcc, json)
 		url = "#{self.urlWithEntity}/#{toAcc}/transactions?key=#{self.apiKey}"
 		uri = URI.parse(url)
@@ -49,6 +58,13 @@ class Transaction
 
 	# *** DELETE ***
 
+	#==deleteTransaction
+	#Deletes a specified transaction from a specified account.
+	#Parameters: AccountID, TransactionID
+	#Returns http response code.
+	#=Note:
+	#This does not actually delete the transaction from the database, it only sets it's
+	#status to 'cancelled'
 	def self.deleteTransaction(accID, transID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions/#{transID}?key=#{self.apiKey}"
 		uri = URI.parse(url)
@@ -56,6 +72,6 @@ class Transaction
 		key="?key=#{self.apiKey}"
 		request = Net::HTTP::Delete.new(uri.path+key)
 		resp = http.request(request)
-		#data = JSON.parse(resp.body)
+		data = JSON.parse(resp.body)
 	end
 end
