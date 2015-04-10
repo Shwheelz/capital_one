@@ -47,6 +47,9 @@ class Bill
 		return JSON.parse(response.body)
 	end
 
+	# *** POST ***
+
+	# need PUT method here
 
 	# *** POST ***
 
