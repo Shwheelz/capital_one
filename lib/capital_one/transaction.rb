@@ -1,15 +1,15 @@
 class Transaction
 
 	def self.urlWithEntity
-		return CONFIG::BASEURL + "/accounts"
+		return Config.baseUrl + "/accounts"
 	end
 
-	def url
-		return CONFIG::BASEURL
+	def self.url
+		return Config.baseUrl
 	end
 
 	def self.apiKey
-		return CONFIG::APIKEY
+		return Config.apiKey
 	end
 
 
@@ -17,15 +17,16 @@ class Transaction
 
 	# Get all transactions for a specific account
 	#tested - Returns an array of hashes.
-	def self.getTransactionsByAccountId(accID)
+	def self.getAllByAccountId(accID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
+		return data
 	end
 
 	# Get a specific transaction
 	# tested - Returns a hash with the specified transaction
-	def self.getTransactionByAccountIdTransactionId(accID, tranID)
+	def self.getOneByAccountIdTransactionId(accID, tranID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions/#{tranID}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
@@ -35,13 +36,14 @@ class Transaction
 	# *** POST ***
 
 	# Create a new transaction between 2 accounts
-	def createTransaction(toAcc, json)
+	def self.createTransaction(toAcc, json)
 		url = "#{self.urlWithEntity}/#{toAcc}/transactions?key=#{self.apiKey}"
 		uri = URI.parse(url)
 		http = Net::HTTP.new(uri.host, uri.port)
 		request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' => 'application/json'})
 		request.body = json
 		resp = http.request(request)
+		data = JSON.parse(resp.body)
 	end
 
 
@@ -54,5 +56,6 @@ class Transaction
 		key="?key=#{self.apiKey}"
 		request = Net::HTTP::Delete.new(uri.path+key)
 		resp = http.request(request)
+		#data = JSON.parse(resp.body)
 	end
 end
