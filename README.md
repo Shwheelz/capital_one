@@ -19,7 +19,6 @@ Or install it yourself as:
     $ gem install capital_one
 
 ## Usage
-By simply adding `require 'capital_one'` to the top of a Ruby project and specifying your API Key, developers can gain access to Capital One's API in Ruby.  This will open the doors for Rails projects, Ruby scripts and more to interact with the Capital One API.  
 
 1. Require the gem  
 
@@ -33,13 +32,6 @@ By simply adding `require 'capital_one'` to the top of a Ruby project and specif
 	
 	**Enterprise Key** - Take on the role of a Capital One employee. Only GET requests are permitted.  
 	**Customer Key** - Take on the role of a Capital One customer. All requests involving your assigned customers and anything they own are permitted.
-
-
-
-## irb Example
-![alt tag](http://i.imgur.com/DwXjl2h.png)
-
-After requiring the Capital One gem, use CapitalOne.getCustomers to return a JSON object of the customers in Capital One's API.
 
 ## Development
 

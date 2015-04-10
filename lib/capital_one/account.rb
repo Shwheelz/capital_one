@@ -13,6 +13,9 @@ class Account
 	end
 
 	# *** GET ***
+	# = getAll
+		# Returns an array of hashes getting all the customers.
+		#Each index in the array is the hash of an individual customer. 
 
 	def self.getAll
 		url = "#{self.urlWithEntity}?&key=#{self.apiKey}"
@@ -20,23 +23,32 @@ class Account
 		data = JSON.parse(resp.body)
 	end
 
-	#Gets all accounts of a given type.
-	#Possible arguments are: Savings, Credit Card, or Checking.
-	#tested, credit card doesn't work, returns array of hashes.
+	#== getAllByType
+		#Gets all accounts of a given type.
+		#=Parameters:
+		#Accepts a string of the account type. 3 possbilities: Credit Card, Savings, Checking.
+		#Returns an array of hashes with the accounts.
+
 	def self.getAllByType(type)
 		url = "#{self.urlWithEntity}?type=#{type}&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
+
+		#== getOne
 		#Returns the account specified by it's account ID.
-		#tested - returns a hash with the account info.
+		#=Parameters:
+		#Accepts a string of the account ID. 
+		#Returns a hash with the account info.
 	def self.getOne(id)
 		url = "#{self.urlWithEntity}/#{id}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
-		#Gets all accounts associated with a given customer ID. 
-		#tested - returns an array of hashes.
+		#== getAllByCustomerId
+		#Returns all accounts associated with a given customer ID
+		#as an array of hashes. 
+
 	def self.getAllByCustomerId(customerId)
 		url = "#{self.url}/customers/#{customerId}/accounts?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
@@ -45,8 +57,10 @@ class Account
 
 
 	# *** PUT ***
-
-	#updates an account's nickname by id with given json data. 
+	#==updateAccount
+	#Updates an account's nickname.
+	#Parameters: AccountID, AccountHash
+	#Returns the http response code.
 	def self.updateAccount(accountId, account)
 		url = "#{self.urlWithEntity}/#{accountId}?key=#{self.apiKey}"
 		uri = URI.parse(url)
@@ -60,8 +74,10 @@ class Account
 
 
 	# *** POST ***
-
-	#creates a new account
+	#==createAccount
+	#Creates a new account
+	#Parameters: CustomerID, accountHash
+	#Returns the http response code. 
 	def self.createAccount(custID, account)
 		accountToCreate = account.to_json
 		url = "#{self.url}/customers/#{custID}/accounts?key=#{self.apiKey}"
@@ -75,8 +91,10 @@ class Account
 
 
 	# *** DELETE ***
-
-	#delete a given account with some ID
+	#==deleteAccount
+	#delete a given account by accountId.
+	#Parameters: AccountId.
+	#Returns the http response code. 
 	def self.deleteAccount(accountId)
 		url = "#{self.urlWithEntity}/#{accountId}?key=#{self.apiKey}"
 		uri = URI.parse(url)
