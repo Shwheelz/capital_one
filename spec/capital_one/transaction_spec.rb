@@ -31,7 +31,7 @@ describe Transaction do
   		it 'Transactions for an account' do
   			VCR.use_cassette 'Transactions/getTransactionsByAcctId' do
 	  			accID = Account.getAll[0]["_id"]
-	  			transaction = Transaction.getTransactionsByAccountId(accID)
+	  			transaction = Transaction.getAllByAccountId(accID)
 	  			expect(transaction.class).to eq(Array)
 	  			expect(transaction.length).to be >= 0
 	  		end
@@ -48,9 +48,9 @@ describe Transaction do
 
   				expect(trans.class).to eq(Hash)
 
-  				transID = Transaction.getTransactionsByAccountId(accID)[0]["_id"]
+  				transID = Transaction.getAllByAccountId(accID)[0]["_id"]
 
-	  			transaction = Transaction.getTransactionByAccountIdTransactionId(accID, transID)
+	  			transaction = Transaction.getOneByAccountIdTransactionId(accID, transID)
 	  			$globalTransID = transaction["_id"]
 	  			expect(transaction.class).to eq(Hash)
 	  			expect(transaction.length).to be > 0
@@ -70,7 +70,7 @@ describe Transaction do
 
   				expect(trans.class).to eq(Hash)
 
-  				transID = Transaction.getTransactionsByAccountId(accID)[0]["_id"]
+  				transID = Transaction.getAllByAccountId(accID)[0]["_id"]
 
 	  			transaction = Transaction.deleteTransaction(accID, transID)
 	  			expect(transaction.class).to be(Net::HTTPNoContent)
