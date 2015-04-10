@@ -75,6 +75,5 @@ class Bill
 		key="?key=#{self.apiKey}"
 		request = Net::HTTP::Delete.new(uri.path+key)
 		response = http.request(request)
-		return JSON.parse(response)
 	end
 end

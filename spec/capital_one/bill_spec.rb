@@ -89,4 +89,15 @@ describe Bill do
     end
   end
 
+
+  describe 'DELETE' do
+    it 'should delete a Bill' do
+      VCR.use_cassette 'bill/deleteBill' do
+        response = Bill.deleteBill($accountId, $billId)
+        expect(response.class).to be(Net::HTTPNoContent)
+        expect(response.code).to eq("204")
+      end
+    end
+  end
+
 end
