@@ -9,6 +9,11 @@ describe Account do
     $accountPost["rewards"] = 100
     $accountPost["balance"] = 100
 
+    $accountPut = Hash.new
+    $accountPut["nickname"] = "test1"
+
+    $accountId = "";
+
     Config.apiKey = "CUSTf52dd79967987b3ba94904e83cc26e47"
   end
 
@@ -78,6 +83,29 @@ describe Account do
     end
   end
 
+  describe 'PUT' do
+    it 'should update an existing account' do
+      VCR.use_cassette 'account/updateAccount' do
+        # get an account we have permission to update
+        customers = Customer.getAll
+        customers.each do |customer|
+          if customer["accounts"].length > 0 #find a customer with an account
+            $accountId = customer["accounts"][0]
+            break
+          end
+        end
+
+        # update the account
+        if $accountId != ""
+          response = Account.updateAccount($accountId, $accountPut)
+          expect(response.class).to be(Hash)
+          expect(response).to include("message")
+          expect(response).to include("code")
+        end
+      end
+    end
+  end
+
   describe 'POST' do
     it 'should create a new account' do
       VCR.use_cassette 'account/createAccount' do
@@ -86,6 +114,16 @@ describe Account do
         expect(response.class).to be(Hash)
         expect(response).to include("message")
         expect(response).to include("code")
+      end
+    end
+  end
+
+  describe 'DELETE' do
+    it 'should create a new account' do
+      VCR.use_cassette 'account/deleteAccount' do
+        response = Account.deleteAccount($accountId)
+        expect(response.class).to be(Net::HTTPNoContent)
+        expect(response.code).to eq("204")
       end
     end
   end
