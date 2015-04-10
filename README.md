@@ -19,12 +19,6 @@ Or install it yourself as:
     $ gem install capital_one
 
 ## Usage
-To setup, add the following lines of code to the top of your file
-```ruby
-require 'capital_one'
-Config.apiKey = "your_api_key"
-```
-=======
 
 1. Require the gem  
 
