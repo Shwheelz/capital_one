@@ -20,8 +20,8 @@ class Branch
 		url = "#{self.urlWithEntity}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
-		
 	end
+	
 	#==getOne
 	#Get a branch by it's id
 	#Parameters: BranchId

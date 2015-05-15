@@ -3,7 +3,7 @@ require 'capital_one'
 describe Atm do
 
   before(:all) do
-    Config.apiKey = "CUSTf52dd79967987b3ba94904e83cc26e47"
+    Config.apiKey = "fc6fe1207d2bb88d137db7e96f91b732"
   end
 
   describe 'Method' do
@@ -26,6 +26,15 @@ describe Atm do
     it 'should get all ATMS' do
       VCR.use_cassette 'atm/atms' do
         atms = Atm.getAll
+        expect(atms.class).to be(Array)
+        expect(atms.length).to be > 0
+        expect(atms[0].class).to be(Hash)
+      end
+    end
+
+    it 'should get all ATMs withing a certain location' do
+      VCR.use_cassette 'atm/atmsByLocation' do
+        atms = Atm.getAllByLocation(38.9047, -77.0164, 10)
         expect(atms.class).to be(Array)
         expect(atms.length).to be > 0
         expect(atms[0].class).to be(Hash)

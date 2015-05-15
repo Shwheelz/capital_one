@@ -66,13 +66,12 @@ class Customer
 	def self.updateCustomer(custID, customer)
 		url = "#{self.urlWithEntity}/#{custID}?key=#{self.apiKey}"
 		uri = URI.parse(url)
-		myHash = JSON.parse(customer)
 		http = Net::HTTP.new(uri.host, uri.port)
 		key = "?key=#{self.apiKey}"
 		request = Net::HTTP::Put.new(uri.path+key)
-		request.set_form_data(myHash)
-		http.request(request)
-
+		request.set_form_data(customer)
+		response = http.request(request)
+		return JSON.parse(response.body)
 	end
 
 	# 

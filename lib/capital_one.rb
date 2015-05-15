@@ -27,6 +27,8 @@ require 'capital_one/bill'
 require 'capital_one/branch'
 require 'capital_one/customer'
 require 'capital_one/transaction'
+require 'capital_one/withdrawal'
+require 'capital_one/deposit'
  
 =begin 
 

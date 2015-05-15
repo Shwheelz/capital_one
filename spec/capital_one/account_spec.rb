@@ -14,7 +14,7 @@ describe Account do
 
     $accountId = "";
 
-    Config.apiKey = "CUSTf52dd79967987b3ba94904e83cc26e47"
+    Config.apiKey = "fc6fe1207d2bb88d137db7e96f91b732"
   end
 
   describe 'Method' do
