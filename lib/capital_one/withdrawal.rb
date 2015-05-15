@@ -72,6 +72,5 @@ class Withdrawal
     key="?key=#{self.apiKey}"
     request = Net::HTTP::Delete.new(uri.path+key)
     resp = http.request(request)
-    data = JSON.parse(resp.body)
   end
 end

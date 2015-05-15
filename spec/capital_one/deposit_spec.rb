@@ -1,12 +1,12 @@
 require 'capital_one'
 
-describe Transaction do
+describe Deposit do
   
   before(:all) do
-      $transactionPost = Hash.new
-      $transactionPost["transaction_type"] = "cash"
-      #$transactionPost["payee_id"] = ""
-      $transactionPost["amount"] = 100
+      $depositPost = Hash.new
+      $depositPost["medium"] = "balance"
+      $depositPost["amount"] = 100
+      $depositPost["description"] = "TEST DEPOSIT"
   end
 
   before(:each) do
@@ -15,66 +15,63 @@ describe Transaction do
 
   describe 'Method' do
     it 'should get the correct base url' do
-      expect(Transaction.url).to eq("http://api.reimaginebanking.com:80")
+      expect(Deposit.url).to eq("http://api.reimaginebanking.com:80")
     end
 
     it 'should get the correct base url with entity' do
-      expect(Transaction.urlWithEntity).to eq("http://api.reimaginebanking.com:80/accounts")
+      expect(Deposit.urlWithEntity).to eq("http://api.reimaginebanking.com:80/accounts")
     end   
 
     it 'should have an API key' do
-        expect(Transaction.apiKey.class).to be(String) # passes if actual == expected
+        expect(Deposit.apiKey.class).to be(String) # passes if actual == expected
       end
     end
 
     describe 'GET' do
-      it 'Transactions for an account' do
-        VCR.use_cassette 'Transactions/getTransactionsByAcctId' do
+      it 'Deposit for an account' do
+        VCR.use_cassette 'deposit/getDepositByAcctId' do
           accID = Account.getAll[0]["_id"]
-          transaction = Transaction.getAllByAccountId(accID)
-          expect(transaction.class).to eq(Array)
-          expect(transaction.length).to be >= 0
+          deposit = Deposit.getAllByAccountId(accID)
+          expect(deposit.class).to eq(Array)
+          expect(deposit.length).to be >= 0
         end
       end
 
-      it 'Specific transaction for an account AND POST for transaction' do
-        VCR.use_cassette 'Transactions/getSpecificTransaction' do
-          payee_accID = Account.getAll[2]["_id"]
-          $transactionPost["payee_id"] = payee_accID
-          transactionPostJson = $transactionPost.to_json
+      it 'Specific deposit for an account AND POST for deposit' do
+        VCR.use_cassette 'deposit/getSpecificDeposit' do
+          depositPostJson = $depositPost.to_json
           accID = Account.getAll[0]["_id"]
 
-          trans = Transaction.createTransaction(accID, transactionPostJson)
+          deposit = Deposit.createDeposit(accID, depositPostJson)
 
-          expect(trans.class).to eq(Hash)
+          expect(deposit.class).to eq(Hash)
 
-          transID = Transaction.getAllByAccountId(accID)[0]["_id"]
+          depositID = Deposit.getAllByAccountId(accID)[0]["_id"]
 
-          transaction = Transaction.getOneByAccountIdTransactionId(accID, transID)
-          $globalTransID = transaction["_id"]
-          expect(transaction.class).to eq(Hash)
-          expect(transaction.length).to be > 0
+          deposit = Deposit.getOneByAccountIdDepositId(accID, depositID)
+          $globalTransID = deposit["_id"]
+          expect(deposit.class).to eq(Hash)
+          expect(deposit.length).to be > 0
         end
       end
     end
 
     describe 'DELETE' do
-      it 'Transaction for an account' do
-        VCR.use_cassette 'Transactions/deleteTransactionsByAcctId' do
-          payee_accID = Account.getAll[2]["_id"]
-          $transactionPost["payee_id"] = payee_accID
-          transactionPostJson = $transactionPost.to_json
+      it 'Deposit for an account' do
+        VCR.use_cassette 'deposit/deleteDepositByAcctId' do
+          depositPostJson = $depositPost.to_json
           accID = Account.getAll[0]["_id"]
 
-          trans = Transaction.createTransaction(accID, transactionPostJson)
+          deposit = Deposit.createDeposit(accID, depositPostJson)
 
-          expect(trans.class).to eq(Hash)
+          expect(deposit.class).to eq(Hash)
 
-          transID = Transaction.getAllByAccountId(accID)[0]["_id"]
+          depositID = Deposit.getAllByAccountId(accID)[0]["_id"]
 
-          transaction = Transaction.deleteTransaction(accID, transID)
-          expect(transaction.class).to be(Net::HTTPNoContent)
-            expect(transaction.code).to eq("204")         
+          deposit = Deposit.deleteDeposit(accID, depositID)
+
+          expect(deposit.class).to be(Net::HTTPNoContent)
+          expect(deposit.code).to eq("204")         
         end
       end
     end
