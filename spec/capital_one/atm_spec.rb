@@ -32,6 +32,15 @@ describe Atm do
       end
     end
 
+    it 'should get all ATMs withing a certain location' do
+      VCR.use_cassette 'atm/atmsByLocation' do
+        atms = Atm.getAllByLocation(38.9047, -77.0164, 10)
+        expect(atms.class).to be(Array)
+        expect(atms.length).to be > 0
+        expect(atms[0].class).to be(Hash)
+      end
+    end
+
     it 'should get a single ATM' do
       VCR.use_cassette 'atm/atm' do
         atm = Atm.getOne(Atm.getAll[0]["_id"])
