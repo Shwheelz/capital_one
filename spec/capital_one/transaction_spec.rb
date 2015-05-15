@@ -4,13 +4,14 @@ describe Transaction do
 	
 	before(:all) do
   		$transactionPost = Hash.new
-	    $transactionPost["transaction_type"] = "cash"
-	    #$transactionPost["payee_id"] = ""
+	    $transactionPost["medium"] = "balance"
+	    $transactionPost["payee_id"] = "" # sets this in the test
 	    $transactionPost["amount"] = 100
+      $transactionPost["description"] = "TEST TRANSACTION"
 	end
 
 	before(:each) do
-		Config.apiKey = "CUSTf52dd79967987b3ba94904e83cc26e47"
+		Config.apiKey = "fc6fe1207d2bb88d137db7e96f91b732"
 	end
 
 	describe 'Method' do
@@ -29,7 +30,7 @@ describe Transaction do
 
   	describe 'GET' do
   		it 'Transactions for an account' do
-  			VCR.use_cassette 'Transactions/getTransactionsByAcctId' do
+  			VCR.use_cassette 'transactions/getTransactionsByAcctId' do
 	  			accID = Account.getAll[0]["_id"]
 	  			transaction = Transaction.getAllByAccountId(accID)
 	  			expect(transaction.class).to eq(Array)
@@ -37,8 +38,26 @@ describe Transaction do
 	  		end
   		end
 
+      it 'Transactions for an account as payer' do
+        VCR.use_cassette 'transactions/getTransactionsByAcctIdPayer' do
+          accID = Account.getAll[0]["_id"]
+          transaction = Transaction.getAllByAccountIdPayer(accID)
+          expect(transaction.class).to eq(Array)
+          expect(transaction.length).to be >= 0
+        end
+      end
+
+      it 'Transactions for an account as payee' do
+        VCR.use_cassette 'transactions/getTransactionsByAcctIdPayee' do
+          accID = Account.getAll[0]["_id"]
+          transaction = Transaction.getAllByAccountIdPayee(accID)
+          expect(transaction.class).to eq(Array)
+          expect(transaction.length).to be >= 0
+        end
+      end
+
   		it 'Specific transaction for an account AND POST for transaction' do
-  			VCR.use_cassette 'Transactions/getSpecificTransaction' do
+  			VCR.use_cassette 'transactions/getSpecificTransaction' do
   				payee_accID = Account.getAll[2]["_id"]
   				$transactionPost["payee_id"] = payee_accID
   				transactionPostJson = $transactionPost.to_json
@@ -60,7 +79,7 @@ describe Transaction do
 
   	describe 'DELETE' do
   		it 'Transaction for an account' do
-  			VCR.use_cassette 'Transactions/deleteTransactionsByAcctId' do
+  			VCR.use_cassette 'transactions/deleteTransactionsByAcctId' do
   				payee_accID = Account.getAll[2]["_id"]
   				$transactionPost["payee_id"] = payee_accID
   				transactionPostJson = $transactionPost.to_json
@@ -73,6 +92,7 @@ describe Transaction do
   				transID = Transaction.getAllByAccountId(accID)[0]["_id"]
 
 	  			transaction = Transaction.deleteTransaction(accID, transID)
+
 	  			expect(transaction.class).to be(Net::HTTPNoContent)
         		expect(transaction.code).to eq("204")	  			
 	  		end

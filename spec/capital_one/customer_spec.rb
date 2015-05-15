@@ -13,7 +13,7 @@ describe Customer do
 	end
 
 	before(:each) do
-		Config.apiKey = "CUSTf52dd79967987b3ba94904e83cc26e47"
+		Config.apiKey = "fc6fe1207d2bb88d137db7e96f91b732"
 	end
 
 	describe 'Method' do
@@ -56,7 +56,7 @@ describe Customer do
 		end
 
 		it 'Specific customer by account ID' do
-			Config.apiKey = "ENTf52dd79967987b3ba94904e83cc26e47"
+			Config.apiKey = "fc6fe1207d2bb88d137db7e96f91b732"
 			VCR.use_cassette 'customer/customerByAccountId' do
 				accountId = Account.getAll[0]["_id"]
 				customer = Customer.getOneByAccountId(accountId)

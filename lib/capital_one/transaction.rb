@@ -26,6 +26,32 @@ class Transaction
 		return data
 	end
 
+	# *** GET ***
+	#==getAllByAccountIdPayer
+	#Get all transactions for a specific account where that account is the payer
+	#Returns an array of hashes.
+	#Parameters: AccountID
+	#Returns an array of hashes containing the transactions for that account where that account is the payer.
+	def self.getAllByAccountIdPayer(accID)
+		url = "#{self.urlWithEntity}/#{accID}/transactions?type=payer&key=#{self.apiKey}"
+		resp = Net::HTTP.get_response(URI.parse(url))
+		data = JSON.parse(resp.body)
+		return data
+	end
+
+	# *** GET ***
+	#==getAllByAccountIdPayee
+	#Get all transactions for a specific account where that account is the payee
+	#Returns an array of hashes.
+	#Parameters: AccountID
+	#Returns an array of hashes containing the transactions for that account where that account is the payee.
+	def self.getAllByAccountIdPayee(accID)
+		url = "#{self.urlWithEntity}/#{accID}/transactions?type=payee&key=#{self.apiKey}"
+		resp = Net::HTTP.get_response(URI.parse(url))
+		data = JSON.parse(resp.body)
+		return data
+	end
+
 	#==getOneByAccountIdTransactionId
 	# Get a specific transaction from a specific account.
 	#Parameters: AccountID, TransactionId
@@ -72,6 +98,5 @@ class Transaction
 		key="?key=#{self.apiKey}"
 		request = Net::HTTP::Delete.new(uri.path+key)
 		resp = http.request(request)
-		data = JSON.parse(resp.body)
 	end
 end
