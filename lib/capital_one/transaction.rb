@@ -15,10 +15,10 @@ class Transaction
 
 	# *** GET ***
 	#==getAllByAccountId
-	#Get all transactions for a specific account
+	#Get all transactions for a specific account where that account is the payer or payee
 	#Returns an array of hashes.
 	#Parameters: AccountID
-	#Returns an array of hashes containing the transactions for that account.
+	#Returns an array of hashes containing the transactions for that account where that account is the payer or payee.
 	def self.getAllByAccountId(accID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
