@@ -32,15 +32,6 @@ describe Branch do
        end
     end
 
-    it 'should get all Branches withing a certain location' do
-      VCR.use_cassette 'branch/branchesByLocation' do
-        branches = Branch.getAllByLocation(38.9047, -77.0164, 10)
-        expect(branches.class).to be(Array)
-        expect(branches.length).to be > 0
-        expect(branches[0].class).to be(Hash)
-      end
-    end
-
     it 'should get a single Branch' do
       VCR.use_cassette 'branch/branch' do
         branch = Branch.getOne(Branch.getAll[0]["_id"])

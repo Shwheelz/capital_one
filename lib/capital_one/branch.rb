@@ -21,16 +21,7 @@ class Branch
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
-
-	#==getAllByLocation
-	# Get all Branches withing a certain radius of a geocoordinate
-	# Returns an array of hashes within the radius of the geocoordinate.  Each hash has a branch.
-	def self.getAllByLocation(lat, lng, rad)
-		url = "#{self.urlWithEntity}?lat=#{lat}&lng=#{lng}&rad=#{rad}&key=#{self.apiKey}"
-		resp = Net::HTTP.get_response(URI.parse(url))
-		data = JSON.parse(resp.body)
-	end
-
+	
 	#==getOne
 	#Get a branch by it's id
 	#Parameters: BranchId
