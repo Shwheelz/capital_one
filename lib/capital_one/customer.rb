@@ -64,12 +64,13 @@ class Customer
 		# }
 	#Returns http response code. 
 	def self.updateCustomer(custID, customer)
+		customerToUpdate = customer.to_json
 		url = "#{self.urlWithEntity}/#{custID}?key=#{self.apiKey}"
 		uri = URI.parse(url)
 		http = Net::HTTP.new(uri.host, uri.port)
 		key = "?key=#{self.apiKey}"
-		request = Net::HTTP::Put.new(uri.path+key)
-		request.set_form_data(customer)
+		request = Net::HTTP::Put.new(uri.path+key, initheader = {'Content-Type' =>'application/json'})
+		request.body = customerToUpdate
 		response = http.request(request)
 		return JSON.parse(response.body)
 	end

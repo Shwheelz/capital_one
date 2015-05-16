@@ -62,12 +62,13 @@ class Account
 	#Parameters: AccountID, AccountHash
 	#Returns the http response code.
 	def self.updateAccount(accountId, account)
+		accountToUpdate = account.to_json
 		url = "#{self.urlWithEntity}/#{accountId}?key=#{self.apiKey}"
 		uri = URI.parse(url)
 		http = Net::HTTP.new(uri.host, uri.port)
 		key = "?key=#{self.apiKey}"
-		request = Net::HTTP::Put.new(uri.path+key)
-		request.set_form_data(account)
+		request = Net::HTTP::Put.new(uri.path+key, initheader = {'Content-Type' =>'application/json'})
+		request.body = accountToUpdate
 		response = http.request(request)
 		return JSON.parse(response.body)
 	end
