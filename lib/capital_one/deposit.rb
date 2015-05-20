@@ -45,12 +45,13 @@ class Deposit
   #Creates a new deposit.
   #Parameters: toAccountId, hashWithDepositData
   #Returns http response code. 
-  def self.createDeposit(toAcc, json)
+  def self.createDeposit(toAcc, deposit)
+    depositToCreate = deposit.to_json
     url = "#{self.urlWithEntity}/#{toAcc}/deposits?key=#{self.apiKey}"
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' => 'application/json'})
-    request.body = json
+    request.body = depositToCreate
     resp = http.request(request)
     data = JSON.parse(resp.body)
   end
@@ -72,6 +73,5 @@ class Deposit
     key="?key=#{self.apiKey}"
     request = Net::HTTP::Delete.new(uri.path+key)
     resp = http.request(request)
-    data = JSON.parse(resp.body)
   end
 end

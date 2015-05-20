@@ -14,7 +14,7 @@ describe Account do
 
     $accountId = "";
 
-    Config.apiKey = "fc6fe1207d2bb88d137db7e96f91b732"
+    Config.apiKey = "3eab5d0a550c080eab8b72ccbcbde8f8"
   end
 
   describe 'Method' do
@@ -67,7 +67,7 @@ describe Account do
         customerId = "";
         customers = Customer.getAll
         customers.each do |customer|
-          if customer["accounts"].length > 0 #find a customer with an account
+          if customer["account_ids"].length > 0 #find a customer with an account
             customerId = customer["_id"]
             break
           end
@@ -78,7 +78,7 @@ describe Account do
         expect(accounts[0].class).to be(Hash)
         expect(accounts[0]).to include("_id")
         expect(accounts[0]).to include("nickname")
-        expect(accounts[0]).to include("customer" => "#{customerId}")
+        expect(accounts[0]).to include("customer_id" => "#{customerId}")
       end
     end
   end
@@ -89,8 +89,8 @@ describe Account do
         # get an account we have permission to update
         customers = Customer.getAll
         customers.each do |customer|
-          if customer["accounts"].length > 0 #find a customer with an account
-            $accountId = customer["accounts"][0]
+          if customer["account_ids"].length > 0 #find a customer with an account
+            $accountId = customer["account_ids"][0]
             break
           end
         end

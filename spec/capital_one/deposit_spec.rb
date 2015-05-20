@@ -10,7 +10,7 @@ describe Deposit do
   end
 
   before(:each) do
-    Config.apiKey = "fc6fe1207d2bb88d137db7e96f91b732"
+    Config.apiKey = "3eab5d0a550c080eab8b72ccbcbde8f8"
   end
 
   describe 'Method' do
@@ -39,10 +39,9 @@ describe Deposit do
 
       it 'Specific deposit for an account AND POST for deposit' do
         VCR.use_cassette 'deposit/getSpecificDeposit' do
-          depositPostJson = $depositPost.to_json
           accID = Account.getAll[0]["_id"]
 
-          deposit = Deposit.createDeposit(accID, depositPostJson)
+          deposit = Deposit.createDeposit(accID, $depositPost)
 
           expect(deposit.class).to eq(Hash)
 
@@ -59,10 +58,9 @@ describe Deposit do
     describe 'DELETE' do
       it 'Deposit for an account' do
         VCR.use_cassette 'deposit/deleteDepositByAcctId' do
-          depositPostJson = $depositPost.to_json
           accID = Account.getAll[0]["_id"]
 
-          deposit = Deposit.createDeposit(accID, depositPostJson)
+          deposit = Deposit.createDeposit(accID, $depositPost)
 
           expect(deposit.class).to eq(Hash)
 

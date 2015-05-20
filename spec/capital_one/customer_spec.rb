@@ -13,7 +13,7 @@ describe Customer do
 	end
 
 	before(:each) do
-		Config.apiKey = "fc6fe1207d2bb88d137db7e96f91b732"
+		Config.apiKey = "3eab5d0a550c080eab8b72ccbcbde8f8"
 	end
 
 	describe 'Method' do
@@ -50,19 +50,18 @@ describe Customer do
 				customer = Customer.getOne(putCustID)
 				expect(customer.class).to be(Hash)
 				expect(customer).to include("_id")
-				expect(customer).to include("accounts")
+				expect(customer).to include("account_ids")
 				expect(customer).to include("first_name")
 			end
 		end
 
 		it 'Specific customer by account ID' do
-			Config.apiKey = "fc6fe1207d2bb88d137db7e96f91b732"
 			VCR.use_cassette 'customer/customerByAccountId' do
 				accountId = Account.getAll[0]["_id"]
 				customer = Customer.getOneByAccountId(accountId)
 				expect(customer.class).to be(Hash)
 				expect(customer).to include("_id")
-				expect(customer).to include("accounts")
+				expect(customer).to include("account_ids")
 				expect(customer).to include("first_name")
 				end
 		end

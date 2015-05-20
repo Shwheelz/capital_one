@@ -5,17 +5,18 @@ describe Bill do
   before(:all) do
     $billPost = Hash.new
     $billPost["status"] = "pending"
+    $billPost["payee"] = "Comcast"
     $billPost["payment_date"] = "2015-04-20"
     $billPost["recurring_date"] = 15
     $billPost["payment_amount"] = 100
 
-    Config.apiKey = "fc6fe1207d2bb88d137db7e96f91b732"
+    Config.apiKey = "3eab5d0a550c080eab8b72ccbcbde8f8"
     
     $accountId = ""
     VCR.use_cassette 'bill/testCreateBill' do
       account = Account.getAll[0]
       $accountId = account["_id"]
-      $customerId = account["customer"]
+      $customerId = account["customer_id"]
       response = Bill.createBill($accountId, $billPost)
 
       $billId = Bill.getAllByAccountId($accountId)[0]["_id"]
