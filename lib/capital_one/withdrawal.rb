@@ -45,12 +45,13 @@ class Withdrawal
   #Creates a new withdrawal.
   #Parameters: toAccountId, hashWithWithdrawalData
   #Returns http response code. 
-  def self.createWithdrawal(toAcc, json)
+  def self.createWithdrawal(toAcc, withdrawal)
+    withdrawalToCreate = withdrawal.to_json
     url = "#{self.urlWithEntity}/#{toAcc}/withdrawals?key=#{self.apiKey}"
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' => 'application/json'})
-    request.body = json
+    request.body = withdrawalToCreate
     resp = http.request(request)
     data = JSON.parse(resp.body)
   end

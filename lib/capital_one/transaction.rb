@@ -71,12 +71,13 @@ class Transaction
 	#Creates a new transaction.
 	#Parameters: toAccountId, hashWithTransacionData
 	#Returns http response code. 
-	def self.createTransaction(toAcc, json)
+	def self.createTransaction(toAcc, transaction)
+		transactionToCreate = transaction.to_json
 		url = "#{self.urlWithEntity}/#{toAcc}/transactions?key=#{self.apiKey}"
 		uri = URI.parse(url)
 		http = Net::HTTP.new(uri.host, uri.port)
 		request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' => 'application/json'})
-		request.body = json
+		request.body = transactionToCreate
 		resp = http.request(request)
 		data = JSON.parse(resp.body)
 	end

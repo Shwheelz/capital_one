@@ -11,7 +11,7 @@ describe Transaction do
 	end
 
 	before(:each) do
-		Config.apiKey = "fc6fe1207d2bb88d137db7e96f91b732"
+		Config.apiKey = "3eab5d0a550c080eab8b72ccbcbde8f8"
 	end
 
 	describe 'Method' do

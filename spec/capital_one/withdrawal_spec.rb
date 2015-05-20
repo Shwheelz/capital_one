@@ -10,7 +10,7 @@ describe Withdrawal do
   end
 
   before(:each) do
-    Config.apiKey = "fc6fe1207d2bb88d137db7e96f91b732"
+    Config.apiKey = "3eab5d0a550c080eab8b72ccbcbde8f8"
   end
 
   describe 'Method' do
@@ -39,10 +39,9 @@ describe Withdrawal do
 
       it 'Specific withdrawal for an account AND POST for withdrawal' do
         VCR.use_cassette 'withdrawal/getSpecificWithdrawal' do
-          withdrawalPostJson = $withdrawalPost.to_json
           accID = Account.getAll[0]["_id"]
 
-          withdrawal = Withdrawal.createWithdrawal(accID, withdrawalPostJson)
+          withdrawal = Withdrawal.createWithdrawal(accID, $withdrawalPost)
 
           expect(withdrawal.class).to eq(Hash)
 
@@ -59,10 +58,9 @@ describe Withdrawal do
     describe 'DELETE' do
       it 'Withdrawal for an account' do
         VCR.use_cassette 'withdrawal/deleteWithdrawalByAcctId' do
-          withdrawalPostJson = $withdrawalPost.to_json
           accID = Account.getAll[0]["_id"]
 
-          withdrawal = Withdrawal.createWithdrawal(accID, withdrawalPostJson)
+          withdrawal = Withdrawal.createWithdrawal(accID, $withdrawalPost)
 
           expect(withdrawal.class).to eq(Hash)
 
