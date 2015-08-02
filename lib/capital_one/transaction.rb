@@ -14,6 +14,8 @@ class Transaction
 
 
 	# *** GET ***
+
+	
 	#==getAllByAccountId
 	#Get all transactions for a specific account where that account is the payer or payee
 	#Returns an array of hashes.
@@ -26,7 +28,6 @@ class Transaction
 		return data
 	end
 
-	# *** GET ***
 	#==getAllByAccountIdPayer
 	#Get all transactions for a specific account where that account is the payer
 	#Returns an array of hashes.
@@ -39,7 +40,6 @@ class Transaction
 		return data
 	end
 
-	# *** GET ***
 	#==getAllByAccountIdPayee
 	#Get all transactions for a specific account where that account is the payee
 	#Returns an array of hashes.

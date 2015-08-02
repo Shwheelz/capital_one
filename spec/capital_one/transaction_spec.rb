@@ -77,6 +77,17 @@ describe Transaction do
   		end
   	end
 
+    describe 'POST' do
+      it 'should create a Transaction' do
+        VCR.use_cassette 'transactions/createTransaction' do
+          response = Transaction.createTransaction($accountId, $transactionPost)
+          expect(response.class).to be(Hash)
+          expect(response).to include("message")
+          expect(response).to include("code")
+        end
+      end
+    end
+
   	describe 'DELETE' do
   		it 'Transaction for an account' do
   			VCR.use_cassette 'transactions/deleteTransactionsByAcctId' do

@@ -58,6 +58,7 @@ class Bill
 	end
 
 	# *** POST ***
+
 	#==updateBill
 	#Updates an account's nickname by id with given json data. 
 	#Parameters: AccountId, BillId, BillJson
@@ -84,7 +85,6 @@ class Bill
 		return JSON.parse(response.body)
 	end
 
-	# *** POST ***
 	#==createBill
 	#create a new bill on an associated account ID
 	#Parameters: AccountId, BillJson
