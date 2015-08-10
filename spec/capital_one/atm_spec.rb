@@ -26,27 +26,27 @@ describe Atm do
     it 'should get all ATMS' do
       VCR.use_cassette 'atm/atms' do
         atms = Atm.getAll
-        expect(atms.class).to be(Array)
+        expect(atms.class).to be(Hash)
         expect(atms.length).to be > 0
-        expect(atms[0].class).to be(Hash)
+        expect(atms.first.class).to be(Array)
       end
     end
 
     it 'should get all ATMs withing a certain location' do
       VCR.use_cassette 'atm/atmsByLocation' do
         atms = Atm.getAllByLocation(38.9047, -77.0164, 10)
-        expect(atms.class).to be(Array)
+        expect(atms.class).to be(Hash)
         expect(atms.length).to be > 0
-        expect(atms[0].class).to be(Hash)
+        expect(atms.first.class).to be(Array)
       end
     end
 
     it 'should get a single ATM' do
       VCR.use_cassette 'atm/atm' do
-        atm = Atm.getOne(Atm.getAll[0]["_id"])
+        atm = Atm.getOne(Atm.getAll.keys[0]["_id"])
         expect(atm.class).to be(Hash)
-        expect(atm).to include("_id")
-        expect(atm).to include("name")
+        expect(atm.to_s).to include("_id")
+        expect(atm.to_s).to include("name")
       end
     end
   end

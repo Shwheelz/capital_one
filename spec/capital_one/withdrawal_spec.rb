@@ -59,14 +59,19 @@ describe Withdrawal do
       it 'Withdrawal for an account' do
         VCR.use_cassette 'withdrawal/deleteWithdrawalByAcctId' do
           accID = Account.getAll[0]["_id"]
-
           withdrawal = Withdrawal.createWithdrawal(accID, $withdrawalPost)
-
+          
+          # Error Check
+          puts "withdrawal: " + withdrawal.to_s
+          
           expect(withdrawal.class).to eq(Hash)
-
           withdrawalID = Withdrawal.getAllByAccountId(accID)[0]["_id"]
-
           withdrawal = Withdrawal.deleteWithdrawal(accID, withdrawalID)
+
+          # Error check
+          puts "accID: " + accID.to_s
+          puts "withdrawalID: " + withdrawalID
+          puts "withdrawal: " + withdrawal.to_s
 
           expect(withdrawal.class).to be(Net::HTTPNoContent)
           expect(withdrawal.code).to eq("204")         

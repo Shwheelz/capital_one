@@ -59,14 +59,20 @@ describe Deposit do
       it 'Deposit for an account' do
         VCR.use_cassette 'deposit/deleteDepositByAcctId' do
           accID = Account.getAll[0]["_id"]
-
           deposit = Deposit.createDeposit(accID, $depositPost)
-
           expect(deposit.class).to eq(Hash)
 
-          depositID = Deposit.getAllByAccountId(accID)[0]["_id"]
+          # Error Check
+          puts "accID: " + accID 
+          puts "$depositPost: " + $depositPost.to_s
+          puts "deposit: " + deposit.to_s
 
+          depositID = Deposit.getAllByAccountId(accID)[0]["_id"]
           deposit = Deposit.deleteDeposit(accID, depositID)
+
+          # Error check
+          puts "depositID: " + depositID
+          puts "deposit: " + deposit.to_s
 
           expect(deposit.class).to be(Net::HTTPNoContent)
           expect(deposit.code).to eq("204")         

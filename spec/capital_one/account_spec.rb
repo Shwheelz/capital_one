@@ -119,7 +119,7 @@ describe Account do
   end
 
   describe 'DELETE' do
-    it 'should create a new account' do
+    it 'should delete an account' do
       VCR.use_cassette 'account/deleteAccount' do
         response = Account.deleteAccount($accountId)
         expect(response.class).to be(Net::HTTPNoContent)
