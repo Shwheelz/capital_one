@@ -43,10 +43,10 @@ describe Atm do
 
     it 'should get a single ATM' do
       VCR.use_cassette 'atm/atm' do
-        atm = Atm.getOne(Atm.getAll.keys[0]["_id"])
+        atm = Atm.getOne(Atm.getAll["data"][0]["_id"])
         expect(atm.class).to be(Hash)
-        expect(atm.to_s).to include("_id")
-        expect(atm.to_s).to include("name")
+        expect(atm).to include("_id")
+        expect(atm).to include("name")
       end
     end
   end
