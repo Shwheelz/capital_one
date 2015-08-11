@@ -67,17 +67,6 @@ describe Transaction do
   				transID = Transaction.getAllByAccountId(accID)[0]["_id"]
 	  			transaction = Transaction.getOneByAccountIdTransactionId(accID, transID)
 	  			$globalTransID = transaction["_id"]
-
-          # Error check
-          puts "payee_accID: " + payee_accID
-          puts "$transactionPost[payee_id]: " + $transactionPost["payee_id"]
-          puts "$transactionPostJson: " + $transactionPostJson
-          puts "accID: " + accID
-          puts "trans: " + trans + ", class: " + trans.class
-          puts "transID: " + transID
-          puts "transaction: " + transaction 
-          puts "$globalTransID: " + $globalTransID
-
 	  			expect(transaction.class).to eq(Hash)
 	  			expect(transaction.length).to be > 0
 	  		end
@@ -106,16 +95,6 @@ describe Transaction do
   				expect(trans.class).to eq(Hash)
   				transID = Transaction.getAllByAccountId(accID)[0]["_id"]
 	  			transaction = Transaction.deleteTransaction(accID, transID)
-
-          # Error Check
-          puts "payee_accID: " + payee_accID
-          puts "$transactionPost[payee_id]: " + $transactionPost["payee_id"]
-          puts "$transactionPostJson: " + $transactionPostJson
-          puts "accID: " + accID
-          puts "trans: " + trans + ", class: " + trans.class
-          puts "transID: " + transID
-          puts "transaction: " + transaction
-
 	  			expect(transaction.class).to be(Net::HTTPNoContent)
         	expect(transaction.code).to eq("204")	  			
 	  		end

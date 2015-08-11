@@ -40,13 +40,9 @@ describe Deposit do
       it 'Specific deposit for an account AND POST for deposit' do
         VCR.use_cassette 'deposit/getSpecificDeposit' do
           accID = Account.getAll[0]["_id"]
-
           deposit = Deposit.createDeposit(accID, $depositPost)
-
           expect(deposit.class).to eq(Hash)
-
           depositID = Deposit.getAllByAccountId(accID)[0]["_id"]
-
           deposit = Deposit.getOneByAccountIdDepositId(accID, depositID)
           $globalTransID = deposit["_id"]
           expect(deposit.class).to eq(Hash)
@@ -61,19 +57,8 @@ describe Deposit do
           accID = Account.getAll[0]["_id"]
           deposit = Deposit.createDeposit(accID, $depositPost)
           expect(deposit.class).to eq(Hash)
-
-          # Error Check
-          puts "accID: " + accID 
-          puts "$depositPost: " + $depositPost.to_s
-          puts "deposit: " + deposit.to_s
-
           depositID = Deposit.getAllByAccountId(accID)[0]["_id"]
           deposit = Deposit.deleteDeposit(accID, depositID)
-
-          # Error check
-          puts "depositID: " + depositID
-          puts "deposit: " + deposit.to_s
-
           expect(deposit.class).to be(Net::HTTPNoContent)
           expect(deposit.code).to eq("204")         
         end
