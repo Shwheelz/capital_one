@@ -1,6 +1,6 @@
-# CapitalOne
+# capital_one
 
-The capital_one gem interfaces Ruby developers with the Capital One API.  Simply require 'capital_one' and gain access to the API methods.  Documentation for Capital One's API can be found at [api.reimaginebanking.com/documentation](http://api.reimaginebanking.com/documentation).  See lib/capital_one.rb for method definitions in Ruby.
+The capital_one gem interfaces Ruby developers with Capital One's Hackathon API.  Simply require 'capital_one' and gain access to the API methods.  Documentation for Capital One's API can be found at [api.reimaginebanking.com/documentation](http://api.reimaginebanking.com/documentation).  See lib/capital_one.rb for method definitions in Ruby.
 
 ## Installation
 
