@@ -22,11 +22,15 @@ Or install it yourself as:
 
 1. Require the gem  
 
-	`require 'capital_one'`  
+	````ruby
+	require 'capital_one'
+	````
 
 2. Go to [api.reimaginebanking.com](http://api.reimaginebanking.com/documentation) and sign up for an API Key with your Github account.  Read the documentation on the API and go to your Profile page and retrieve your API key.  Once you retrive your key you must specify the key in your project to gain access to the API.  
 
-	`Config.apiKey = "API_KEY"`  
+	````ruby
+	Config.apiKey = "YOUR_API_KEY"
+	````
 	
 	You will see that you are assigned two api keys when signing up for the API.  These keys have different roles and permissions assigned to them.
 	
