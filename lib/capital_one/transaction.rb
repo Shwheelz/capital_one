@@ -16,11 +16,12 @@ class Transaction
 	# *** GET ***
 
 	
-	#==getAllByAccountId
-	#Get all transactions for a specific account where that account is the payer or payee
-	#Returns an array of hashes.
-	#Parameters: AccountID
-	#Returns an array of hashes containing the transactions for that account where that account is the payer or payee.
+	#== getAllByAccountId
+		# Get all transactions for a specific account where that account is the payer or payee
+		# Returns an array of hashes.
+		# Parameters: AccountID
+		# Returns an array of hashes containing the transactions for that account where that account is the payer or payee.
+		
 	def self.getAllByAccountId(accID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
@@ -28,11 +29,12 @@ class Transaction
 		return data
 	end
 
-	#==getAllByAccountIdPayer
-	#Get all transactions for a specific account where that account is the payer
-	#Returns an array of hashes.
-	#Parameters: AccountID
-	#Returns an array of hashes containing the transactions for that account where that account is the payer.
+	#== getAllByAccountIdPayer
+		# Get all transactions for a specific account where that account is the payer
+		# Returns an array of hashes.
+		# Parameters: AccountID
+		# Returns an array of hashes containing the transactions for that account where that account is the payer.
+		
 	def self.getAllByAccountIdPayer(accID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions?type=payer&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
@@ -40,11 +42,12 @@ class Transaction
 		return data
 	end
 
-	#==getAllByAccountIdPayee
-	#Get all transactions for a specific account where that account is the payee
-	#Returns an array of hashes.
-	#Parameters: AccountID
-	#Returns an array of hashes containing the transactions for that account where that account is the payee.
+	#== getAllByAccountIdPayee
+	 	# Get all transactions for a specific account where that account is the payee
+	 	# Returns an array of hashes.
+		# Parameters: AccountID
+		# Returns an array of hashes containing the transactions for that account where that account is the payee.
+	
 	def self.getAllByAccountIdPayee(accID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions?type=payee&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
@@ -52,10 +55,10 @@ class Transaction
 		return data
 	end
 
-	#==getOneByAccountIdTransactionId
-	# Get a specific transaction from a specific account.
-	#Parameters: AccountID, TransactionId
-	# Returns a hash with the specified transaction
+	#== getOneByAccountIdTransactionId
+		# Get a specific transaction from a specific account.
+		# Parameters: AccountID, TransactionId
+		# Returns a hash with the specified transaction
 	
 	def self.getOneByAccountIdTransactionId(accID, tranID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions/#{tranID}?key=#{self.apiKey}"
@@ -66,11 +69,11 @@ class Transaction
 
 	# *** POST ***
 
-	# Create a new transaction between 2 accounts
-	#==createTransaction
-	#Creates a new transaction.
-	#Parameters: toAccountId, hashWithTransacionData
-	#Returns http response code. 
+	#==	createTransaction
+		# Create a new transaction between 2 accounts
+		# Parameters: toAccountId, hashWithTransacionData
+		# Returns http response code. 
+	
 	def self.createTransaction(toAcc, transaction)
 		transactionToCreate = transaction.to_json
 		url = "#{self.urlWithEntity}/#{toAcc}/transactions?key=#{self.apiKey}"
@@ -85,13 +88,14 @@ class Transaction
 
 	# *** DELETE ***
 
-	#==deleteTransaction
-	#Deletes a specified transaction from a specified account.
-	#Parameters: AccountID, TransactionID
-	#Returns http response code.
-	#=Note:
-	#This does not actually delete the transaction from the database, it only sets it's
-	#status to 'cancelled'
+	#== deleteTransaction
+		# Deletes a specified transaction from a specified account.
+		# Parameters: AccountID, TransactionID
+		# Returns http response code.
+		#= Note:
+			# This does not actually delete the transaction from the database, it only sets it's
+			# status to 'cancelled'
+	
 	def self.deleteTransaction(accID, transID)
 		url = "#{self.urlWithEntity}/#{accID}/transactions/#{transID}?key=#{self.apiKey}"
 		uri = URI.parse(url)

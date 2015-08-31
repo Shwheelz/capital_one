@@ -10,16 +10,16 @@ describe Deposit do
   end
 
   before(:each) do
-    Config.apiKey = "3eab5d0a550c080eab8b72ccbcbde8f8"
+    Config.apiKey = "d481ae7211ed5a78cb18855ca7d40e4f"
   end
 
   describe 'Method' do
     it 'should get the correct base url' do
-      expect(Deposit.url).to eq("http://api.reimaginebanking.com:80")
+      expect(Deposit.url).to eq("http://api.nessiebanking.com:80")
     end
 
     it 'should get the correct base url with entity' do
-      expect(Deposit.urlWithEntity).to eq("http://api.reimaginebanking.com:80/accounts")
+      expect(Deposit.urlWithEntity).to eq("http://api.nessiebanking.com:80/accounts")
     end   
 
     it 'should have an API key' do

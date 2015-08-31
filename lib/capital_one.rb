@@ -12,7 +12,7 @@ module Config
     attr_accessor :apiKey
 
     def baseUrl
-      @baseUrl = 'http://api.reimaginebanking.com:80'
+      @baseUrl = 'http://api.nessiebanking.com:80'
     end
   end
 end
@@ -26,9 +26,11 @@ require 'capital_one/atm'
 require 'capital_one/bill'
 require 'capital_one/branch'
 require 'capital_one/customer'
+require 'capital_one/deposit'
+require 'capital_one/merchant'
 require 'capital_one/transaction'
 require 'capital_one/withdrawal'
-require 'capital_one/deposit'
+
  
 =begin 
 

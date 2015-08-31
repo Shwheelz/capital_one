@@ -17,9 +17,11 @@ class Customer
 	end
 
 	# *** GET ***
-	#==getAll
-	#Gets all customers the API key has acccess to.
-	#Returns an array of hashes.
+
+	#== getAll
+		# Gets all customers the API key has acccess to.
+		# Returns an array of hashes.
+	
 	def self.getAll
 		url = "#{self.urlWithEntity}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
@@ -27,20 +29,22 @@ class Customer
 		return data
 	end
 
-	#==getOne
-	#Gets the specified customer's information.
-	#Parameters
-	#tested - Returns a hash.
+	#== getOne
+		# Gets the specified customer's information.
+		# Parameters
+		# tested - Returns a hash.
+	
 	def self.getOne(custId)
 		url = "#{self.urlWithEntity}/#{custId}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
 
-	#==getOneByAccountId
-	#Get the customer for the given account.
-	#Parameters: AccountId
-	#Returns a hash with the specified customer data.
+	#== getOneByAccountId
+		# Get the customer for the given account.
+		# Parameters: AccountId
+		# Returns a hash with the specified customer data.
+	
 	def self.getOneByAccountId(accID)
 		url = "#{self.urlWithAcctEntity}/#{accID}/customer?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
@@ -49,20 +53,22 @@ class Customer
 
 
 	# *** PUT ***
-	#==updateCustomer
-	#Updates a customer by id with given json data. 
-	#Parameters: CustomerId, CustomerJson.
-	#Json is as follows: 
-		# 	{
-		#   "address": {
-		#     "street_number": "",
-		#     "street_name": "",
-		#     "city": "",
-		#     "state": "",
-		#     "zip": ""
-		#   }
-		# }
-	#Returns http response code. 
+	
+	#== updateCustomer
+		# Updates a customer by id with given json data. 
+		# Parameters: CustomerId, CustomerJson.
+		# Json is as follows: 
+			# 	{
+			#   "address": {
+			#     "street_number": "",
+			#     "street_name": "",
+			#     "city": "",
+			#     "state": "",
+			#     "zip": ""
+			#   }
+			# }
+		# Returns http response code. 
+	
 	def self.updateCustomer(custID, customer)
 		customerToUpdate = customer.to_json
 		url = "#{self.urlWithEntity}/#{custID}?key=#{self.apiKey}"
@@ -73,8 +79,6 @@ class Customer
 		request.body = customerToUpdate
 		response = http.request(request)
 		return JSON.parse(response.body)
-	end
-
-	# 
+	end 
 
 end
