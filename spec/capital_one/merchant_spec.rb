@@ -38,8 +38,8 @@ describe Merchant do
       VCR.use_cassette 'merchant/merchantsByLocation' do
         merchants = Merchant.getAllByLocation(38.9047, -77.0164, 10)
         expect(merchants.class).to be(Array)
-        # expect(merchants.length).to be > 0
-        # expect(merchants[0].class).to be(Hash)
+        expect(merchants.length).to be > 0
+        expect(merchants[0].class).to be(Hash)
       end
     end
 
@@ -48,7 +48,7 @@ describe Merchant do
         merchant = Merchant.getOne(Merchant.getAll[0]["_id"])
         expect(merchant.class).to be(Hash)
         expect(merchant).to include("_id")
-        expect(merchant).to include("_name")
+        expect(merchant).to include("name")
       end
     end
 
@@ -59,7 +59,7 @@ describe Merchant do
     it 'should create a new merchant' do
       VCR.use_cassette 'merchant/createMerchant' do
         merchID = Merchant.getAll[0]["_id"]
-        response = Merchant.createMerchant(merchID, $merchantPost)
+        response = Merchant.createMerchant($merchantPost)
         expect(response.class).to be(Hash)
         expect(response).to include("message")
         expect(response).to include("code")

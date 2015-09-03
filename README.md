@@ -1,6 +1,6 @@
 # capital_one
 
-The capital_one gem interfaces Ruby developers with Capital One's Hackathon API.  Simply require 'capital_one' and gain access to the API methods.  Documentation for Capital One's API can be found at [api.reimaginebanking.com/documentation](http://api.reimaginebanking.com/documentation).  See lib/capital_one.rb for method definitions in Ruby.
+The capital_one gem interfaces Ruby developers with Capital One's Hackathon API.  Simply require 'capital_one' and gain access to the API methods.  Documentation for Capital One's API can be found at [api.nessiebanking.com/documentation](http://api.nessiebanking.com/documentation).  See lib/capital_one.rb for method definitions in Ruby.  Please note that this gem in under construction as the Nessie team recently changed their API endpoint.  I expect to have this gem fully updated and 100% functional by the end of September (likely much sooner).  Thank you for your patience.
 
 ## Installation
 
@@ -26,7 +26,7 @@ Or install it yourself as:
 	require 'capital_one'
 	````
 
-2. Go to [api.reimaginebanking.com](http://api.reimaginebanking.com/documentation) and sign up for an API Key with your Github account.  Read the documentation on the API and go to your Profile page and retrieve your API key.  Once you retrive your key you must specify the key in your project to gain access to the API.  
+2. Go to [api.nessiebanking.com](http://api.nessiebanking.com/documentation) and sign up for an API Key with your Github account.  Read the documentation on the API and go to your Profile page and retrieve your API key.  Once you retrive your key you must specify the key in your project to gain access to the API.  
 
 	````ruby
 	Config.apiKey = "YOUR_API_KEY"

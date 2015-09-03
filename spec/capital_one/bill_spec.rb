@@ -53,14 +53,6 @@ describe Bill do
       end
     end
 
-    it 'should get one Bills by customer id' do
-      VCR.use_cassette 'bill/billByCustomerId' do
-        bill = Bill.getOneByCustomerIdBillId($customerId, $billId)
-        expect(bill.class).to be(Hash)
-        expect(bill).to include("status")
-      end
-    end
-
     it 'should get all Bills by account id' do
       VCR.use_cassette 'bill/billsByAccountId' do
         bills = Bill.getAllByAccountId($accountId)
@@ -70,10 +62,11 @@ describe Bill do
       end
     end
 
-    it 'should get one Bills by account id' do
-      VCR.use_cassette 'bill/billByAccountId' do
-        bill = Bill.getOneByAccountIdBillId($accountId, $billId)
+    it 'should get one Bill' do
+      VCR.use_cassette 'bill/bill' do
+        bill = Bill.getOne($billId)
         expect(bill.class).to be(Hash)
+        expect(bill).to include("_id")
         expect(bill).to include("status")
       end
     end
@@ -82,7 +75,7 @@ describe Bill do
   describe 'PUT' do
     it 'should update a Bill' do
       VCR.use_cassette 'bill/updateBill' do
-        response = Bill.updateBill($accountId, $billId, $billPost)
+        response = Bill.updateBill($billId, $billPost)
         expect(response.class).to be(Hash)
         expect(response).to include("message")
         expect(response).to include("code")
@@ -101,11 +94,10 @@ describe Bill do
     end
   end
 
-
   describe 'DELETE' do
     it 'should delete a Bill' do
       VCR.use_cassette 'bill/deleteBill' do
-        response = Bill.deleteBill($accountId, $billId)
+        response = Bill.deleteBill($billId)
         expect(response.class).to be(Net::HTTPNoContent)
         expect(response.code).to eq("204")
       end

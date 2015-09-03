@@ -5,7 +5,7 @@ describe Account do
   before(:all) do
     $accountPost = Hash.new
     $accountPost["type"] = "Credit Card"
-    $accountPost["nickname"] = "test1"
+    $accountPost["nickname"] = "testing"
     $accountPost["rewards"] = 100
     $accountPost["balance"] = 100
 
@@ -13,12 +13,10 @@ describe Account do
     $accountPut["nickname"] = "test1"
 
     $accountId = "";
-
     Config.apiKey = "d481ae7211ed5a78cb18855ca7d40e4f"
   end
 
   describe 'Method' do
-
     it 'should get the correct base url' do
       expect(Account.url).to eq("http://api.nessiebanking.com:80")
     end
@@ -30,7 +28,6 @@ describe Account do
     it 'should have an API key' do
       expect(Account.apiKey.class).to be(String) # passes if actual == expected
     end
-
   end
 
   describe 'GET' do
@@ -121,6 +118,8 @@ describe Account do
   describe 'DELETE' do
     it 'should delete an account' do
       VCR.use_cassette 'account/deleteAccount' do
+        custID = Customer.getAll[0]["_id"]
+        $accountId = Account.getAllByCustomerId(custID).last["_id"]
         response = Account.deleteAccount($accountId)
         expect(response.class).to be(Net::HTTPNoContent)
         expect(response.code).to eq("204")

@@ -8,6 +8,10 @@ class Bill
 		return Config.baseUrl + "/customers"
 	end
 
+	def self.urlWithEntity
+		return Config.baseUrl + "/bills"
+	end
+
 	def self.url
 		return Config.baseUrl
 	end
@@ -18,46 +22,20 @@ class Bill
 
 	# *** GET ***
 
-	#== getAllByCustomerId
-		# Get all bills for a specific customer
-		# Parameters: customerId
-		# Returns the customer as a hash array.
-	
+	def self.getAllByAccountId(accountId)
+		url = "#{self.accountBaseUrl}/#{accountId}/bills?key=#{self.apiKey}"
+		response = Net::HTTP.get_response(URI.parse(url))
+		return JSON.parse(response.body)
+	end
+
 	def self.getAllByCustomerId(customerId)
 		url = "#{self.customerBaseUrl}/#{customerId}/bills?key=#{self.apiKey}"
 		response = Net::HTTP.get_response(URI.parse(url))
 		return JSON.parse(response.body)
 	end
 
-	#== getOneByCustomerIdBillId
-		# Get a specific bill from a specific customer.
-		# Parameters: customerId, BillId
-		# Returns the specified bill as a hash array
-	
-	def self.getOneByCustomerIdBillId(customerId, billId)
-		url = "#{self.customerBaseUrl}/#{customerId}/bills/#{billId}?key=#{self.apiKey}"
-		resp = Net::HTTP.get_response(URI.parse(url))
-		data = JSON.parse(resp.body)
-	end
-
-	#== getAllByAccountId
-		# Get all bills for a specific account
-		# Parameters: accountId
-		# Returns an array of hashes containing the bills. 
-	
-	def self.getAllByAccountId(accountId)
-		url = "#{self.accountBaseUrl}/#{accountId}/bills?key=#{self.apiKey}"
-		response = Net::HTTP.get_response(URI.parse(url))
-		return JSON.parse(response.body)
-	end
-	
-	#==getOneByAccountIdBillId
-		# Get a specific bill from a specific account
-		# Parameters: AccountId, BillId
-		# Returns a hash array with the bill. 
-	
-	def self.getOneByAccountIdBillId(accountId, billId)
-		url ="#{self.accountBaseUrl}/#{accountId}/bills/#{billId}?key=#{self.apiKey}"
+	def self.getOne(id)
+		url = "#{self.urlWithEntity}/#{id}?key=#{self.apiKey}"
 		response = Net::HTTP.get_response(URI.parse(url))
 		return JSON.parse(response.body)
 	end
@@ -78,9 +56,9 @@ class Bill
 			# }
 		# Returns http response code. 
 
-	def self.updateBill(accountId, billId, bill)
+	def self.updateBill(billId, bill)
 		billToUpdate = bill.to_json
-		url = "#{self.accountBaseUrl}/#{accountId}/bills/#{billId}?key=#{self.apiKey}"
+		url = "#{self.urlWithEntity}/#{billId}?key=#{self.apiKey}"
 		uri = URI.parse(url)
 		http = Net::HTTP.new(uri.host, uri.port)
 		key = "?key=#{self.apiKey}"
@@ -116,14 +94,9 @@ class Bill
 
 
 	# *** DELETE ***
-
-	#== deleteBill
-		# delete a bill by id from a given account.
-		# Parameters: Accountid, billid.
-		# Returns http response code. 
-		
-	def self.deleteBill(accountId, billId)
-		url = "#{self.accountBaseUrl}/#{accountId}/bills/#{billId}?key=#{self.apiKey}"
+	
+	def self.deleteBill(billId)
+		url = "#{self.urlWithEntity}/#{billId}?key=#{self.apiKey}"
 		uri = URI.parse(url)
 		http = Net::HTTP.new(uri.host, uri.port)
 		key="?key=#{self.apiKey}"

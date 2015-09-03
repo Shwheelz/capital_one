@@ -28,7 +28,8 @@ require 'capital_one/branch'
 require 'capital_one/customer'
 require 'capital_one/deposit'
 require 'capital_one/merchant'
-require 'capital_one/transaction'
+require 'capital_one/purchase'
+require 'capital_one/transfer'
 require 'capital_one/withdrawal'
 
  
