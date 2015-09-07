@@ -13,18 +13,31 @@ class Transfer
 	end
 
 	# *** GET ***
+	#= getAll
+		# Returns an array of hashes getting all the transfers for an account.
+		# Each index in the array is the hash of an individual transfer.
 	def self.getAll(accId)
 		url = "#{self.urlWithEntity}/#{accId}/transfers?&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
 
+	#== getAllByType
+		# Gets all transfers of a given type and account.
+		#= Parameters:
+		# Accepts a string of the transfer type. 2 possbilities: payer or payee
+		# Returns an array of hashes with the transfers.
 	def self.getAllByType(accId, type)
 		url = "#{self.urlWithEntity}/#{accId}/transfers?type=#{type}&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
 
+	#== getOne
+		# Returns the transfer specified by its transfer ID.
+		#= Parameters:
+		# Accepts a string of the transfer ID. 
+		# Returns a hash with the transfer info.
 	def self.getOne(id)
 		url = "#{self.url}/transfers/#{id}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
@@ -32,6 +45,10 @@ class Transfer
 	end
 
 	# *** POST ***
+	#== createAccount
+		# Creates a new transfer
+		# Parameters: AccountID, TransferHash
+		# Returns the http response code. 
 	def self.createTransfer(accId, transfer)
 		transferToCreate = transfer.to_json
 		url = "#{self.urlWithEntity}/#{accId}/transfers?key=#{self.apiKey}"
@@ -44,6 +61,10 @@ class Transfer
 	end
 
 	# *** PUT ***
+	#==updateAccount
+		# Updates a transfer's info.
+		# Parameters: TransferId, TransferHash
+		# Returns the http response code.
 	def self.updateTransfer(id, transfer)
 		transferToUpdate = transfer.to_json
 		url = "#{self.url}/transfers/#{id}?key=#{self.apiKey}"
@@ -57,6 +78,10 @@ class Transfer
 	end
 
 	# *** DELETE ***
+	#== deleteAccount
+		# delete a given transfer by TransferId.
+		# Parameters: TransferId.
+		# Returns the http response code. 
 	def self.deleteTransfer(id)
 		url = "#{self.url}/transfers/#{id}?key=#{self.apiKey}"
 		uri = URI.parse(url)

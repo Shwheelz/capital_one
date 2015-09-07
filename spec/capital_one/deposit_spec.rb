@@ -7,6 +7,9 @@ describe Deposit do
       $depositPost["medium"] = "balance"
       $depositPost["amount"] = 100
       $depositPost["description"] = "TEST DEPOSIT"
+
+      $depositPut = Hash.new
+      $depositPut["description"] = "Updated test desc"
   end
 
   before(:each) do
@@ -57,6 +60,19 @@ describe Deposit do
           expect(deposit.class).to eq(Hash)
           expect(deposit).to include("message")
           expect(deposit).to include("code")
+        end
+      end
+    end
+
+    describe 'PUT' do
+      it 'should update an existing deposit' do
+        VCR.use_cassette 'deposit/updateDeposit' do
+          accountID = Account.getAll[0]["_id"]
+          depositID = Deposit.getAllByAccountId(accountID)
+          response = Deposit.updateDeposit(depositID, $depositPut)
+          expect(response.class).to be(Hash)
+          expect(response).to include("message")
+          expect(response).to include("code")
         end
       end
     end

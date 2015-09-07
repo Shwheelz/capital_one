@@ -10,6 +10,9 @@ describe Customer do
   	$customerPost["address"]["city"] = "Tysons Corner"
   	$customerPost["address"]["state"] = "Virginia"
   	$customerPost["address"]["zip"] = "22102"
+
+  	$customerPut = Hash.new
+  	$customerPut = ["address"]["street_name"] = "New test street"
 	end
 
 	before(:each) do
@@ -65,11 +68,22 @@ describe Customer do
 		end
 	end 
 
+	describe 'POST' do
+		it 'should create a new customer' do
+			VCR.use_cassette 'customer/newCustomer' do
+				response = Customer.createCustomer($customerPost)
+				expect(response.class).to be(Hash)
+				expect(response).to include("message")
+				expect(response).to include("code")
+			end
+		end
+	end
+
 	describe 'PUT' do
 		it 'Update customer information' do
 			VCR.use_cassette 'customer/updateCustomer' do
 				putCustID = Customer.getAll[0]["_id"]
-				response = Customer.updateCustomer(putCustID, $customerPost)
+				response = Customer.updateCustomer(putCustID, $customerPut)
 				expect(response.class).to be(Hash)
 				expect(response).to include("message")
 				expect(response).to include("code")

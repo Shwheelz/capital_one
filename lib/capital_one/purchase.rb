@@ -13,11 +13,22 @@ class Purchase
 	end
 
 	# *** GET ***
+
+	#==getAll
+		# Returns all purchases for a given account
+		#= Parameters: AccountId
+		# Returns an array of hashes
+
 	def self.getAll(accId)
 		url = "#{self.urlWithEntity}/#{accId}/purchases?&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
+
+	#==getOne
+		# Returns a purchase for a given ID
+		#= Parameters: PurchaseId
+		# Returns a hash
 
 	def self.getOne(id)
 		url = "#{self.url}/purchases/#{id}?&key=#{self.apiKey}"
@@ -26,6 +37,19 @@ class Purchase
 	end
 
 	# *** POST ***
+	#==createPurchase
+		# Creates a new purchase for a given account
+		#= Parameters: AccountId, PurchaseHash
+		# PurchaseHash is formatted as follows:
+		# {
+		# 	"merchant_id": "string",
+		# 	"medium": "balance",
+		# 	"purchase_date": "string",
+		# 	"amount": 0,
+		# 	"status": "pending",
+		# 	"description": "string"
+		# }
+		# Returns http response code
 	def self.createPurchase(accId, purchase)
 		purchaseToCreate = purchase.to_json
 		url = "#{self.urlWithEntity}/#{accId}/purchases?&key=#{self.apiKey}"
@@ -38,6 +62,21 @@ class Purchase
 	end
 
 	# *** PUT ***
+
+	#==updatePurchase
+		# Updates an existing purchase
+		#= Parameters: PurchaseId, PurchaseHash
+		# PurchaseHash is formatted as follows:
+		# {
+		# 	"merchant_id": "string",
+		# 	"medium": "balance",
+		# 	"purchase_date": "string",
+		# 	"amount": 0,
+		# 	"status": "pending",
+		# 	"description": "string"
+		# }
+		# Returns http response code
+
 	def self.updatePurchase(id, purchase)
 		purchaseToUpdate = purchase.to_json
 		url = "#{self.url}/purchases/#{id}?key=#{self.apiKey}"
@@ -51,6 +90,12 @@ class Purchase
 	end
 
 	# *** DELETE ***
+
+	#==deletePurchase
+		# Deletes a purchase for a given ID
+		#= Parameters: PurchaseId
+		# Returns http response code
+		
 	def self.deletePurchase(id)
 		url = "#{self.url}/purchases/#{id}?&key=#{self.apiKey}"
 		uri = URI.parse(url)

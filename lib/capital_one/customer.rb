@@ -31,8 +31,8 @@ class Customer
 
 	#== getOne
 		# Gets the specified customer's information.
-		# Parameters
-		# tested - Returns a hash.
+		#= Parameters: CustomerId
+		# Returns a Hash with the customer data
 	
 	def self.getOne(custId)
 		url = "#{self.urlWithEntity}/#{custId}?key=#{self.apiKey}"
@@ -42,7 +42,7 @@ class Customer
 
 	#== getOneByAccountId
 		# Get the customer for the given account.
-		# Parameters: AccountId
+		#= Parameters: AccountId
 		# Returns a hash with the specified customer data.
 	
 	def self.getOneByAccountId(accID)
@@ -51,12 +51,41 @@ class Customer
 		data = JSON.parse(resp.body)
 	end
 
+	# *** POST ***
+
+	#==createCustomer
+		# Creates a new customer with the given json data
+		#= Parameters: CustomerHash
+		# JSON is as follows: 
+			# {
+			# "first_name": "string",
+			# "last_name": "string",
+			# "address": {
+			# 	  "street_number": "string",
+			#     "street_name": "",
+			#     "city": "",
+			#     "state": "",
+			#     "zip": ""		
+			#   }
+			# }
+		# Returns http response code
+		
+	def self.createCustomer(customer)
+		url = "#{self.urlWithEntity}?key=#{self.apiKey}"
+		uri = URI.parse(url)
+		http = Net::HTTP.new(uri.host, uri.port)
+		request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' =>'application/json'})
+		request.body = customer.to_json
+		response = http.request(request)
+		return JSON.parse(response.body)
+	end
+
 
 	# *** PUT ***
 	
 	#== updateCustomer
 		# Updates a customer by id with given json data. 
-		# Parameters: CustomerId, CustomerJson.
+		#= Parameters: CustomerId, CustomerHash.
 		# Json is as follows: 
 			# 	{
 			#   "address": {

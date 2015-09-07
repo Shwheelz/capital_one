@@ -25,6 +25,8 @@ class Atm
 
 	#==getAllByLocation
 		# Get all ATMs withing a certain radius of a geocoordinate
+		#= Paremeters: latitude, longitude, radius
+		# Accepts lat, lng, and rad as floats
 		# Returns an array of hashes within the radius of the geocoordinate.  Each hash has an ATM.
 	
 	def self.getAllByLocation(lat, lng, rad)
@@ -34,7 +36,8 @@ class Atm
 	end
 	
 	#==getOne
-		# Parameters: ATMid
+		# Gets one ATM for a given ID
+		# Parameters: AtmId
 		# Returns the ATM that has the given ID. 
 	
 	def self.getOne(id)

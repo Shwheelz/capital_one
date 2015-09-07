@@ -22,17 +22,32 @@ class Bill
 
 	# *** GET ***
 
+	#==getAllByAccountId
+		# Get all bills for a specific account
+		# Parameters: accountId
+		# Returns an array of hashes containing the bills. 
+
 	def self.getAllByAccountId(accountId)
 		url = "#{self.accountBaseUrl}/#{accountId}/bills?key=#{self.apiKey}"
 		response = Net::HTTP.get_response(URI.parse(url))
 		return JSON.parse(response.body)
 	end
 
+	#==getAllByCustomerId
+		# Get all bills for a specific customer
+		# Parameters: customerId
+		# Returns the customer as a hash array.
+
 	def self.getAllByCustomerId(customerId)
 		url = "#{self.customerBaseUrl}/#{customerId}/bills?key=#{self.apiKey}"
 		response = Net::HTTP.get_response(URI.parse(url))
 		return JSON.parse(response.body)
 	end
+
+	#==getOne
+		# Gets one bill for a specific billId
+		# Parameters: billId
+		# Returns a hash with the bill data
 
 	def self.getOne(id)
 		url = "#{self.urlWithEntity}/#{id}?key=#{self.apiKey}"
@@ -43,8 +58,8 @@ class Bill
 	# *** POST ***
 
 	#==updateBill
-		# Updates an account's nickname by id with given json data. 
-		# Parameters: AccountId, BillId, BillJson
+		# Updates an account's information by id with given json data. 
+		# Parameters: BillId, BillJson
 		# Json format is as follows: 
 			# 	{
 			#   "status": "",
@@ -68,7 +83,7 @@ class Bill
 		return JSON.parse(response.body)
 	end
 
-	#== createBill
+	#==createBill
 		# create a new bill on an associated account ID
 		# Parameters: AccountId, BillJson
 		# Json is as follows:
@@ -94,7 +109,10 @@ class Bill
 
 
 	# *** DELETE ***
-	
+	#==deleteBill
+		# delete a bill by its id
+		# Parameters: BillId
+		# Returns http response code
 	def self.deleteBill(billId)
 		url = "#{self.urlWithEntity}/#{billId}?key=#{self.apiKey}"
 		uri = URI.parse(url)

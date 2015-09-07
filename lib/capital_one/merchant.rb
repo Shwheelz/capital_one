@@ -13,6 +13,9 @@ class Merchant
 	end
 
 	# *** GET ***
+
+	#==getAll
+		# Returns all Merchants as an array of hashes
 	def self.getAll
 		url = "#{self.urlWithEntity}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
@@ -20,12 +23,23 @@ class Merchant
 		return data
 	end
 
+	#==getAllByLocation
+		# Returns all Merchants within a given location range
+		#= Parameters: Latitude, Longitude, Radius
+		# Accepts lat, lng, and rad as floats
+		# Returns an array of hashes
+
 	def self.getAllByLocation(lat, lng, rad)
 		url = "#{self.urlWithEntity}?lat=#{lat}&lng=#{lng}&rad=#{rad}&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
    		data = JSON.parse(resp.body)
     	return data
 	end
+
+	#==getOne
+		# Returns a single merchant for a given ID
+		#= Parameters: MerchantId
+		# Returns a hash
 
 	def self.getOne(merchId)
 		url = "#{self.urlWithEntity}/#{merchId}?key=#{self.apiKey}"
@@ -35,6 +49,27 @@ class Merchant
 	end
 
 	# *** PUT ***
+
+	#==updateMerchant
+		# Updates an existing Merchant
+		#= Parameters: MerchantId, MerchantHash
+		# MerchantHash format is as follows: 
+		# 	{
+		# 		"name": "string",
+		# 		"address": {
+		# 			"street_number": "string",
+		# 			"street_name": "string",
+		# 			"city": "string",
+		# 			"state": "string",
+		# 			"zip": "string",
+		#		},
+		# 		"geocode": {
+		# 			"lat": 0,
+		# 			"lng": 0,
+		# 		}
+		# 	}
+		# Returns http response code
+
 	def self.updateMerchant(merchId, merchant)
 		merchantToUpdate = merchant.to_json
 		url = "#{self.urlWithEntity}/#{merchId}?key=#{self.apiKey}"
@@ -48,6 +83,27 @@ class Merchant
 	end
 
 	# *** POST ***
+
+	#==createMerchant
+		# Creates a new Merchant
+		#= Parameters: MerchantHash
+		# MerchantHash format is as follows: 
+		# 	{
+		# 		"name": "string",
+		# 		"address": {
+		# 			"street_number": "string",
+		# 			"street_name": "string",
+		# 			"city": "string",
+		# 			"state": "string",
+		# 			"zip": "string",
+		#		},
+		# 		"geocode": {
+		# 			"lat": 0,
+		# 			"lng": 0,
+		# 		}
+		# 	}
+		# Returns http response code
+		
 	def self.createMerchant(merchant)
 		merchantToCreate = merchant.to_json
 		url = "#{self.urlWithEntity}/?key=#{self.apiKey}"

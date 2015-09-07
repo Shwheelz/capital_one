@@ -7,6 +7,9 @@ describe Withdrawal do
       $withdrawalPost["medium"] = "balance"
       $withdrawalPost["amount"] = 100
       $withdrawalPost["description"] = "TEST WITHDRAWAL"
+
+      $withdrawalPut = Hash.new
+      $withdrawalPut["description"] = "TEST UPDATE"
   end
 
   before(:each) do
@@ -47,6 +50,31 @@ describe Withdrawal do
           $globalTransID = withdrawal["_id"]
           expect(withdrawal.class).to eq(Hash)
           expect(withdrawal.length).to be > 0
+        end
+      end
+    end
+
+    describe 'POST' do
+      it 'should create a new withdrawal' do
+        VCR.use_cassette 'withdrawal/createWithdrawal' do
+          accID = Account.getAll[0]["_id"]
+          withdrawal = Withdrawal.createWithdrawal(accID, $withdrawalPost)
+          expect(withdrawal.class).to eq(Hash)
+          expect(withdrawal).to include("message")
+          expect(withdrawal).to include("code")
+        end
+      end
+    end 
+
+    describe 'PUT' do
+      it 'should update a withdrawal' do 
+        VCR.use_cassette 'withdrawal/updateWithdrawal' do
+          accID = Account.getAll[0]["_id"]
+          withdrawalID = Withdrawal.getAll(accID)[0]["_id"]
+          response = Withdrawal.updateWithdrawal(withdrawalID, $withdrawalPut)
+          expect(response.class).to eq(Hash)
+          expect(response).to include("message")
+          expect(response).to include("code")
         end
       end
     end

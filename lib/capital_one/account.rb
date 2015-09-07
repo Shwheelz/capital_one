@@ -25,7 +25,7 @@ class Account
 
 	#== getAllByType
 		# Gets all accounts of a given type.
-		#= Parameters:
+		#= Parameters: type
 		# Accepts a string of the account type. 3 possbilities: Credit Card, Savings, Checking.
 		# Returns an array of hashes with the accounts.
 
@@ -37,8 +37,8 @@ class Account
 
 
 	#== getOne
-		# Returns the account specified by it's account ID.
-		#= Parameters:
+		# Returns the account specified by its account ID.
+		#= Parameters: AccountId
 		# Accepts a string of the account ID. 
 		# Returns a hash with the account info.
 	def self.getOne(id)
@@ -48,8 +48,9 @@ class Account
 	end
 	
 	#== getAllByCustomerId
-		# Returns all accounts associated with a given customer ID
-		# as an array of hashes. 
+		# Returns all accounts associated with a given customer ID as an array of hashes. 
+		#= Parameters: CustomerId
+		# Accepts a string of the customer ID
 
 	def self.getAllByCustomerId(customerId)
 		url = "#{self.url}/customers/#{customerId}/accounts?key=#{self.apiKey}"
@@ -62,7 +63,7 @@ class Account
 	
 	#==updateAccount
 		# Updates an account's nickname.
-		# Parameters: AccountID, AccountHash
+		#= Parameters: AccountID, AccountHash
 		# Returns the http response code.
 	
 	def self.updateAccount(accountId, account)
