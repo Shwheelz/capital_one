@@ -10,7 +10,7 @@ describe Withdrawal do
   end
 
   before(:each) do
-    Config.apiKey = "d481ae7211ed5a78cb18855ca7d40e4f"
+    Config.apiKey = "330681dbf73436832cafac4f11622452"
   end
 
   describe 'Method' do
@@ -43,7 +43,7 @@ describe Withdrawal do
           withdrawal = Withdrawal.createWithdrawal(accID, $withdrawalPost)
           expect(withdrawal.class).to eq(Hash)
           withdrawalID = Withdrawal.getAllByAccountId(accID)[0]["_id"]
-          withdrawal = Withdrawal.getOneByAccountIdWithdrawalId(accID, withdrawalID)
+          withdrawal = Withdrawal.getOne(withdrawalID)
           $globalTransID = withdrawal["_id"]
           expect(withdrawal.class).to eq(Hash)
           expect(withdrawal.length).to be > 0
@@ -58,7 +58,7 @@ describe Withdrawal do
           withdrawal = Withdrawal.createWithdrawal(accID, $withdrawalPost)
           expect(withdrawal.class).to eq(Hash)
           withdrawalID = Withdrawal.getAllByAccountId(accID)[0]["_id"]
-          withdrawal = Withdrawal.deleteWithdrawal(accID, withdrawalID)
+          withdrawal = Withdrawal.deleteWithdrawal(withdrawalID)
           expect(withdrawal.class).to be(Net::HTTPNoContent)
           expect(withdrawal.code).to eq("204")         
         end

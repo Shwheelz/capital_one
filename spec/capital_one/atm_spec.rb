@@ -3,7 +3,7 @@ require 'capital_one'
 describe Atm do
 
   before(:all) do
-    Config.apiKey = "d481ae7211ed5a78cb18855ca7d40e4f"
+    Config.apiKey = "330681dbf73436832cafac4f11622452"
   end
 
   describe 'Method' do

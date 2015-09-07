@@ -14,13 +14,13 @@ class Transfer
 
 	# *** GET ***
 	def self.getAll(accId)
-		url = "#{self.urlWithEntity}/#{accID}/transfers?&key=#{self.apiKey}"
+		url = "#{self.urlWithEntity}/#{accId}/transfers?&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
 
 	def self.getAllByType(accId, type)
-		url = "#{self.urlWithEntity}/#{accID}/transfers?type=#{type}&key=#{self.apiKey}"
+		url = "#{self.urlWithEntity}/#{accId}/transfers?type=#{type}&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end

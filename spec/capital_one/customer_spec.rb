@@ -13,7 +13,7 @@ describe Customer do
 	end
 
 	before(:each) do
-		Config.apiKey = "d481ae7211ed5a78cb18855ca7d40e4f"
+		Config.apiKey = "330681dbf73436832cafac4f11622452"
 	end
 
 	describe 'Method' do
@@ -50,7 +50,6 @@ describe Customer do
 				customer = Customer.getOne(putCustID)
 				expect(customer.class).to be(Hash)
 				expect(customer).to include("_id")
-				expect(customer).to include("account_ids")
 				expect(customer).to include("first_name")
 			end
 		end
@@ -61,9 +60,8 @@ describe Customer do
 				customer = Customer.getOneByAccountId(accountId)
 				expect(customer.class).to be(Hash)
 				expect(customer).to include("_id")
-				expect(customer).to include("account_ids")
 				expect(customer).to include("first_name")
-				end
+			end
 		end
 	end 
 

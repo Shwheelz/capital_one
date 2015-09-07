@@ -4,8 +4,7 @@ describe Purchase do
 
 	before(:all) do
 		$purchasePost = Hash.new
-		$purchasePost["merchant_id"] = ""
-		$purchasePost["purchase_date"] = ""
+		$purchasePost["purchase_date"] = "2015-09-05"
 		$purchasePost["amount"] = 5
 		$purchasePost["status"] = "pending"
 		$purchasePost["description"] = "test purchase"
@@ -13,7 +12,7 @@ describe Purchase do
 		$purchasePut = Hash.new
 		$purchasePut["description"] = "updated test desc"
 
-    Config.apiKey = "d481ae7211ed5a78cb18855ca7d40e4f"
+    Config.apiKey = "330681dbf73436832cafac4f11622452"
 	end
 
 	describe 'Method' do
@@ -32,9 +31,9 @@ describe Purchase do
 
   	describe 'GET' do
   		it 'should get all purchases for an account' do
-  			VCR.use_casette 'purchase/purchases' do
+  			VCR.use_cassette 'purchase/purchases' do
   				accID = Account.getAll()[0]["_id"]
-  				purchases = purchases.getAll(accID)
+  				purchases = Purchase.getAll(accID)
   				expect(purchases.class).to be(Array)
   				expect(purchases.length).to be > 0
   				expect(purchases[0].class).to be(Hash)
@@ -42,9 +41,9 @@ describe Purchase do
   		end
 
   		it 'should get one purchase' do
-  			VCR.use_casette 'purchase/purchase' do
+  			VCR.use_cassette 'purchase/purchase' do
   				accID = Account.getAll()[0]["_id"]
-  				purchase = purchases.getAll(accID)[0]
+  				purchase = Purchase.getAll(accID)[0]
   				expect(purchase.class).to be(Hash)
   				expect(purchase).to include("_id")
   				expect(purchase).to include("type")
@@ -54,34 +53,35 @@ describe Purchase do
 
   	describe 'POST' do
   		it 'should create a new purchase' do
-  			VCR.use_casette 'purchase/createPurchase' do
+  			VCR.use_cassette 'purchase/createPurchase' do
   				accID = Account.getAll()[0]["_id"]
+          $purchasePost["merchant_id"] = Merchant.getAll[0]["_id"]
   				response = Purchase.createPurchase(accID, $purchasePost)
   				expect(response.class).to be(Hash)
-        		expect(response).to include("message")
-        		expect(response).to include("code")
+        	expect(response).to include("message")
+        	expect(response).to include("code")
   			end
   		end
   	end
 
   	describe 'PUT' do
   		it 'should update an existing purchase' do
-  			VCR.use_casette 'purchase/updatePurchase' do
+  			VCR.use_cassette 'purchase/updatePurchase' do
    				accID = Account.getAll()[0]["_id"]
-   				purchaseID = purchases.getAll(accID)[0]["_id"]
-   				resposne = Purchase.updatePurchase(purchaseID, $purchasePut)
+   				purchaseID = Purchase.getAll(accID)[0]["_id"]
+   				response = Purchase.updatePurchase(purchaseID, $purchasePut)
    				expect(response.class).to be(Hash)
-          		expect(response).to include("message")
-          		expect(response).to include("code")
+          expect(response).to include("message")
+          expect(response).to include("code")
   			end
   		end
   	end
 
   	describe 'DELETE' do
   		it 'should delete a purchase' do
-  			VCR.use_casette 'purchase/deletePurchase' do
+  			VCR.use_cassette 'purchase/deletePurchase' do
   				accID = Account.getAll()[0]["_id"]
-   				purchaseID = purchases.getAll(accID)[0]["_id"]
+   				purchaseID = Purchase.getAll(accID)[0]["_id"]
    				response = Purchase.deletePurchase(purchaseID)
    				expect(response.class).to be(Net::HTTPNoContent)
        		expect(response.code).to eq("204")

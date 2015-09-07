@@ -8,12 +8,12 @@ describe Transfer do
 		$transferPost["payee_id"] = ""
 		$transferPost["amount"] = 20
 		$transferPost["status"] = "pending"
-		$transfterPost["description"] = "test transfer"
+		$transferPost["description"] = "test transfer"
 
 		$transferPut = Hash.new
 		$transferPut["description"] = "updated transfer"
 
-		Config.apiKey = 'd481ae7211ed5a78cb18855ca7d40e4f'
+		Config.apiKey = '330681dbf73436832cafac4f11622452'
 	end
 
 	describe 'Method' do
@@ -45,7 +45,7 @@ describe Transfer do
 			VCR.use_cassette 'transfer/transferByType' do
 				accID = Account.getAll()[0]["_id"]
 				type = "p2p"
-				transfers = Transfer.getAll(accID, type)
+				transfers = Transfer.getAllByType(accID, type)
 				expect(transfers.class).to be(Array)
 				expect(transfers.length).to be > 0
 				expect(transfers[0].class).to be(Hash)
@@ -55,7 +55,8 @@ describe Transfer do
 		it 'should get one transfer' do
 			VCR.use_cassette 'transfer/transfer' do
 				accID = Account.getAll()[0]["_id"]
-				transfer = Transfer.getOne(Transfer.getAll(accID)[0])
+				transferID = Transfer.getAll(accID)[0]["_id"]
+				transfer = Transfer.getOne(transferID)
 				expect(transfer.class).to be(Hash)
 				expect(transfer).to include("_id")
 				expect(transfer).to include("type")
@@ -79,12 +80,12 @@ describe Transfer do
 	describe 'PUT' do
 		it 'should update an existing transfer' do
 			VCR.use_cassette 'transfer/updateTransfer' do
-        accID = Account.getAll()[0]["_id"]
-        transferID = transfer = Transfer.getOne(Transfer.getAll(accID)[0]["_id"])
-        response = Transfer.updateTransfer(transferID, $transferPut)
-        expect(response.class).to be(Hash)
-        expect(response).to include("message")
-        expect(response).to include("code")
+		        accID = Account.getAll()[0]["_id"]
+		        transferID = Transfer.getAll(accID)[0]["_id"]
+		        response = Transfer.updateTransfer(transferID, $transferPut)
+		        expect(response.class).to be(Hash)
+		        expect(response).to include("message")
+		        expect(response).to include("code")
 			end
 		end
 	end

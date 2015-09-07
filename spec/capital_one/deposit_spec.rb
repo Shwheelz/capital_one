@@ -10,7 +10,7 @@ describe Deposit do
   end
 
   before(:each) do
-    Config.apiKey = "d481ae7211ed5a78cb18855ca7d40e4f"
+    Config.apiKey = "330681dbf73436832cafac4f11622452"
   end
 
   describe 'Method' do
@@ -28,7 +28,7 @@ describe Deposit do
     end
 
     describe 'GET' do
-      it 'Deposit for an account' do
+      it 'should get all deposits by account id' do
         VCR.use_cassette 'deposit/getDepositByAcctId' do
           accID = Account.getAll[0]["_id"]
           deposit = Deposit.getAllByAccountId(accID)
@@ -37,16 +37,26 @@ describe Deposit do
         end
       end
 
-      it 'Specific deposit for an account AND POST for deposit' do
-        VCR.use_cassette 'deposit/getSpecificDeposit' do
+      it 'should get one deposit' do
+        VCR.use_cassette 'deposit/deposit' do
+          accID = Account.getAll[0]["_id"]
+          depositId = Deposit.getAllByAccountId(accID)[0]["_id"]
+          deposit = Deposit.getOne(depositId)
+          expect(deposit.class).to eq(Hash)
+          expect(deposit).to include("_id")
+          expect(deposit).to include("type")
+        end
+      end
+    end
+
+    describe 'POST' do
+      it 'should create a new deposit' do
+        VCR.use_cassette 'deposit/createDeposit' do
           accID = Account.getAll[0]["_id"]
           deposit = Deposit.createDeposit(accID, $depositPost)
           expect(deposit.class).to eq(Hash)
-          depositID = Deposit.getAllByAccountId(accID)[0]["_id"]
-          deposit = Deposit.getOneByAccountIdDepositId(accID, depositID)
-          $globalTransID = deposit["_id"]
-          expect(deposit.class).to eq(Hash)
-          expect(deposit.length).to be > 0
+          expect(deposit).to include("message")
+          expect(deposit).to include("code")
         end
       end
     end
@@ -58,7 +68,7 @@ describe Deposit do
           deposit = Deposit.createDeposit(accID, $depositPost)
           expect(deposit.class).to eq(Hash)
           depositID = Deposit.getAllByAccountId(accID)[0]["_id"]
-          deposit = Deposit.deleteDeposit(accID, depositID)
+          deposit = Deposit.deleteDeposit(depositID)
           expect(deposit.class).to be(Net::HTTPNoContent)
           expect(deposit.code).to eq("204")         
         end

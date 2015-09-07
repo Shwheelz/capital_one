@@ -10,7 +10,7 @@ describe Bill do
     $billPost["recurring_date"] = 15
     $billPost["payment_amount"] = 100
 
-    Config.apiKey = "d481ae7211ed5a78cb18855ca7d40e4f"
+    Config.apiKey = "330681dbf73436832cafac4f11622452"
     
     $accountId = ""
     VCR.use_cassette 'bill/testCreateBill' do

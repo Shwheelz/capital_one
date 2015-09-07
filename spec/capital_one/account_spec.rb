@@ -10,10 +10,10 @@ describe Account do
     $accountPost["balance"] = 100
 
     $accountPut = Hash.new
-    $accountPut["nickname"] = "test1"
+    $accountPut["nickname"] = "labordaytest"
 
     $accountId = "";
-    Config.apiKey = "d481ae7211ed5a78cb18855ca7d40e4f"
+    Config.apiKey = "330681dbf73436832cafac4f11622452"
   end
 
   describe 'Method' do
@@ -61,21 +61,12 @@ describe Account do
 
     it 'should get all accounts for a customer' do
       VCR.use_cassette 'account/accountsByCustomerId' do
-        customerId = "";
-        customers = Customer.getAll
-        customers.each do |customer|
-          if customer["account_ids"].length > 0 #find a customer with an account
-            customerId = customer["_id"]
-            break
-          end
-        end
-
-        accounts = Account.getAllByCustomerId(customerId)
+        customerID = Customer.getAll[0]["_id"]
+        accounts = Account.getAllByCustomerId(customerID)
         expect(accounts.class).to be(Array)
         expect(accounts[0].class).to be(Hash)
         expect(accounts[0]).to include("_id")
         expect(accounts[0]).to include("nickname")
-        expect(accounts[0]).to include("customer_id" => "#{customerId}")
       end
     end
   end
@@ -83,22 +74,11 @@ describe Account do
   describe 'PUT' do
     it 'should update an existing account' do
       VCR.use_cassette 'account/updateAccount' do
-        # get an account we have permission to update
-        customers = Customer.getAll
-        customers.each do |customer|
-          if customer["account_ids"].length > 0 #find a customer with an account
-            $accountId = customer["account_ids"][0]
-            break
-          end
-        end
-
-        # update the account
-        if $accountId != ""
-          response = Account.updateAccount($accountId, $accountPut)
-          expect(response.class).to be(Hash)
-          expect(response).to include("message")
-          expect(response).to include("code")
-        end
+        accountID = Account.getAll[0]["_id"]
+        response = Account.updateAccount(accountID, $accountPut)
+        expect(response.class).to be(Hash)
+        expect(response).to include("message")
+        expect(response).to include("code")
       end
     end
   end
@@ -119,7 +99,7 @@ describe Account do
     it 'should delete an account' do
       VCR.use_cassette 'account/deleteAccount' do
         custID = Customer.getAll[0]["_id"]
-        $accountId = Account.getAllByCustomerId(custID).last["_id"]
+        $accountId = Account.getAllByCustomerId(custID)[0]["_id"]
         response = Account.deleteAccount($accountId)
         expect(response.class).to be(Net::HTTPNoContent)
         expect(response.code).to eq("204")

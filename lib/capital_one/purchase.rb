@@ -28,8 +28,9 @@ class Purchase
 	# *** POST ***
 	def self.createPurchase(accId, purchase)
 		purchaseToCreate = purchase.to_json
-		url = "#{self.urlWithEntity}/accId/purchases?&key=#{self.apiKey}"
+		url = "#{self.urlWithEntity}/#{accId}/purchases?&key=#{self.apiKey}"
 		uri = URI.parse(url)
+		http = Net::HTTP.new(uri.host, uri.port)
 		request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' =>'application/json'})
 		request.body = purchaseToCreate
 		response = http.request(request)
@@ -39,7 +40,7 @@ class Purchase
 	# *** PUT ***
 	def self.updatePurchase(id, purchase)
 		purchaseToUpdate = purchase.to_json
-		url = "#{self.url}/purchases/#{id}?&key=#{self.apiKey}"
+		url = "#{self.url}/purchases/#{id}?key=#{self.apiKey}"
 		uri = URI.parse(url)
 		http = Net::HTTP.new(uri.host, uri.port)
 		key = "?key=#{self.apiKey}"
@@ -51,7 +52,7 @@ class Purchase
 
 	# *** DELETE ***
 	def self.deletePurchase(id)
-		url = "#{self.url}/purchases/#{id}?&key={#self.apiKey}"
+		url = "#{self.url}/purchases/#{id}?&key=#{self.apiKey}"
 		uri = URI.parse(url)
 		http = Net::HTTP.new(uri.host, uri.port)
 		key="?key=#{self.apiKey}"
