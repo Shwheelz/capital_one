@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Transfer - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link">Object
+  
+</div>
+
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-apiKey">::apiKey</a>
+    
+    <li ><a href="#method-c-createTransfer">::createTransfer</a>
+    
+    <li ><a href="#method-c-deleteTransfer">::deleteTransfer</a>
+    
+    <li ><a href="#method-c-getAll">::getAll</a>
+    
+    <li ><a href="#method-c-getAllByType">::getAllByType</a>
+    
+    <li ><a href="#method-c-getOne">::getOne</a>
+    
+    <li ><a href="#method-c-updateTransfer">::updateTransfer</a>
+    
+    <li ><a href="#method-c-url">::url</a>
+    
+    <li ><a href="#method-c-urlWithEntity">::urlWithEntity</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Transfer">
+  <h1 id="class-Transfer" class="class">
+    class Transfer
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-apiKey" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">apiKey</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="apiKey-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">apiKey</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">apiKey</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-createTransfer" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">createTransfer</span><span
+            class="method-args">(accId, transfer)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <pre>*** POST ***</pre>
+
+<h2 id="method-c-createTransfer-label-createAccount">createAccount<span><a href="#method-c-createTransfer-label-createAccount">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<pre>Creates a new transfer
+Parameters: AccountID, TransferHash
+Returns the http response code.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="createTransfer-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">createTransfer</span>(<span class="ruby-identifier">accId</span>, <span class="ruby-identifier">transfer</span>)
+        <span class="ruby-identifier">transferToCreate</span> = <span class="ruby-identifier">transfer</span>.<span class="ruby-identifier">to_json</span>
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{accId}/transfers?key=#{self.apiKey}&quot;</span>
+        <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
+        <span class="ruby-identifier">http</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>)
+        <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">request_uri</span>, <span class="ruby-identifier">initheader</span> = {<span class="ruby-string">&#39;Content-Type&#39;</span> =<span class="ruby-operator">&gt;</span><span class="ruby-string">&#39;application/json&#39;</span>})
+        <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">transferToCreate</span>
+        <span class="ruby-identifier">response</span> = <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-deleteTransfer" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deleteTransfer</span><span
+            class="method-args">(id)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <pre>*** DELETE ***</pre>
+
+<h2 id="method-c-deleteTransfer-label-deleteAccount">deleteAccount<span><a href="#method-c-deleteTransfer-label-deleteAccount">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<pre>delete a given transfer by TransferId.
+Parameters: TransferId.
+Returns the http response code.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="deleteTransfer-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deleteTransfer</span>(<span class="ruby-identifier">id</span>)
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/transfers/#{id}?key=#{self.apiKey}&quot;</span>
+        <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
+        <span class="ruby-identifier">http</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>)
+        <span class="ruby-identifier">key</span>=<span class="ruby-node">&quot;?key=#{self.apiKey}&quot;</span>
+        <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Delete</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span><span class="ruby-operator">+</span><span class="ruby-identifier">key</span>)
+        <span class="ruby-identifier">response</span> = <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-getAll" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getAll</span><span
+            class="method-args">(accId)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <pre>*** GET ***</pre>
+
+<h1 id="method-c-getAll-label-getAll">getAll<span><a href="#method-c-getAll-label-getAll">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<pre>Returns an array of hashes getting all the transfers for an account.
+Each index in the array is the hash of an individual transfer.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="getAll-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getAll</span>(<span class="ruby-identifier">accId</span>)
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{accId}/transfers?&amp;key=#{self.apiKey}&quot;</span>
+        <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
+        <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-getAllByType" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getAllByType</span><span
+            class="method-args">(accId, type)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <h2 id="method-c-getAllByType-label-getAllByType">getAllByType<span><a href="#method-c-getAllByType-label-getAllByType">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<pre>Gets all transfers of a given type and account.</pre>
+
+<h1 id="method-c-getAllByType-label-Parameters-3A">Parameters:<span><a href="#method-c-getAllByType-label-Parameters-3A">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<pre>Accepts a string of the transfer type. 2 possbilities: payer or payee
+Returns an array of hashes with the transfers.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="getAllByType-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getAllByType</span>(<span class="ruby-identifier">accId</span>, <span class="ruby-identifier">type</span>)
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{accId}/transfers?type=#{type}&amp;key=#{self.apiKey}&quot;</span>
+        <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
+        <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-getOne" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getOne</span><span
+            class="method-args">(id)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <h2 id="method-c-getOne-label-getOne">getOne<span><a href="#method-c-getOne-label-getOne">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<pre>Returns the transfer specified by its transfer ID.</pre>
+
+<h1 id="method-c-getOne-label-Parameters-3A">Parameters:<span><a href="#method-c-getOne-label-Parameters-3A">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<pre>Accepts a string of the transfer ID. 
+Returns a hash with the transfer info.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="getOne-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getOne</span>(<span class="ruby-identifier">id</span>)
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/transfers/#{id}?key=#{self.apiKey}&quot;</span>
+        <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
+        <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-updateTransfer" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">updateTransfer</span><span
+            class="method-args">(id, transfer)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <pre>*** PUT ***</pre>
+
+<h2 id="method-c-updateTransfer-label-updateAccount">updateAccount<span><a href="#method-c-updateTransfer-label-updateAccount">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<pre>Updates a transfer&#39;s info.
+Parameters: TransferId, TransferHash
+Returns the http response code.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="updateTransfer-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">updateTransfer</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">transfer</span>)
+        <span class="ruby-identifier">transferToUpdate</span> = <span class="ruby-identifier">transfer</span>.<span class="ruby-identifier">to_json</span>
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/transfers/#{id}?key=#{self.apiKey}&quot;</span>
+        <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
+        <span class="ruby-identifier">http</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>)
+        <span class="ruby-identifier">key</span> = <span class="ruby-node">&quot;?key=#{self.apiKey}&quot;</span>
+        <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Put</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span><span class="ruby-operator">+</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">initheader</span> = {<span class="ruby-string">&#39;Content-Type&#39;</span> =<span class="ruby-operator">&gt;</span><span class="ruby-string">&#39;application/json&#39;</span>})
+        <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">transferToUpdate</span>
+        <span class="ruby-identifier">response</span> = <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-url" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">url</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="url-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">url</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">baseUrl</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-urlWithEntity" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">urlWithEntity</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="urlWithEntity-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 3</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">urlWithEntity</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">baseUrl</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;/accounts&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
