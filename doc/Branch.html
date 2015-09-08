@@ -6,19 +6,16 @@
 
 <title>class Branch - RDoc Documentation</title>
 
-<link href="./fonts.css" rel="stylesheet">
-<link href="./rdoc.css" rel="stylesheet">
-
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
 <script src="./js/jquery.js"></script>
-<script src="./js/navigation.js"></script>
-<script src="./js/search_index.js"></script>
-<script src="./js/search.js"></script>
-<script src="./js/searcher.js"></script>
 <script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
 
 
 <body id="top" role="document" class="class">
@@ -163,24 +160,21 @@
 
         <div class="method-description">
           
-          <pre>*** GET ***</pre>
+          <h2 id="method-c-getAll-label-getAll">getAll<span><a href="#method-c-getAll-label-getAll">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<h2 id="method-c-getAll-label-getAll">getAll<span><a href="#method-c-getAll-label-getAll">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
-
-<pre>Get all the branches</pre>
-
-<p>Returns an array of hashes. Each hash is a branch.</p>
+<pre class="ruby"><span class="ruby-constant">Gets</span> <span class="ruby-identifier">all</span> <span class="ruby-identifier">branches</span>
+<span class="ruby-constant">Returns</span> <span class="ruby-identifier">an</span> <span class="ruby-identifier">array</span> <span class="ruby-identifier">of</span> <span class="ruby-constant">Hashes</span> <span class="ruby-identifier">with</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">branch</span> <span class="ruby-identifier">data</span>
+</pre>
           
           
 
           
           <div class="method-source-code" id="getAll-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/branch.rb, line 19</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/branch.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getAll</span>
         <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
         <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)
-        
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -205,21 +199,24 @@
 
         <div class="method-description">
           
-          <h2 id="method-c-getOne-label-getOne">getOne<span><a href="#method-c-getOne-label-getOne">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+          <h2 id="method-c-getOne-label-getOne">getOne<span><a href="#method-c-getOne-label-getOne">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>Get a branch by it&#39;s id Parameters: BranchId Returns a hash with the
-specified branch.</p>
+<pre>Gets one branch for a given ID</pre>
+
+<h1 id="method-c-getOne-label-Parameters-3A+AtmId">Parameters: AtmId<span><a href="#method-c-getOne-label-Parameters-3A+AtmId">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<pre class="ruby"><span class="ruby-constant">Returns</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">hash</span> <span class="ruby-identifier">with</span> <span class="ruby-identifier">the</span> <span class="ruby-constant">ATM</span> <span class="ruby-identifier">data</span>
+</pre>
           
           
 
           
           <div class="method-source-code" id="getOne-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/branch.rb, line 29</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/branch.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getOne</span>(<span class="ruby-identifier">id</span>)
         <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{id}?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
-        <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)
-        
+        <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)  
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -305,7 +302,7 @@ specified branch.</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
-  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

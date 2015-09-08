@@ -6,19 +6,16 @@
 
 <title>README - RDoc Documentation</title>
 
-<link href="./fonts.css" rel="stylesheet">
-<link href="./rdoc.css" rel="stylesheet">
-
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
 <script src="./js/jquery.js"></script>
-<script src="./js/navigation.js"></script>
-<script src="./js/search_index.js"></script>
-<script src="./js/search.js"></script>
-<script src="./js/searcher.js"></script>
 <script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
 
 
 <body id="top" role="document" class="file">
@@ -58,7 +55,7 @@
   <h3>Table of Contents</h3>
 
   <ul class="link-list" role="directory">
-    <li><a href="#label-CapitalOne">CapitalOne</a>
+    <li><a href="#label-capital_one">capital_one</a>
     <li><a href="#label-Installation">Installation</a>
     <li><a href="#label-Usage">Usage</a>
     <li><a href="#label-Development">Development</a>
@@ -75,6 +72,8 @@
   
     <li><a href="./Gemfile.html">Gemfile</a>
   
+    <li><a href="./Gemfile_lock.html">Gemfile.lock</a>
+  
     <li><a href="./Guardfile.html">Guardfile</a>
   
     <li><a href="./LICENSE_txt.html">LICENSE</a>
@@ -87,6 +86,12 @@
   
     <li><a href="./capital_one_gemspec.html">capital_one.gemspec</a>
   
+    <li><a href="./coverage/assets/0_10_0/application_css.html">application.css</a>
+  
+    <li><a href="./coverage/assets/0_10_0/application_js.html">application.js</a>
+  
+    <li><a href="./coverage/index_html.html">index.html</a>
+  
   </ul>
 </div>
 
@@ -95,15 +100,18 @@
 
 <main role="main" aria-label="Page README.md">
 
-<h1 id="label-CapitalOne"><a href="CapitalOne.html">CapitalOne</a><span><a href="#label-CapitalOne">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+<h1 id="label-capital_one">capital_one<span><a href="#label-capital_one">&para;</a> <a href="#top">&uarr;</a></span></h1>
 
-<p>The capital_one gem interfaces Ruby developers with the Capital One API.
-Simply require &#39;capital_one&#39; and gain access to the API methods.
-Documentation for Capital One&#39;s API can be found at <a
-href="http://api.reimaginebanking.com/documentation">api.reimaginebanking.com/documentation</a>.
-See lib/capital_one.rb for method definitions in Ruby.</p>
+<p>The capital_one gem interfaces Ruby developers with Capital One&#39;s
+Hackathon API. Simply require &#39;capital_one&#39; and gain access to the
+API methods. Documentation for Capital One&#39;s API can be found at <a
+href="http://api.nessiebanking.com/documentation">api.nessiebanking.com/documentation</a>.
+See lib/capital_one.rb for method definitions in Ruby. Please note that
+this gem in under construction as the Nessie team recently changed their
+API endpoint. I expect to have this gem fully updated and 100% functional
+by the end of September (likely much sooner). Thank you for your patience.</p>
 
-<h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
 <p>Add this line to your application&#39;s Gemfile:</p>
 
@@ -118,21 +126,24 @@ See lib/capital_one.rb for method definitions in Ruby.</p>
 
 <pre>$ gem install capital_one</pre>
 
-<h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#top">&uarr;</a></span></h2>
 <ol><li>
 <p>Require the gem</p>
 
-<pre class="ruby"><span class="ruby-value">%xrequire &#39;capital_one&#39;`</span>
-</pre>
+<pre>````ruby
+require &#39;capital_one&#39;
+````</pre>
 </li><li>
 <p>Go to <a
-href="http://api.reimaginebanking.com/documentation">api.reimaginebanking.com</a>
+href="http://api.nessiebanking.com/documentation">api.nessiebanking.com</a>
 and sign up for an API Key with your Github account. Read the documentation
 on the API and go to your Profile page and retrieve your API key. Once you
 retrive your key you must specify the key in your project to gain access to
 the API.</p>
 
-<pre>`Config.apiKey = &quot;API_KEY&quot;`  
+<pre>````ruby
+Config.apiKey = &quot;YOUR_API_KEY&quot;
+````
 
 You will see that you are assigned two api keys when signing up for the API.  These keys have different roles and permissions assigned to them.
 
@@ -140,7 +151,7 @@ You will see that you are assigned two api keys when signing up for the API.  Th
 **Customer Key** - Take on the role of a Capital One customer. All requests involving your assigned customers and anything they own are permitted.</pre>
 </li></ol>
 
-<h2 id="label-Development">Development<span><a href="#label-Development">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<h2 id="label-Development">Development<span><a href="#label-Development">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
 <p>After checking out the repo, run <code>bin/setup</code> to install
 dependencies. Then, run <code>bin/console</code> for an interactive prompt
@@ -153,7 +164,7 @@ to create a git tag for the version, push git commits and tags, and push
 the <code>.gem</code> file to <a
 href="https://rubygems.org">rubygems.org</a>.</p>
 
-<h2 id="label-Contributing">Contributing<span><a href="#label-Contributing">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<h2 id="label-Contributing">Contributing<span><a href="#label-Contributing">&para;</a> <a href="#top">&uarr;</a></span></h2>
 <ol><li>
 <p>Fork it ( <a
 href="https://github.com/[my-github-username]/capital_one/fork">github.com/[my-github-username]/capital_one/fork</a>
@@ -174,7 +185,7 @@ feature&#39;</code>)</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
-  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

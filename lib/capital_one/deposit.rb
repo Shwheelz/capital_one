@@ -81,12 +81,13 @@ class Deposit
     # Returns http response code
 
   def self.updateDeposit(id, deposit)
+    depositToUpdate = deposit.to_json
     url = "#{self.url}/deposits/#{id}?key=#{self.apiKey}"
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     key = "?key=#{self.apiKey}"
     request = Net::HTTP::Put.new(uri.path+key, initheader = {'Content-Type' =>'application/json'})
-    request.body = deposit.to_json
+    request.body = depositToUpdate
     response = http.request(request)
     return JSON.parse(response.body)
   end

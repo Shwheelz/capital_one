@@ -5,7 +5,6 @@ describe Transfer do
 	before(:all) do
 		$transferPost = Hash.new
 		$transferPost["medium"] = "balance"
-		$transferPost["payee_id"] = ""
 		$transferPost["amount"] = 20
 		$transferPost["status"] = "pending"
 		$transferPost["description"] = "test transfer"
@@ -28,7 +27,7 @@ describe Transfer do
 	    it 'should have an API key' do
 	      expect(Transfer.apiKey.class).to be(String) # passes if actual == expected
 	    end
-  end
+    end
 
 	describe 'GET' do
 		it 'should get all transfers for an account' do
@@ -44,7 +43,7 @@ describe Transfer do
 		it 'should get all transfers of one type for an account' do
 			VCR.use_cassette 'transfer/transferByType' do
 				accID = Account.getAll()[0]["_id"]
-				type = "p2p"
+				type = "payer"
 				transfers = Transfer.getAllByType(accID, type)
 				expect(transfers.class).to be(Array)
 				expect(transfers.length).to be > 0
@@ -94,11 +93,13 @@ describe Transfer do
 	describe 'DELETE' do
 		it 'should delete a transfer' do
 			VCR.use_cassette 'transfer/deleteTransfer' do
-        accID = Account.getAll()[0]["_id"]
-        transferID = Transfer.getAll(accID)[0]["_id"]
-        response = Transfer.deleteTransfer(transferID)
-        expect(response.class).to be(Net::HTTPNoContent)
-        expect(response.code).to eq("204")
+		        accID = Account.getAll()[0]["_id"]
+		        $transferPost["payee_id"] = Account.getAll()[1]["_id"]
+		        transfer = Transfer.createTransfer(accID, $transferPost)
+		        transferID = Transfer.getAll(accID).last["_id"]
+		        response = Transfer.deleteTransfer(transferID)
+		        expect(response.class).to be(Net::HTTPNoContent)
+		        expect(response.code).to eq("204")
 			end
 		end
 	end

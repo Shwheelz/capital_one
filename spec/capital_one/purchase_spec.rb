@@ -4,6 +4,7 @@ describe Purchase do
 
 	before(:all) do
 		$purchasePost = Hash.new
+    $purchasePost["medium"] = "balance"
 		$purchasePost["purchase_date"] = "2015-09-05"
 		$purchasePost["amount"] = 5
 		$purchasePost["status"] = "pending"
@@ -33,7 +34,7 @@ describe Purchase do
   		it 'should get all purchases for an account' do
   			VCR.use_cassette 'purchase/purchases' do
   				accID = Account.getAll()[0]["_id"]
-  				purchases = Purchase.getAll(accID)
+  				purchases = Purchase.getAllByAccountId(accID)
   				expect(purchases.class).to be(Array)
   				expect(purchases.length).to be > 0
   				expect(purchases[0].class).to be(Hash)
@@ -43,7 +44,8 @@ describe Purchase do
   		it 'should get one purchase' do
   			VCR.use_cassette 'purchase/purchase' do
   				accID = Account.getAll()[0]["_id"]
-  				purchase = Purchase.getAll(accID)[0]
+  				purchaseID = Purchase.getAllByAccountId(accID)[0]["_id"]
+          purchase = Purchase.getOne(purchaseID)
   				expect(purchase.class).to be(Hash)
   				expect(purchase).to include("_id")
   				expect(purchase).to include("type")
@@ -68,7 +70,7 @@ describe Purchase do
   		it 'should update an existing purchase' do
   			VCR.use_cassette 'purchase/updatePurchase' do
    				accID = Account.getAll()[0]["_id"]
-   				purchaseID = Purchase.getAll(accID)[0]["_id"]
+   				purchaseID = Purchase.getAllByAccountId(accID)[0]["_id"]
    				response = Purchase.updatePurchase(purchaseID, $purchasePut)
    				expect(response.class).to be(Hash)
           expect(response).to include("message")
@@ -81,7 +83,8 @@ describe Purchase do
   		it 'should delete a purchase' do
   			VCR.use_cassette 'purchase/deletePurchase' do
   				accID = Account.getAll()[0]["_id"]
-   				purchaseID = Purchase.getAll(accID)[0]["_id"]
+          purchase = Purchase.createPurchase(accID, $purchasePost)
+   				purchaseID = Purchase.getAllByAccountId(accID).last["_id"]
    				response = Purchase.deletePurchase(purchaseID)
    				expect(response.class).to be(Net::HTTPNoContent)
        		expect(response.code).to eq("204")

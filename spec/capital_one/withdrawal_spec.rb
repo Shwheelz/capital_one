@@ -70,7 +70,7 @@ describe Withdrawal do
       it 'should update a withdrawal' do 
         VCR.use_cassette 'withdrawal/updateWithdrawal' do
           accID = Account.getAll[0]["_id"]
-          withdrawalID = Withdrawal.getAll(accID)[0]["_id"]
+          withdrawalID = Withdrawal.getAllByAccountId(accID)[0]["_id"]
           response = Withdrawal.updateWithdrawal(withdrawalID, $withdrawalPut)
           expect(response.class).to eq(Hash)
           expect(response).to include("message")
@@ -83,9 +83,7 @@ describe Withdrawal do
       it 'Withdrawal for an account' do
         VCR.use_cassette 'withdrawal/deleteWithdrawalByAcctId' do
           accID = Account.getAll[0]["_id"]
-          withdrawal = Withdrawal.createWithdrawal(accID, $withdrawalPost)
-          expect(withdrawal.class).to eq(Hash)
-          withdrawalID = Withdrawal.getAllByAccountId(accID)[0]["_id"]
+          withdrawalID = Withdrawal.getAllByAccountId(accID).last["_id"]
           withdrawal = Withdrawal.deleteWithdrawal(withdrawalID)
           expect(withdrawal.class).to be(Net::HTTPNoContent)
           expect(withdrawal.code).to eq("204")         

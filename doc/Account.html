@@ -6,19 +6,16 @@
 
 <title>class Account - RDoc Documentation</title>
 
-<link href="./fonts.css" rel="stylesheet">
-<link href="./rdoc.css" rel="stylesheet">
-
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
 <script src="./js/jquery.js"></script>
-<script src="./js/navigation.js"></script>
-<script src="./js/search_index.js"></script>
-<script src="./js/search.js"></script>
-<script src="./js/searcher.js"></script>
 <script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
 
 
 <body id="top" role="document" class="class">
@@ -173,18 +170,17 @@
 
         <div class="method-description">
           
-          <pre>*** POST ***</pre>
+          <h2 id="method-c-createAccount-label-createAccount">createAccount<span><a href="#method-c-createAccount-label-createAccount">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<h2 id="method-c-createAccount-label-createAccount">createAccount<span><a href="#method-c-createAccount-label-createAccount">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
-
-<p>Creates a new account Parameters: CustomerID, accountHash Returns the http
-response code.</p>
+<pre>Creates a new account
+Parameters: CustomerID, accountHash
+Returns the http response code.</pre>
           
           
 
           
           <div class="method-source-code" id="createAccount-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/account.rb, line 81</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/account.rb, line 89</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">createAccount</span>(<span class="ruby-identifier">custID</span>, <span class="ruby-identifier">account</span>)
         <span class="ruby-identifier">accountToCreate</span> = <span class="ruby-identifier">account</span>.<span class="ruby-identifier">to_json</span>
         <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/customers/#{custID}/accounts?key=#{self.apiKey}&quot;</span>
@@ -218,18 +214,17 @@ response code.</p>
 
         <div class="method-description">
           
-          <pre>*** DELETE ***</pre>
+          <h2 id="method-c-deleteAccount-label-deleteAccount">deleteAccount<span><a href="#method-c-deleteAccount-label-deleteAccount">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<h2 id="method-c-deleteAccount-label-deleteAccount">deleteAccount<span><a href="#method-c-deleteAccount-label-deleteAccount">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
-
-<p>delete a given account by accountId. Parameters: AccountId. Returns the
-http response code.</p>
+<pre>delete a given account by accountId.
+Parameters: AccountId.
+Returns the http response code.</pre>
           
           
 
           
           <div class="method-source-code" id="deleteAccount-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/account.rb, line 98</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/account.rb, line 108</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deleteAccount</span>(<span class="ruby-identifier">accountId</span>)
         <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{accountId}?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
@@ -261,11 +256,12 @@ http response code.</p>
 
         <div class="method-description">
           
-          <pre>*** GET ***
-= getAll
-Returns an array of hashes getting all the customers.</pre>
+          <pre>*** GET ***</pre>
 
-<p>Each index in the array is the hash of an individual customer.</p>
+<h1 id="method-c-getAll-label-getAll">getAll<span><a href="#method-c-getAll-label-getAll">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<pre>Returns an array of hashes getting all the customers.
+Each index in the array is the hash of an individual customer.</pre>
           
           
 
@@ -300,16 +296,20 @@ Returns an array of hashes getting all the customers.</pre>
 
         <div class="method-description">
           
-          <h2 id="method-c-getAllByCustomerId-label-getAllByCustomerId">getAllByCustomerId<span><a href="#method-c-getAllByCustomerId-label-getAllByCustomerId">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+          <h2 id="method-c-getAllByCustomerId-label-getAllByCustomerId">getAllByCustomerId<span><a href="#method-c-getAllByCustomerId-label-getAllByCustomerId">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>Returns all accounts associated with a given customer ID as an array of
-hashes.</p>
+<pre>Returns all accounts associated with a given customer ID as an array of hashes.</pre>
+
+<h1 id="method-c-getAllByCustomerId-label-Parameters-3A+CustomerId">Parameters: CustomerId<span><a href="#method-c-getAllByCustomerId-label-Parameters-3A+CustomerId">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<pre class="ruby"><span class="ruby-constant">Accepts</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">string</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">customer</span> <span class="ruby-constant">ID</span>
+</pre>
           
           
 
           
           <div class="method-source-code" id="getAllByCustomerId-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/account.rb, line 52</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/account.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getAllByCustomerId</span>(<span class="ruby-identifier">customerId</span>)
         <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/customers/#{customerId}/accounts?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
@@ -338,14 +338,14 @@ hashes.</p>
 
         <div class="method-description">
           
-          <h2 id="method-c-getAllByType-label-getAllByType">getAllByType<span><a href="#method-c-getAllByType-label-getAllByType">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+          <h2 id="method-c-getAllByType-label-getAllByType">getAllByType<span><a href="#method-c-getAllByType-label-getAllByType">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>Gets all accounts of a given type.</p>
+<pre>Gets all accounts of a given type.</pre>
 
-<h1 id="method-c-getAllByType-label-Parameters%3A">Parameters:<span><a href="#method-c-getAllByType-label-Parameters%3A">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+<h1 id="method-c-getAllByType-label-Parameters-3A+type">Parameters: type<span><a href="#method-c-getAllByType-label-Parameters-3A+type">&para;</a> <a href="#top">&uarr;</a></span></h1>
 
-<p>Accepts a string of the account type. 3 possbilities: Credit Card, Savings,
-Checking. Returns an array of hashes with the accounts.</p>
+<pre>Accepts a string of the account type. 3 possbilities: Credit Card, Savings, Checking.
+Returns an array of hashes with the accounts.</pre>
           
           
 
@@ -380,19 +380,20 @@ Checking. Returns an array of hashes with the accounts.</p>
 
         <div class="method-description">
           
-          <h2 id="method-c-getOne-label-getOne">getOne<span><a href="#method-c-getOne-label-getOne">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+          <h2 id="method-c-getOne-label-getOne">getOne<span><a href="#method-c-getOne-label-getOne">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>Returns the account specified by it&#39;s account ID.</p>
+<pre>Returns the account specified by its account ID.</pre>
 
-<h1 id="method-c-getOne-label-Parameters%3A">Parameters:<span><a href="#method-c-getOne-label-Parameters%3A">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+<h1 id="method-c-getOne-label-Parameters-3A+AccountId">Parameters: AccountId<span><a href="#method-c-getOne-label-Parameters-3A+AccountId">&para;</a> <a href="#top">&uarr;</a></span></h1>
 
-<p>Accepts a string of the account ID.  Returns a hash with the account info.</p>
+<pre>Accepts a string of the account ID. 
+Returns a hash with the account info.</pre>
           
           
 
           
           <div class="method-source-code" id="getOne-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/account.rb, line 43</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/account.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getOne</span>(<span class="ruby-identifier">id</span>)
         <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{id}?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
@@ -421,25 +422,27 @@ Checking. Returns an array of hashes with the accounts.</p>
 
         <div class="method-description">
           
-          <pre>*** PUT ***</pre>
+          <h2 id="method-c-updateAccount-label-updateAccount">updateAccount<span><a href="#method-c-updateAccount-label-updateAccount">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<h2 id="method-c-updateAccount-label-updateAccount">updateAccount<span><a href="#method-c-updateAccount-label-updateAccount">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<pre>Updates an account&#39;s nickname.</pre>
 
-<p>Updates an account&#39;s nickname. Parameters: AccountID, AccountHash
-Returns the http response code.</p>
+<h1 id="method-c-updateAccount-label-Parameters-3A+AccountID-2C+AccountHash">Parameters: AccountID, AccountHash<span><a href="#method-c-updateAccount-label-Parameters-3A+AccountID-2C+AccountHash">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<pre>Returns the http response code.</pre>
           
           
 
           
           <div class="method-source-code" id="updateAccount-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/account.rb, line 64</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/account.rb, line 69</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">updateAccount</span>(<span class="ruby-identifier">accountId</span>, <span class="ruby-identifier">account</span>)
+        <span class="ruby-identifier">accountToUpdate</span> = <span class="ruby-identifier">account</span>.<span class="ruby-identifier">to_json</span>
         <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{accountId}?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
         <span class="ruby-identifier">http</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>)
         <span class="ruby-identifier">key</span> = <span class="ruby-node">&quot;?key=#{self.apiKey}&quot;</span>
-        <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Put</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span><span class="ruby-operator">+</span><span class="ruby-identifier">key</span>)
-        <span class="ruby-identifier">request</span>.<span class="ruby-identifier">set_form_data</span>(<span class="ruby-identifier">account</span>)
+        <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Put</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span><span class="ruby-operator">+</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">initheader</span> = {<span class="ruby-string">&#39;Content-Type&#39;</span> =<span class="ruby-operator">&gt;</span><span class="ruby-string">&#39;application/json&#39;</span>})
+        <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">accountToUpdate</span>
         <span class="ruby-identifier">response</span> = <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>)
         <span class="ruby-keyword">return</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -527,7 +530,7 @@ Returns the http response code.</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
-  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

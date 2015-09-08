@@ -19,7 +19,7 @@ class Purchase
 		#= Parameters: AccountId
 		# Returns an array of hashes
 
-	def self.getAll(accId)
+	def self.getAllByAccountId(accId)
 		url = "#{self.urlWithEntity}/#{accId}/purchases?&key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
@@ -97,7 +97,7 @@ class Purchase
 		# Returns http response code
 		
 	def self.deletePurchase(id)
-		url = "#{self.url}/purchases/#{id}?&key=#{self.apiKey}"
+		url = "#{self.url}/purchases/#{id}?key=#{self.apiKey}"
 		uri = URI.parse(url)
 		http = Net::HTTP.new(uri.host, uri.port)
 		key="?key=#{self.apiKey}"

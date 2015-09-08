@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Transfer - RDoc Documentation</title>
+<title>class Purchase - RDoc Documentation</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
@@ -72,17 +72,15 @@
     
     <li ><a href="#method-c-apiKey">::apiKey</a>
     
-    <li ><a href="#method-c-createTransfer">::createTransfer</a>
+    <li ><a href="#method-c-createPurchase">::createPurchase</a>
     
-    <li ><a href="#method-c-deleteTransfer">::deleteTransfer</a>
+    <li ><a href="#method-c-deletePurchase">::deletePurchase</a>
     
     <li ><a href="#method-c-getAll">::getAll</a>
     
-    <li ><a href="#method-c-getAllByType">::getAllByType</a>
-    
     <li ><a href="#method-c-getOne">::getOne</a>
     
-    <li ><a href="#method-c-updateTransfer">::updateTransfer</a>
+    <li ><a href="#method-c-updatePurchase">::updatePurchase</a>
     
     <li ><a href="#method-c-url">::url</a>
     
@@ -94,9 +92,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-Transfer">
-  <h1 id="class-Transfer" class="class">
-    class Transfer
+<main role="main" aria-labelledby="class-Purchase">
+  <h1 id="class-Purchase" class="class">
+    class Purchase
   </h1>
 
   <section class="description">
@@ -141,7 +139,7 @@
 
           
           <div class="method-source-code" id="apiKey-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 11</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/purchase.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">apiKey</span>
         <span class="ruby-keyword">return</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">apiKey</span>
 <span class="ruby-keyword">end</span></pre>
@@ -155,11 +153,11 @@
       </div>
 
     
-      <div id="method-c-createTransfer" class="method-detail ">
+      <div id="method-c-createPurchase" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">createTransfer</span><span
-            class="method-args">(accId, transfer)</span>
+          <span class="method-name">createPurchase</span><span
+            class="method-args">(accId, purchase)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -170,24 +168,35 @@
           
           <pre>*** POST ***</pre>
 
-<h2 id="method-c-createTransfer-label-createAccount">createAccount<span><a href="#method-c-createTransfer-label-createAccount">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<h2 id="method-c-createPurchase-label-createPurchase">createPurchase<span><a href="#method-c-createPurchase-label-createPurchase">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<pre>Creates a new transfer
-Parameters: AccountID, TransferHash
-Returns the http response code.</pre>
+<pre>Creates a new purchase for a given account</pre>
+
+<h1 id="method-c-createPurchase-label-Parameters-3A+AccountId-2C+PurchaseHash">Parameters: AccountId, PurchaseHash<span><a href="#method-c-createPurchase-label-Parameters-3A+AccountId-2C+PurchaseHash">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<pre>PurchaseHash is formatted as follows:
+{
+    &quot;merchant_id&quot;: &quot;string&quot;,
+    &quot;medium&quot;: &quot;balance&quot;,
+    &quot;purchase_date&quot;: &quot;string&quot;,
+    &quot;amount&quot;: 0,
+    &quot;status&quot;: &quot;pending&quot;,
+    &quot;description&quot;: &quot;string&quot;
+}
+Returns http response code</pre>
           
           
 
           
-          <div class="method-source-code" id="createTransfer-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 52</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">createTransfer</span>(<span class="ruby-identifier">accId</span>, <span class="ruby-identifier">transfer</span>)
-        <span class="ruby-identifier">transferToCreate</span> = <span class="ruby-identifier">transfer</span>.<span class="ruby-identifier">to_json</span>
-        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{accId}/transfers?key=#{self.apiKey}&quot;</span>
+          <div class="method-source-code" id="createPurchase-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/purchase.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">createPurchase</span>(<span class="ruby-identifier">accId</span>, <span class="ruby-identifier">purchase</span>)
+        <span class="ruby-identifier">purchaseToCreate</span> = <span class="ruby-identifier">purchase</span>.<span class="ruby-identifier">to_json</span>
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{accId}/purchases?&amp;key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
         <span class="ruby-identifier">http</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>)
         <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">request_uri</span>, <span class="ruby-identifier">initheader</span> = {<span class="ruby-string">&#39;Content-Type&#39;</span> =<span class="ruby-operator">&gt;</span><span class="ruby-string">&#39;application/json&#39;</span>})
-        <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">transferToCreate</span>
+        <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">purchaseToCreate</span>
         <span class="ruby-identifier">response</span> = <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>)
         <span class="ruby-keyword">return</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -201,10 +210,10 @@ Returns the http response code.</pre>
       </div>
 
     
-      <div id="method-c-deleteTransfer" class="method-detail ">
+      <div id="method-c-deletePurchase" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">deleteTransfer</span><span
+          <span class="method-name">deletePurchase</span><span
             class="method-args">(id)</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -214,21 +223,22 @@ Returns the http response code.</pre>
 
         <div class="method-description">
           
-          <pre>*** DELETE ***</pre>
+          <h2 id="method-c-deletePurchase-label-deletePurchase">deletePurchase<span><a href="#method-c-deletePurchase-label-deletePurchase">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<h2 id="method-c-deleteTransfer-label-deleteAccount">deleteAccount<span><a href="#method-c-deleteTransfer-label-deleteAccount">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<pre>Deletes a purchase for a given ID</pre>
 
-<pre>delete a given transfer by TransferId.
-Parameters: TransferId.
-Returns the http response code.</pre>
+<h1 id="method-c-deletePurchase-label-Parameters-3A+PurchaseId">Parameters: PurchaseId<span><a href="#method-c-deletePurchase-label-Parameters-3A+PurchaseId">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<pre class="ruby"><span class="ruby-constant">Returns</span> <span class="ruby-identifier">http</span> <span class="ruby-identifier">response</span> <span class="ruby-identifier">code</span>
+</pre>
           
           
 
           
-          <div class="method-source-code" id="deleteTransfer-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 85</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deleteTransfer</span>(<span class="ruby-identifier">id</span>)
-        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/transfers/#{id}?key=#{self.apiKey}&quot;</span>
+          <div class="method-source-code" id="deletePurchase-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/purchase.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deletePurchase</span>(<span class="ruby-identifier">id</span>)
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/purchases/#{id}?&amp;key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
         <span class="ruby-identifier">http</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>)
         <span class="ruby-identifier">key</span>=<span class="ruby-node">&quot;?key=#{self.apiKey}&quot;</span>
@@ -258,62 +268,22 @@ Returns the http response code.</pre>
 
         <div class="method-description">
           
-          <pre>*** GET ***</pre>
+          <h2 id="method-c-getAll-label-getAll">getAll<span><a href="#method-c-getAll-label-getAll">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<h1 id="method-c-getAll-label-getAll">getAll<span><a href="#method-c-getAll-label-getAll">&para;</a> <a href="#top">&uarr;</a></span></h1>
+<pre>Returns all purchases for a given account</pre>
 
-<pre>Returns an array of hashes getting all the transfers for an account.
-Each index in the array is the hash of an individual transfer.</pre>
+<h1 id="method-c-getAll-label-Parameters-3A+AccountId">Parameters: AccountId<span><a href="#method-c-getAll-label-Parameters-3A+AccountId">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<pre class="ruby"><span class="ruby-constant">Returns</span> <span class="ruby-identifier">an</span> <span class="ruby-identifier">array</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">hashes</span>
+</pre>
           
           
 
           
           <div class="method-source-code" id="getAll-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 19</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/purchase.rb, line 22</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getAll</span>(<span class="ruby-identifier">accId</span>)
-        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{accId}/transfers?&amp;key=#{self.apiKey}&quot;</span>
-        <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
-        <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-c-getAllByType" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">getAllByType</span><span
-            class="method-args">(accId, type)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <h2 id="method-c-getAllByType-label-getAllByType">getAllByType<span><a href="#method-c-getAllByType-label-getAllByType">&para;</a> <a href="#top">&uarr;</a></span></h2>
-
-<pre>Gets all transfers of a given type and account.</pre>
-
-<h1 id="method-c-getAllByType-label-Parameters-3A">Parameters:<span><a href="#method-c-getAllByType-label-Parameters-3A">&para;</a> <a href="#top">&uarr;</a></span></h1>
-
-<pre>Accepts a string of the transfer type. 2 possbilities: payer or payee
-Returns an array of hashes with the transfers.</pre>
-          
-          
-
-          
-          <div class="method-source-code" id="getAllByType-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 30</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getAllByType</span>(<span class="ruby-identifier">accId</span>, <span class="ruby-identifier">type</span>)
-        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{accId}/transfers?type=#{type}&amp;key=#{self.apiKey}&quot;</span>
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{accId}/purchases?&amp;key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
         <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -342,20 +312,20 @@ Returns an array of hashes with the transfers.</pre>
           
           <h2 id="method-c-getOne-label-getOne">getOne<span><a href="#method-c-getOne-label-getOne">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<pre>Returns the transfer specified by its transfer ID.</pre>
+<pre>Returns a purchase for a given ID</pre>
 
-<h1 id="method-c-getOne-label-Parameters-3A">Parameters:<span><a href="#method-c-getOne-label-Parameters-3A">&para;</a> <a href="#top">&uarr;</a></span></h1>
+<h1 id="method-c-getOne-label-Parameters-3A+PurchaseId">Parameters: PurchaseId<span><a href="#method-c-getOne-label-Parameters-3A+PurchaseId">&para;</a> <a href="#top">&uarr;</a></span></h1>
 
-<pre>Accepts a string of the transfer ID. 
-Returns a hash with the transfer info.</pre>
+<pre class="ruby"><span class="ruby-constant">Returns</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">hash</span>
+</pre>
           
           
 
           
           <div class="method-source-code" id="getOne-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 41</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/purchase.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getOne</span>(<span class="ruby-identifier">id</span>)
-        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/transfers/#{id}?key=#{self.apiKey}&quot;</span>
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/purchases/#{id}?&amp;key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
         <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -369,11 +339,11 @@ Returns a hash with the transfer info.</pre>
       </div>
 
     
-      <div id="method-c-updateTransfer" class="method-detail ">
+      <div id="method-c-updatePurchase" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">updateTransfer</span><span
-            class="method-args">(id, transfer)</span>
+          <span class="method-name">updatePurchase</span><span
+            class="method-args">(id, purchase)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -382,27 +352,37 @@ Returns a hash with the transfer info.</pre>
 
         <div class="method-description">
           
-          <pre>*** PUT ***</pre>
+          <h2 id="method-c-updatePurchase-label-updatePurchase">updatePurchase<span><a href="#method-c-updatePurchase-label-updatePurchase">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<h2 id="method-c-updateTransfer-label-updateAccount">updateAccount<span><a href="#method-c-updateTransfer-label-updateAccount">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<pre class="ruby"><span class="ruby-constant">Updates</span> <span class="ruby-identifier">an</span> <span class="ruby-identifier">existing</span> <span class="ruby-identifier">purchase</span>
+</pre>
 
-<pre>Updates a transfer&#39;s info.
-Parameters: TransferId, TransferHash
-Returns the http response code.</pre>
+<h1 id="method-c-updatePurchase-label-Parameters-3A+PurchaseId-2C+PurchaseHash">Parameters: PurchaseId, PurchaseHash<span><a href="#method-c-updatePurchase-label-Parameters-3A+PurchaseId-2C+PurchaseHash">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<pre>PurchaseHash is formatted as follows:
+{
+    &quot;merchant_id&quot;: &quot;string&quot;,
+    &quot;medium&quot;: &quot;balance&quot;,
+    &quot;purchase_date&quot;: &quot;string&quot;,
+    &quot;amount&quot;: 0,
+    &quot;status&quot;: &quot;pending&quot;,
+    &quot;description&quot;: &quot;string&quot;
+}
+Returns http response code</pre>
           
           
 
           
-          <div class="method-source-code" id="updateTransfer-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 68</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">updateTransfer</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">transfer</span>)
-        <span class="ruby-identifier">transferToUpdate</span> = <span class="ruby-identifier">transfer</span>.<span class="ruby-identifier">to_json</span>
-        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/transfers/#{id}?key=#{self.apiKey}&quot;</span>
+          <div class="method-source-code" id="updatePurchase-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/purchase.rb, line 80</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">updatePurchase</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">purchase</span>)
+        <span class="ruby-identifier">purchaseToUpdate</span> = <span class="ruby-identifier">purchase</span>.<span class="ruby-identifier">to_json</span>
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/purchases/#{id}?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
         <span class="ruby-identifier">http</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>)
         <span class="ruby-identifier">key</span> = <span class="ruby-node">&quot;?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Put</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span><span class="ruby-operator">+</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">initheader</span> = {<span class="ruby-string">&#39;Content-Type&#39;</span> =<span class="ruby-operator">&gt;</span><span class="ruby-string">&#39;application/json&#39;</span>})
-        <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">transferToUpdate</span>
+        <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">purchaseToUpdate</span>
         <span class="ruby-identifier">response</span> = <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>)
         <span class="ruby-keyword">return</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -435,7 +415,7 @@ Returns the http response code.</pre>
 
           
           <div class="method-source-code" id="url-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 7</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/purchase.rb, line 7</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">url</span>
         <span class="ruby-keyword">return</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">baseUrl</span>
 <span class="ruby-keyword">end</span></pre>
@@ -468,7 +448,7 @@ Returns the http response code.</pre>
 
           
           <div class="method-source-code" id="urlWithEntity-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/transfer.rb, line 3</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/purchase.rb, line 3</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">urlWithEntity</span>
         <span class="ruby-keyword">return</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">baseUrl</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;/accounts&quot;</span>
 <span class="ruby-keyword">end</span></pre>

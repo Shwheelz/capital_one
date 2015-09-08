@@ -6,19 +6,16 @@
 
 <title>class Atm - RDoc Documentation</title>
 
-<link href="./fonts.css" rel="stylesheet">
-<link href="./rdoc.css" rel="stylesheet">
-
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
 <script src="./js/jquery.js"></script>
-<script src="./js/navigation.js"></script>
-<script src="./js/search_index.js"></script>
-<script src="./js/search.js"></script>
-<script src="./js/searcher.js"></script>
 <script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
 
 
 <body id="top" role="document" class="class">
@@ -76,6 +73,8 @@
     <li ><a href="#method-c-apiKey">::apiKey</a>
     
     <li ><a href="#method-c-getAll">::getAll</a>
+    
+    <li ><a href="#method-c-getAllByLocation">::getAllByLocation</a>
     
     <li ><a href="#method-c-getOne">::getOne</a>
     
@@ -163,19 +162,60 @@
 
         <div class="method-description">
           
-          <pre>*** GET ***</pre>
+          <h2 id="method-c-getAll-label-getAll">getAll<span><a href="#method-c-getAll-label-getAll">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<h2 id="method-c-getAll-label-getAll">getAll<span><a href="#method-c-getAll-label-getAll">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
-
-<p>Returns all ATMs as an array of hashes.</p>
+<pre>Returns all ATMs as an array of hashes.</pre>
           
           
 
           
           <div class="method-source-code" id="getAll-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/atm.rb, line 19</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/atm.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getAll</span>
         <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}?key=#{self.apiKey}&quot;</span>
+        <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
+        <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-getAllByLocation" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getAllByLocation</span><span
+            class="method-args">(lat, lng, rad)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <h2 id="method-c-getAllByLocation-label-getAllByLocation">getAllByLocation<span><a href="#method-c-getAllByLocation-label-getAllByLocation">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<pre class="ruby"><span class="ruby-constant">Get</span> <span class="ruby-identifier">all</span> <span class="ruby-constant">ATMs</span> <span class="ruby-identifier">withing</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">certain</span> <span class="ruby-identifier">radius</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">geocoordinate</span>
+</pre>
+
+<h1 id="method-c-getAllByLocation-label-Paremeters-3A+latitude-2C+longitude-2C+radius">Paremeters: latitude, longitude, radius<span><a href="#method-c-getAllByLocation-label-Paremeters-3A+latitude-2C+longitude-2C+radius">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<pre>Accepts lat, lng, and rad as floats
+Returns an array of hashes within the radius of the geocoordinate.  Each hash has an ATM.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="getAllByLocation-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/atm.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getAllByLocation</span>(<span class="ruby-identifier">lat</span>, <span class="ruby-identifier">lng</span>, <span class="ruby-identifier">rad</span>)
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}?lat=#{lat}&amp;lng=#{lng}&amp;rad=#{rad}&amp;key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
         <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -202,15 +242,17 @@
 
         <div class="method-description">
           
-          <h2 id="method-c-getOne-label-getOne">getOne<span><a href="#method-c-getOne-label-getOne">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+          <h2 id="method-c-getOne-label-getOne">getOne<span><a href="#method-c-getOne-label-getOne">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>Parameters: ATMid Returns the ATM that has the given ID.</p>
+<pre>Gets one ATM for a given ID
+Parameters: AtmId
+Returns the ATM that has the given ID.</pre>
           
           
 
           
           <div class="method-source-code" id="getOne-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/atm.rb, line 28</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/atm.rb, line 43</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getOne</span>(<span class="ruby-identifier">id</span>)
         <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{id}?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
@@ -300,7 +342,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
-  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

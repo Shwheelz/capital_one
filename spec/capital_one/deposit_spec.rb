@@ -68,7 +68,7 @@ describe Deposit do
       it 'should update an existing deposit' do
         VCR.use_cassette 'deposit/updateDeposit' do
           accountID = Account.getAll[0]["_id"]
-          depositID = Deposit.getAllByAccountId(accountID)
+          depositID = Deposit.getAllByAccountId(accountID)[0]["_id"]
           response = Deposit.updateDeposit(depositID, $depositPut)
           expect(response.class).to be(Hash)
           expect(response).to include("message")
@@ -83,7 +83,7 @@ describe Deposit do
           accID = Account.getAll[0]["_id"]
           deposit = Deposit.createDeposit(accID, $depositPost)
           expect(deposit.class).to eq(Hash)
-          depositID = Deposit.getAllByAccountId(accID)[0]["_id"]
+          depositID = Deposit.getAllByAccountId(accID).last["_id"]
           deposit = Deposit.deleteDeposit(depositID)
           expect(deposit.class).to be(Net::HTTPNoContent)
           expect(deposit.code).to eq("204")         

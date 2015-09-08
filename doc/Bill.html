@@ -6,19 +6,16 @@
 
 <title>class Bill - RDoc Documentation</title>
 
-<link href="./fonts.css" rel="stylesheet">
-<link href="./rdoc.css" rel="stylesheet">
-
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
 <script src="./js/jquery.js"></script>
-<script src="./js/navigation.js"></script>
-<script src="./js/search_index.js"></script>
-<script src="./js/search.js"></script>
-<script src="./js/searcher.js"></script>
 <script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
 
 
 <body id="top" role="document" class="class">
@@ -87,13 +84,13 @@
     
     <li ><a href="#method-c-getAllByCustomerId">::getAllByCustomerId</a>
     
-    <li ><a href="#method-c-getOneByAccountIdBillId">::getOneByAccountIdBillId</a>
-    
-    <li ><a href="#method-c-getOneByCustomerIdBillId">::getOneByCustomerIdBillId</a>
+    <li ><a href="#method-c-getOne">::getOne</a>
     
     <li ><a href="#method-c-updateBill">::updateBill</a>
     
     <li ><a href="#method-c-url">::url</a>
+    
+    <li ><a href="#method-c-urlWithEntity">::urlWithEntity</a>
     
   </ul>
 </div>
@@ -181,7 +178,7 @@
 
           
           <div class="method-source-code" id="apiKey-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 15</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">apiKey</span>
         <span class="ruby-keyword">return</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">apiKey</span>
 <span class="ruby-keyword">end</span></pre>
@@ -208,23 +205,20 @@
 
         <div class="method-description">
           
-          <pre>*** POST ***</pre>
+          <h2 id="method-c-createBill-label-createBill">createBill<span><a href="#method-c-createBill-label-createBill">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<h2 id="method-c-createBill-label-createBill">createBill<span><a href="#method-c-createBill-label-createBill">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
-
-<p>create a new bill on an associated account ID Parameters: AccountId,
-BillJson Json is as follows:</p>
-
-<pre>    {
+<pre>create a new bill on an associated account ID
+Parameters: AccountId, BillJson
+Json is as follows:
+   {
   &quot;status&quot;: &quot;&quot;,
   &quot;payee&quot;: &quot;&quot;,
   &quot;nickname&quot;: &quot;&quot;,
   &quot;payment_date&quot;: &quot;&quot;,
   &quot;recurring_date&quot;: 0,
   &quot;payment_amount&quot;: 0
-}</pre>
-
-<p>Returns http response code.</p>
+}
+Returns http response code.</pre>
           
           
 
@@ -287,7 +281,7 @@ BillJson Json is as follows:</p>
         
         <div class="method-heading">
           <span class="method-name">deleteBill</span><span
-            class="method-args">(accountId, billId)</span>
+            class="method-args">(billId)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -298,18 +292,19 @@ BillJson Json is as follows:</p>
           
           <pre>*** DELETE ***</pre>
 
-<h2 id="method-c-deleteBill-label-deleteBill">deleteBill<span><a href="#method-c-deleteBill-label-deleteBill">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<h2 id="method-c-deleteBill-label-deleteBill">deleteBill<span><a href="#method-c-deleteBill-label-deleteBill">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>delete a bill by id from a given account. Parameters: Accountid, billid.
-Returns http response code.</p>
+<pre>delete a bill by its id
+Parameters: BillId
+Returns http response code</pre>
           
           
 
           
           <div class="method-source-code" id="deleteBill-source">
             <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 116</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deleteBill</span>(<span class="ruby-identifier">accountId</span>, <span class="ruby-identifier">billId</span>)
-        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.accountBaseUrl}/#{accountId}/bills/#{billId}?key=#{self.apiKey}&quot;</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deleteBill</span>(<span class="ruby-identifier">billId</span>)
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{billId}?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
         <span class="ruby-identifier">http</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>)
         <span class="ruby-identifier">key</span>=<span class="ruby-node">&quot;?key=#{self.apiKey}&quot;</span>
@@ -339,16 +334,17 @@ Returns http response code.</p>
 
         <div class="method-description">
           
-          <h2 id="method-c-getAllByAccountId-label-getAllByAccountId">getAllByAccountId<span><a href="#method-c-getAllByAccountId-label-getAllByAccountId">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+          <h2 id="method-c-getAllByAccountId-label-getAllByAccountId">getAllByAccountId<span><a href="#method-c-getAllByAccountId-label-getAllByAccountId">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>Get all bills for a specific account Parameters: accountId Returns an array
-of hashes containing the bills.</p>
+<pre>Get all bills for a specific account
+Parameters: accountId
+Returns an array of hashes containing the bills.</pre>
           
           
 
           
           <div class="method-source-code" id="getAllByAccountId-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 45</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getAllByAccountId</span>(<span class="ruby-identifier">accountId</span>)
         <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.accountBaseUrl}/#{accountId}/bills?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">response</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
@@ -377,17 +373,17 @@ of hashes containing the bills.</p>
 
         <div class="method-description">
           
-          <h2 id="method-c-getAllByCustomerId-label-getAllByCustomerId">getAllByCustomerId<span><a href="#method-c-getAllByCustomerId-label-getAllByCustomerId">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+          <h2 id="method-c-getAllByCustomerId-label-getAllByCustomerId">getAllByCustomerId<span><a href="#method-c-getAllByCustomerId-label-getAllByCustomerId">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<pre>Get all bills for a specific customer</pre>
-
-<p>Parameters: customerId Returns the customer as a hash array.</p>
+<pre>Get all bills for a specific customer
+Parameters: customerId
+Returns the customer as a hash array.</pre>
           
           
 
           
           <div class="method-source-code" id="getAllByCustomerId-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 25</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getAllByCustomerId</span>(<span class="ruby-identifier">customerId</span>)
         <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.customerBaseUrl}/#{customerId}/bills?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">response</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
@@ -403,11 +399,11 @@ of hashes containing the bills.</p>
       </div>
 
     
-      <div id="method-c-getOneByAccountIdBillId" class="method-detail ">
+      <div id="method-c-getOne" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">getOneByAccountIdBillId</span><span
-            class="method-args">(accountId, billId)</span>
+          <span class="method-name">getOne</span><span
+            class="method-args">(id)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -416,59 +412,21 @@ of hashes containing the bills.</p>
 
         <div class="method-description">
           
-          <h2 id="method-c-getOneByAccountIdBillId-label-getOneByAccountIdBillId">getOneByAccountIdBillId<span><a href="#method-c-getOneByAccountIdBillId-label-getOneByAccountIdBillId">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+          <h2 id="method-c-getOne-label-getOne">getOne<span><a href="#method-c-getOne-label-getOne">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>Get a specific bill from a specific account Parameters: AccountId, BillId
-Returns a hash array with the bill.</p>
+<pre>Gets one bill for a specific billId
+Parameters: billId
+Returns a hash with the bill data</pre>
           
           
 
           
-          <div class="method-source-code" id="getOneByAccountIdBillId-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 54</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getOneByAccountIdBillId</span>(<span class="ruby-identifier">accountId</span>, <span class="ruby-identifier">billId</span>)
-        <span class="ruby-identifier">url</span> =<span class="ruby-node">&quot;#{self.accountBaseUrl}/#{accountId}/bills/#{billId}?key=#{self.apiKey}&quot;</span>
+          <div class="method-source-code" id="getOne-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getOne</span>(<span class="ruby-identifier">id</span>)
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{id}?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">response</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
         <span class="ruby-keyword">return</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-c-getOneByCustomerIdBillId" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">getOneByCustomerIdBillId</span><span
-            class="method-args">(customerId, billId)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <h2 id="method-c-getOneByCustomerIdBillId-label-getOneByCustomerIdBillId">getOneByCustomerIdBillId<span><a href="#method-c-getOneByCustomerIdBillId-label-getOneByCustomerIdBillId">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
-
-<pre>Get a specific bill from a specific customer.</pre>
-
-<p>Parameters: customerId, BillId Returns the specified bill as a hash array</p>
-          
-          
-
-          
-          <div class="method-source-code" id="getOneByCustomerIdBillId-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 35</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getOneByCustomerIdBillId</span>(<span class="ruby-identifier">customerId</span>, <span class="ruby-identifier">billId</span>)
-        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.customerBaseUrl}/#{customerId}/bills/#{billId}?key=#{self.apiKey}&quot;</span>
-        <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
-        <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -484,7 +442,7 @@ Returns a hash array with the bill.</p>
         
         <div class="method-heading">
           <span class="method-name">updateBill</span><span
-            class="method-args">(accountId, billId, bill)</span>
+            class="method-args">(billId, bill)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -493,36 +451,34 @@ Returns a hash array with the bill.</p>
 
         <div class="method-description">
           
-          <pre>*** POST ***</pre>
+          <h2 id="method-c-updateBill-label-updateBill">updateBill<span><a href="#method-c-updateBill-label-updateBill">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<h2 id="method-c-updateBill-label-updateBill">updateBill<span><a href="#method-c-updateBill-label-updateBill">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
-
-<p>Updates an account&#39;s nickname by id with given json data.  Parameters:
-AccountId, BillId, BillJson Json format is as follows:</p>
-
-<pre>    {
+<pre>Updates an account&#39;s information by id with given json data. 
+Parameters: BillId, BillJson
+Json format is as follows: 
+   {
   &quot;status&quot;: &quot;&quot;,
   &quot;payee&quot;: &quot;&quot;,
   &quot;nickname&quot;: &quot;&quot;,
   &quot;payment_date&quot;: &quot;&quot;,
   &quot;recurring_date&quot;: 0,
   &quot;payment_amount&quot;: 0
-}</pre>
-
-<p>Returns http response code.</p>
+}
+Returns http response code.</pre>
           
           
 
           
           <div class="method-source-code" id="updateBill-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 75</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">updateBill</span>(<span class="ruby-identifier">accountId</span>, <span class="ruby-identifier">billId</span>, <span class="ruby-identifier">bill</span>)
-        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.accountBaseUrl}/#{accountId}/bills/#{billId}?key=#{self.apiKey}&quot;</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">updateBill</span>(<span class="ruby-identifier">billId</span>, <span class="ruby-identifier">bill</span>)
+        <span class="ruby-identifier">billToUpdate</span> = <span class="ruby-identifier">bill</span>.<span class="ruby-identifier">to_json</span>
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{billId}?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
         <span class="ruby-identifier">http</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>)
         <span class="ruby-identifier">key</span> = <span class="ruby-node">&quot;?key=#{self.apiKey}&quot;</span>
-        <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Put</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span><span class="ruby-operator">+</span><span class="ruby-identifier">key</span>)
-        <span class="ruby-identifier">request</span>.<span class="ruby-identifier">set_form_data</span>(<span class="ruby-identifier">bill</span>)
+        <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Put</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span><span class="ruby-operator">+</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">initheader</span> = {<span class="ruby-string">&#39;Content-Type&#39;</span> =<span class="ruby-operator">&gt;</span><span class="ruby-string">&#39;application/json&#39;</span>})
+        <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">billToUpdate</span>
         <span class="ruby-identifier">response</span> = <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>)
         <span class="ruby-keyword">return</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -555,9 +511,42 @@ AccountId, BillId, BillJson Json format is as follows:</p>
 
           
           <div class="method-source-code" id="url-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 11</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">url</span>
         <span class="ruby-keyword">return</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">baseUrl</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-urlWithEntity" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">urlWithEntity</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="urlWithEntity-source">
+            <pre><span class="ruby-comment"># File lib/capital_one/bill.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">urlWithEntity</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">baseUrl</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;/bills&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -577,7 +566,7 @@ AccountId, BillId, BillJson Json format is as follows:</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
-  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

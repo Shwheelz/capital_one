@@ -3,16 +3,17 @@ require 'capital_one'
 describe Customer do
 
 	before(:all) do
-  	$customerPost = Hash.new
-  	$customerPost["address"] = Hash.new
-  	$customerPost["address"]["street_number"] = "8020"
-  	$customerPost["address"]["street_name"] = "Towers crescent dr"
-  	$customerPost["address"]["city"] = "Tysons Corner"
-  	$customerPost["address"]["state"] = "Virginia"
-  	$customerPost["address"]["zip"] = "22102"
+	  	$customerPost = Hash.new
+	  	$customerPost["address"] = Hash.new
+	  	$customerPost["address"]["street_number"] = "8020"
+	  	$customerPost["address"]["street_name"] = "Towers crescent dr"
+	  	$customerPost["address"]["city"] = "Tysons Corner"
+	  	$customerPost["address"]["state"] = "Virginia"
+	  	$customerPost["address"]["zip"] = "22102"
 
-  	$customerPut = Hash.new
-  	$customerPut = ["address"]["street_name"] = "New test street"
+	  	$customerPut = Hash.new
+	  	$customerPut["address"] = Hash.new
+	  	$customerPut["address"]["street_name"] = "New test street"
 	end
 
 	before(:each) do
