@@ -232,7 +232,7 @@ Returns http response code.</pre>
 
           
           <div class="method-source-code" id="deleteDeposit-source">
-            <pre><span class="ruby-comment"># File lib/capital_one/deposit.rb, line 101</span>
+            <pre><span class="ruby-comment"># File lib/capital_one/deposit.rb, line 102</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deleteDeposit</span>(<span class="ruby-identifier">id</span>)
   <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/deposits/#{id}?key=#{self.apiKey}&quot;</span>
   <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
@@ -373,12 +373,13 @@ Returns http response code</pre>
           <div class="method-source-code" id="updateDeposit-source">
             <pre><span class="ruby-comment"># File lib/capital_one/deposit.rb, line 83</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">updateDeposit</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">deposit</span>)
+  <span class="ruby-identifier">depositToUpdate</span> = <span class="ruby-identifier">deposit</span>.<span class="ruby-identifier">to_json</span>
   <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/deposits/#{id}?key=#{self.apiKey}&quot;</span>
   <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
   <span class="ruby-identifier">http</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>)
   <span class="ruby-identifier">key</span> = <span class="ruby-node">&quot;?key=#{self.apiKey}&quot;</span>
   <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Put</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span><span class="ruby-operator">+</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">initheader</span> = {<span class="ruby-string">&#39;Content-Type&#39;</span> =<span class="ruby-operator">&gt;</span><span class="ruby-string">&#39;application/json&#39;</span>})
-  <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">deposit</span>.<span class="ruby-identifier">to_json</span>
+  <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">depositToUpdate</span>
   <span class="ruby-identifier">response</span> = <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
 <span class="ruby-keyword">end</span></pre>

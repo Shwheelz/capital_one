@@ -76,7 +76,7 @@
     
     <li ><a href="#method-c-deletePurchase">::deletePurchase</a>
     
-    <li ><a href="#method-c-getAll">::getAll</a>
+    <li ><a href="#method-c-getAllByAccountId">::getAllByAccountId</a>
     
     <li ><a href="#method-c-getOne">::getOne</a>
     
@@ -238,7 +238,7 @@ Returns http response code</pre>
           <div class="method-source-code" id="deletePurchase-source">
             <pre><span class="ruby-comment"># File lib/capital_one/purchase.rb, line 99</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deletePurchase</span>(<span class="ruby-identifier">id</span>)
-        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/purchases/#{id}?&amp;key=#{self.apiKey}&quot;</span>
+        <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.url}/purchases/#{id}?key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
         <span class="ruby-identifier">http</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>)
         <span class="ruby-identifier">key</span>=<span class="ruby-node">&quot;?key=#{self.apiKey}&quot;</span>
@@ -255,10 +255,10 @@ Returns http response code</pre>
       </div>
 
     
-      <div id="method-c-getAll" class="method-detail ">
+      <div id="method-c-getAllByAccountId" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">getAll</span><span
+          <span class="method-name">getAllByAccountId</span><span
             class="method-args">(accId)</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -268,11 +268,11 @@ Returns http response code</pre>
 
         <div class="method-description">
           
-          <h2 id="method-c-getAll-label-getAll">getAll<span><a href="#method-c-getAll-label-getAll">&para;</a> <a href="#top">&uarr;</a></span></h2>
+          <h2 id="method-c-getAllByAccountId-label-getAll">getAll<span><a href="#method-c-getAllByAccountId-label-getAll">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
 <pre>Returns all purchases for a given account</pre>
 
-<h1 id="method-c-getAll-label-Parameters-3A+AccountId">Parameters: AccountId<span><a href="#method-c-getAll-label-Parameters-3A+AccountId">&para;</a> <a href="#top">&uarr;</a></span></h1>
+<h1 id="method-c-getAllByAccountId-label-Parameters-3A+AccountId">Parameters: AccountId<span><a href="#method-c-getAllByAccountId-label-Parameters-3A+AccountId">&para;</a> <a href="#top">&uarr;</a></span></h1>
 
 <pre class="ruby"><span class="ruby-constant">Returns</span> <span class="ruby-identifier">an</span> <span class="ruby-identifier">array</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">hashes</span>
 </pre>
@@ -280,9 +280,9 @@ Returns http response code</pre>
           
 
           
-          <div class="method-source-code" id="getAll-source">
+          <div class="method-source-code" id="getAllByAccountId-source">
             <pre><span class="ruby-comment"># File lib/capital_one/purchase.rb, line 22</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getAll</span>(<span class="ruby-identifier">accId</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getAllByAccountId</span>(<span class="ruby-identifier">accId</span>)
         <span class="ruby-identifier">url</span> = <span class="ruby-node">&quot;#{self.urlWithEntity}/#{accId}/purchases?&amp;key=#{self.apiKey}&quot;</span>
         <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
         <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>)
