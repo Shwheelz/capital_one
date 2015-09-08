@@ -1,6 +1,6 @@
 # capital_one
 
-The capital_one gem interfaces Ruby developers with Capital One's Hackathon API.  Simply require 'capital_one' and gain access to the API methods.  Documentation for Capital One's API can be found at [api.nessiebanking.com/documentation](http://api.nessiebanking.com/documentation).
+The [capital_one gem](http://https://rubygems.org/gems/capital_one) interfaces Ruby developers with Capital One's Hackathon API.  Simply require 'capital_one' and gain access to the API methods.  Documentation for Capital One's API can be found at [api.nessiebanking.com/documentation](http://api.nessiebanking.com/documentation).
 
 ## Installation
 
