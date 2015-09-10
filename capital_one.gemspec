@@ -5,7 +5,7 @@ require 'capital_one/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "capital_one"
-  spec.version       = '0.4.0'
+  spec.version       = '0.4.1'
   spec.authors       = ["Shane Besong", "Tom Pazamickas"]
   spec.email         = ["sfbesong@gmail.com", "tpazamickas@gmail.com"]
 

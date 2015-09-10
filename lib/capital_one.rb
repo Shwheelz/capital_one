@@ -12,7 +12,7 @@ module Config
     attr_accessor :apiKey
 
     def baseUrl
-      @baseUrl = 'http://api.nessiebanking.com:80'
+      @baseUrl = 'http://api.reimaginebanking.com:80'
     end
   end
 end

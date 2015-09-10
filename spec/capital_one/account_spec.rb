@@ -13,16 +13,16 @@ describe Account do
     $accountPut["nickname"] = "labordaytest"
 
     $accountId = "";
-    Config.apiKey = "330681dbf73436832cafac4f11622452"
+    Config.apiKey = "ff1fbfb0f1bfaefb769e25299805ddf1"
   end
 
   describe 'Method' do
     it 'should get the correct base url' do
-      expect(Account.url).to eq("http://api.nessiebanking.com:80")
+      expect(Account.url).to eq("http://api.reimaginebanking.com:80")
     end
 
     it 'should get the correct base url with entity' do
-      expect(Account.urlWithEntity).to eq("http://api.nessiebanking.com:80/accounts")
+      expect(Account.urlWithEntity).to eq("http://api.reimaginebanking.com:80/accounts")
     end
 
     it 'should have an API key' do

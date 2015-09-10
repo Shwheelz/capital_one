@@ -10,7 +10,7 @@ describe Bill do
     $billPost["recurring_date"] = 15
     $billPost["payment_amount"] = 100
 
-    Config.apiKey = "330681dbf73436832cafac4f11622452"
+    Config.apiKey = "ff1fbfb0f1bfaefb769e25299805ddf1"
     
     $accountId = ""
     VCR.use_cassette 'bill/testCreateBill' do
@@ -26,15 +26,15 @@ describe Bill do
   describe 'Method' do
 
     it 'should get the correct base url' do
-      expect(Bill.url).to eq("http://api.nessiebanking.com:80")
+      expect(Bill.url).to eq("http://api.reimaginebanking.com:80")
     end
 
     it 'should get the correct account base url with entity ' do
-      expect(Bill.accountBaseUrl).to eq("http://api.nessiebanking.com:80/accounts")
+      expect(Bill.accountBaseUrl).to eq("http://api.reimaginebanking.com:80/accounts")
     end
 
     it 'should get the correct customer base url with entity ' do
-      expect(Bill.customerBaseUrl).to eq("http://api.nessiebanking.com:80/customers")
+      expect(Bill.customerBaseUrl).to eq("http://api.reimaginebanking.com:80/customers")
     end
 
     it 'should have an API key' do

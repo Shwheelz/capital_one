@@ -20,7 +20,7 @@ describe Merchant do
     $merchantPut = Hash.new
     $merchantPut["name"] = "Updated Test Name"
     
-    Config.apiKey = "330681dbf73436832cafac4f11622452"
+    Config.apiKey = "ff1fbfb0f1bfaefb769e25299805ddf1"
   end
 
   describe 'GET' do
@@ -36,7 +36,7 @@ describe Merchant do
 
     it 'should get all merchants within a certain location' do
       VCR.use_cassette 'merchant/merchantsByLocation' do
-        merchants = Merchant.getAllByLocation(38.9047, -77.0164, 10)
+        merchants = Merchant.getAllByLocation(39.904218, -75.169313, 10)
         expect(merchants.class).to be(Array)
         expect(merchants.length).to be > 0
         expect(merchants[0].class).to be(Hash)

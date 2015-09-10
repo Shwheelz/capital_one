@@ -3,7 +3,7 @@ require 'capital_one'
 describe Config do
 
   it 'should have the correct base URL' do
-    expect(Config.baseUrl).to eq("http://api.nessiebanking.com:80")
+    expect(Config.baseUrl).to eq("http://api.reimaginebanking.com:80")
   end
 
   it 'should set the api key' do
