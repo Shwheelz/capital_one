@@ -32,12 +32,30 @@ describe Atm do
       end
     end
 
+    it 'should get all the ATMs by page' do
+      VCR.use_cassette 'atm/atmsWithPage' do
+        atms = Atm.getAllWithPage(2)
+        expect(atms.class).to be(Hash)
+        expect(atms.length).to be > 0
+        expect(atms.first.class).to be(Array)
+      end
+    end
+
     it 'should get all ATMs within a certain location' do
       VCR.use_cassette 'atm/atmsByLocation' do
         atms = Atm.getAllByLocation(38.9047, -77.0164, 10)
         expect(atms.class).to be(Hash)
         expect(atms.length).to be > 0
         expect(atms.first.class).to be(Array)
+      end
+    end
+
+    it 'should get all ATMs within a certain location by page' do 
+      VCR.use_cassette 'atm/atmsByLocationWithPage' do
+        atms = Atm.getAllByLocation(38.9047, -77.0164, 10, 2)
+        expect(atms.class).to be (Hash)
+        expect(atms.length).to be > 0
+        expect(atms.first.class).to be (Array)
       end
     end
 

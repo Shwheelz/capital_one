@@ -15,10 +15,22 @@ class Atm
 	# *** GET ***
 	
 	#==getAll
-		# Returns all ATMs as an array of hashes.
+		# Returns all ATMs as a hash (first page only)
+		# Pagination was implemented to break up the size of the hash
 
 	def self.getAll
 		url = "#{self.urlWithEntity}?key=#{self.apiKey}"
+		resp = Net::HTTP.get_response(URI.parse(url))
+		data = JSON.parse(resp.body)
+	end
+
+	#==getAll(page)
+		# Returns all ATMs for a given response page
+		#= Parameters: page as an integer
+		# Returns a hash of ATM details 
+
+	def self.getAllWithPage(page)
+		url = "#{self.urlWithEntity}?key=#{self.apiKey}&page=#{page}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
 	end
@@ -35,6 +47,18 @@ class Atm
 		data = JSON.parse(resp.body)
 	end
 	
+	#==getAllByLocationWithPage
+		# Returns all ATMs within a certain radius for a given response page
+		#= Parameters: lat, lng, and rad as floats; page as int
+		# Returns a hash of ATM details
+
+	def self.getAllByLocationWithPage(lat, lng, rad, page)
+		url = "#{self.urlWithEntity}?lat=#{lat}&lng=#{lng}&rad=#{rad}&key=#{self.apiKey}&page=#{page}"
+		resp = Net::HTTP.get_response(URI.parse(url))
+		data = JSON.parse(resp.body)
+	end
+
+
 	#==getOne
 		# Gets one ATM for a given ID
 		# Parameters: AtmId

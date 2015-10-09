@@ -3,16 +3,6 @@ require 'capital_one'
 describe Account do
 
   before(:all) do
-    $accountPost = Hash.new
-    $accountPost["type"] = "Credit Card"
-    $accountPost["nickname"] = "testing"
-    $accountPost["rewards"] = 100
-    $accountPost["balance"] = 100
-
-    $accountPut = Hash.new
-    $accountPut["nickname"] = "labordaytest"
-
-    $accountId = "";
     Config.apiKey = "ff1fbfb0f1bfaefb769e25299805ddf1"
   end
 
@@ -74,8 +64,9 @@ describe Account do
   describe 'PUT' do
     it 'should update an existing account' do
       VCR.use_cassette 'account/updateAccount' do
+        accountPut = {"nickname": "labordaytest"}
         accountID = Account.getAll[0]["_id"]
-        response = Account.updateAccount(accountID, $accountPut)
+        response = Account.updateAccount(accountID, accountPut)
         expect(response.class).to be(Hash)
         expect(response).to include("message")
         expect(response).to include("code")
@@ -86,8 +77,16 @@ describe Account do
   describe 'POST' do
     it 'should create a new account' do
       VCR.use_cassette 'account/createAccount' do
+
+        accountPost = {
+          "type": "Credit Card",
+          "nickname": "testing",
+          "rewards": 100,
+          "balance": 100
+        }
+        
         custID = Customer.getAll[0]["_id"]
-        response = Account.createAccount(custID, $accountPost)
+        response = Account.createAccount(custID, accountPost)
         expect(response.class).to be(Hash)
         expect(response).to include("message")
         expect(response).to include("code")
@@ -99,8 +98,8 @@ describe Account do
     it 'should delete an account' do
       VCR.use_cassette 'account/deleteAccount' do
         custID = Customer.getAll[0]["_id"]
-        $accountId = Account.getAllByCustomerId(custID)[0]["_id"]
-        response = Account.deleteAccount($accountId)
+        accountId = Account.getAllByCustomerId(custID)[0]["_id"]
+        response = Account.deleteAccount(accountId)
         expect(response.class).to be(Net::HTTPNoContent)
         expect(response.code).to eq("204")
       end
