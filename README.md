@@ -37,6 +37,12 @@ Or install it yourself as:
 	**Enterprise Key** - Take on the role of a Capital One employee. Only GET requests are permitted.  
 	**Customer Key** - Take on the role of a Capital One customer. All requests involving your assigned customers and anything they own are permitted.
 
+## Bugs/Quirks
+1. No methods for Enterprise endpoints.  If you wish to use Enterprise, you will have to write your own get requests.  Net::HTTP is the easiest way to do this.
+2. Responses that are paginated, such as getting all ATMs or all Branches, isn't intuitive to use with wrapper methods.  Again, this can be accomplished through writing explicit requests to the endpoint supplied in the response.
+3. Transactions can take up to 60 seconds to occur.  This isn't a bug with the wrapper; the API is designed to execute transactions every minute to simulate the delayed transaction time experienced with real transactions.
+4. ATMs are populated for Arlington, VA and surrounding locations, not the whole country
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
