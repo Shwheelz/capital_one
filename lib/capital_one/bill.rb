@@ -113,6 +113,7 @@ class Bill
 		# delete a bill by its id
 		# Parameters: BillId
 		# Returns http response code
+		
 	def self.deleteBill(billId)
 		url = "#{self.urlWithEntity}/#{billId}?key=#{self.apiKey}"
 		uri = URI.parse(url)

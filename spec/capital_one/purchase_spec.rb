@@ -13,7 +13,7 @@ describe Purchase do
 		$purchasePut = Hash.new
 		$purchasePut["description"] = "updated test desc"
 
-    Config.apiKey = "ff1fbfb0f1bfaefb769e25299805ddf1"
+    Config.apiKey = "3e07f628fb1c458d3c2959ec5d87b8dd"
 	end
 
 	describe 'Method' do

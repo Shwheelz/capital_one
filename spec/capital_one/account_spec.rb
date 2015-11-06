@@ -3,7 +3,7 @@ require 'capital_one'
 describe Account do
 
   before(:all) do
-    Config.apiKey = "ff1fbfb0f1bfaefb769e25299805ddf1"
+    Config.apiKey = "3e07f628fb1c458d3c2959ec5d87b8dd"
   end
 
   describe 'Method' do
@@ -64,7 +64,7 @@ describe Account do
   describe 'PUT' do
     it 'should update an existing account' do
       VCR.use_cassette 'account/updateAccount' do
-        accountPut = {"nickname": "labordaytest"}
+        accountPut = {"nickname"=> "testPut"}
         accountID = Account.getAll[0]["_id"]
         response = Account.updateAccount(accountID, accountPut)
         expect(response.class).to be(Hash)
@@ -79,10 +79,10 @@ describe Account do
       VCR.use_cassette 'account/createAccount' do
 
         accountPost = {
-          "type": "Credit Card",
-          "nickname": "testing",
-          "rewards": 100,
-          "balance": 100
+          "type"=> "Credit Card",
+          "nickname"=> "testPost",
+          "rewards"=> 100,
+          "balance"=> 100
         }
         
         custID = Customer.getAll[0]["_id"]
