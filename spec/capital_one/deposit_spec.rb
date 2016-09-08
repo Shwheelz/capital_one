@@ -13,7 +13,7 @@ describe Deposit do
   end
 
   before(:each) do
-    Config.apiKey = "3e07f628fb1c458d3c2959ec5d87b8dd"
+    Config.apiKey = "98a490a765c08c70d61dc3f89feea899"
   end
 
   describe 'Method' do
@@ -29,6 +29,18 @@ describe Deposit do
         expect(Deposit.apiKey.class).to be(String) # passes if actual == expected
       end
     end
+
+  describe 'POST' do
+    it 'should create a new deposit' do
+      VCR.use_cassette 'deposit/createDeposit' do
+        accID = Account.getAll[0]["_id"]
+        deposit = Deposit.createDeposit(accID, $depositPost)
+        expect(deposit.class).to eq(Hash)
+        expect(deposit).to include("message")
+        expect(deposit).to include("code")
+      end
+    end
+  end
 
     describe 'GET' do
       it 'should get all deposits by account id' do
@@ -48,18 +60,6 @@ describe Deposit do
           expect(deposit.class).to eq(Hash)
           expect(deposit).to include("_id")
           expect(deposit).to include("type")
-        end
-      end
-    end
-
-    describe 'POST' do
-      it 'should create a new deposit' do
-        VCR.use_cassette 'deposit/createDeposit' do
-          accID = Account.getAll[0]["_id"]
-          deposit = Deposit.createDeposit(accID, $depositPost)
-          expect(deposit.class).to eq(Hash)
-          expect(deposit).to include("message")
-          expect(deposit).to include("code")
         end
       end
     end

@@ -17,7 +17,7 @@ describe Customer do
 	end
 
 	before(:each) do
-		Config.apiKey = "3e07f628fb1c458d3c2959ec5d87b8dd"
+		Config.apiKey = "98a490a765c08c70d61dc3f89feea899"
 	end
 
 	describe 'Method' do
@@ -38,12 +38,23 @@ describe Customer do
   	end
 	end
 
+	describe 'POST' do
+		it 'should create a new customer' do
+			VCR.use_cassette 'customer/newCustomer' do
+				response = Customer.createCustomer($customerPost)
+				expect(response.class).to be(Hash)
+				expect(response).to include("message")
+				expect(response).to include("code")
+			end
+		end
+	end
+
 	describe 'GET' do 
 		it 'All customers' do
 			VCR.use_cassette 'customer/customers' do
 				allCustomers = Customer.getAll
 				expect(allCustomers.class).to be(Array)
-				expect(allCustomers.length).to be(3)
+				expect(allCustomers.length).to be > 0
 				expect(allCustomers[0].class).to be(Hash)
 			end
 		end
@@ -65,17 +76,6 @@ describe Customer do
 				expect(customer.class).to be(Hash)
 				expect(customer).to include("_id")
 				expect(customer).to include("first_name")
-			end
-		end
-	end 
-
-	describe 'POST' do
-		it 'should create a new customer' do
-			VCR.use_cassette 'customer/newCustomer' do
-				response = Customer.createCustomer($customerPost)
-				expect(response.class).to be(Hash)
-				expect(response).to include("message")
-				expect(response).to include("code")
 			end
 		end
 	end

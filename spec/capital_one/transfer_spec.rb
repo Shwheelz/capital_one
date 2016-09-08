@@ -6,13 +6,13 @@ describe Transfer do
 		$transferPost = Hash.new
 		$transferPost["medium"] = "balance"
 		$transferPost["amount"] = 20
-		$transferPost["status"] = "pending"
+    $transferPost["transaction_date"] = "2016-09-08"
 		$transferPost["description"] = "test transfer"
 
 		$transferPut = Hash.new
 		$transferPut["description"] = "updated transfer"
 
-		Config.apiKey = '3e07f628fb1c458d3c2959ec5d87b8dd'
+		Config.apiKey = '98a490a765c08c70d61dc3f89feea899'
 	end
 
 	describe 'Method' do
@@ -29,10 +29,23 @@ describe Transfer do
 	    end
     end
 
+	describe 'POST' do
+		it 'should create a new transfer' do
+			VCR.use_cassette 'transfer/createTransfer' do
+				p accID = Account.getAll()[0]["_id"]
+        p $transferPost["payee_id"] = Account.getAll()[1]["_id"]
+				transfer = Transfer.createTransfer(accID, $transferPost)
+				expect(transfer.class).to be(Hash)
+				expect(transfer).to include("message")
+				expect(transfer).to include("code")
+			end
+		end
+	end
+
 	describe 'GET' do
 		it 'should get all transfers for an account' do
 			VCR.use_cassette 'transfer/transfers' do
-				accID = Account.getAll()[0]["_id"]
+				p accID = Account.getAll()[0]["_id"]
 				transfers = Transfer.getAll(accID)
 				expect(transfers.class).to be(Array)
 				expect(transfers.length).to be > 0
@@ -62,20 +75,6 @@ describe Transfer do
 			end
 		end
 	end
-
-	describe 'POST' do
-		it 'should create a new transfer' do
-			VCR.use_cassette 'transfer/createTransfer' do
-				accID = Account.getAll()[0]["_id"]
-				transfer = Transfer.createTransfer(accID, $transferPost)
-				expect(transfer.class).to be(Hash)
-				expect(transfer).to include("message")
-				expect(transfer).to include("code")
-			end
-		end
-	end
-
-
 	describe 'PUT' do
 		it 'should update an existing transfer' do
 			VCR.use_cassette 'transfer/updateTransfer' do
@@ -88,7 +87,6 @@ describe Transfer do
 			end
 		end
 	end
-
 
 	describe 'DELETE' do
 		it 'should delete a transfer' do

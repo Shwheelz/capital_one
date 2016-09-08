@@ -23,6 +23,17 @@ class Merchant
 		return data
 	end
 
+	#==getAllWithPage(page)
+	# Returns all Merchants for a given response page
+	#= Parameters: page as an integer
+	# Returns a hash of Merchant details
+
+	def self.getAllWithPage(page)
+		url = "#{self.urlWithEntity}?key=#{self.apiKey}&page=#{page}"
+		resp = Net::HTTP.get_response(URI.parse(url))
+		data = JSON.parse(resp.body)
+	end
+
 	#==getAllByLocation
 		# Returns all Merchants within a given location range
 		#= Parameters: Latitude, Longitude, Radius

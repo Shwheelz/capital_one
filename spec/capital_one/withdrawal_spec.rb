@@ -13,7 +13,7 @@ describe Withdrawal do
   end
 
   before(:each) do
-    Config.apiKey = "3e07f628fb1c458d3c2959ec5d87b8dd"
+    Config.apiKey = "98a490a765c08c70d61dc3f89feea899"
   end
 
   describe 'Method' do

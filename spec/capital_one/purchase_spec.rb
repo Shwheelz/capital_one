@@ -13,7 +13,7 @@ describe Purchase do
 		$purchasePut = Hash.new
 		$purchasePut["description"] = "updated test desc"
 
-    Config.apiKey = "3e07f628fb1c458d3c2959ec5d87b8dd"
+    Config.apiKey = "98a490a765c08c70d61dc3f89feea899"
 	end
 
 	describe 'Method' do
@@ -29,6 +29,19 @@ describe Purchase do
 	      expect(Purchase.apiKey.class).to be(String) # passes if actual == expected
 	    end
   	end
+
+	describe 'POST' do
+		it 'should create a new purchase' do
+			VCR.use_cassette 'purchase/createPurchase' do
+				accID = Account.getAll()[0]["_id"]
+				$purchasePost["merchant_id"] = Merchant.getAll["data"][0]["_id"]
+				response = Purchase.createPurchase(accID, $purchasePost)
+				expect(response.class).to be(Hash)
+				expect(response).to include("message")
+				expect(response).to include("code")
+			end
+		end
+	end
 
   	describe 'GET' do
   		it 'should get all purchases for an account' do
@@ -53,19 +66,6 @@ describe Purchase do
   		end
   	end
 
-  	describe 'POST' do
-  		it 'should create a new purchase' do
-  			VCR.use_cassette 'purchase/createPurchase' do
-  				accID = Account.getAll()[0]["_id"]
-          $purchasePost["merchant_id"] = Merchant.getAll[0]["_id"]
-  				response = Purchase.createPurchase(accID, $purchasePost)
-  				expect(response.class).to be(Hash)
-        	expect(response).to include("message")
-        	expect(response).to include("code")
-  			end
-  		end
-  	end
-
   	describe 'PUT' do
   		it 'should update an existing purchase' do
   			VCR.use_cassette 'purchase/updatePurchase' do
@@ -83,7 +83,6 @@ describe Purchase do
   		it 'should delete a purchase' do
   			VCR.use_cassette 'purchase/deletePurchase' do
   				accID = Account.getAll()[0]["_id"]
-          purchase = Purchase.createPurchase(accID, $purchasePost)
    				purchaseID = Purchase.getAllByAccountId(accID).last["_id"]
    				response = Purchase.deletePurchase(purchaseID)
    				expect(response.class).to be(Net::HTTPNoContent)

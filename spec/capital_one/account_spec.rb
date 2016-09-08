@@ -3,7 +3,7 @@ require 'capital_one'
 describe Account do
 
   before(:all) do
-    Config.apiKey = "3e07f628fb1c458d3c2959ec5d87b8dd"
+    Config.apiKey = "98a490a765c08c70d61dc3f89feea899"
   end
 
   describe 'Method' do
@@ -17,6 +17,26 @@ describe Account do
 
     it 'should have an API key' do
       expect(Account.apiKey.class).to be(String) # passes if actual == expected
+    end
+  end
+
+  describe 'POST' do
+    it 'should create a new account' do
+      VCR.use_cassette 'account/createAccount' do
+
+        accountPost = {
+            "type"=> "Credit Card",
+            "nickname"=> "testPost",
+            "rewards"=> 100,
+            "balance"=> 100
+        }
+
+        custID = Customer.getAll[0]["_id"]
+        response = Account.createAccount(custID, accountPost)
+        expect(response.class).to be(Hash)
+        expect(response).to include("message")
+        expect(response).to include("code")
+      end
     end
   end
 
@@ -67,26 +87,6 @@ describe Account do
         accountPut = {"nickname"=> "testPut"}
         accountID = Account.getAll[0]["_id"]
         response = Account.updateAccount(accountID, accountPut)
-        expect(response.class).to be(Hash)
-        expect(response).to include("message")
-        expect(response).to include("code")
-      end
-    end
-  end
-
-  describe 'POST' do
-    it 'should create a new account' do
-      VCR.use_cassette 'account/createAccount' do
-
-        accountPost = {
-          "type"=> "Credit Card",
-          "nickname"=> "testPost",
-          "rewards"=> 100,
-          "balance"=> 100
-        }
-        
-        custID = Customer.getAll[0]["_id"]
-        response = Account.createAccount(custID, accountPost)
         expect(response.class).to be(Hash)
         expect(response).to include("message")
         expect(response).to include("code")
