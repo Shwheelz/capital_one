@@ -8,15 +8,15 @@ describe Loan do
 
   describe 'Method' do
     it 'should get the correct base url' do
-      expect(Account.url).to eq("http://api.reimaginebanking.com:80")
+      expect(Loan.url).to eq("http://api.reimaginebanking.com:80")
     end
 
     it 'should get the correct base url with entity' do
-      expect(Account.urlWithEntity).to eq("http://api.reimaginebanking.com:80/loans")
+      expect(Loan.urlWithEntity).to eq("http://api.reimaginebanking.com:80/loans")
     end
 
     it 'should have an API key' do
-      expect(Account.apiKey.class).to be(String) # passes if actual == expected
+      expect(Loan.apiKey.class).to be(String) # passes if actual == expected
     end
   end
 
@@ -73,6 +73,7 @@ describe Loan do
         expect(loan).to include("amount")
       end
     end
+  end
 
   describe 'PUT' do
     it 'should update an existing loan' do

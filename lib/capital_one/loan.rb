@@ -17,7 +17,7 @@ class Loan
 		data = JSON.parse(resp.body)
 	end
 
-	def self.getLoans(loanId)
+	def self.getLoan(loanId)
 		url = "#{self.urlWithEntity}/#{loanId}?key=#{self.apiKey}"
 		resp = Net::HTTP.get_response(URI.parse(url))
 		data = JSON.parse(resp.body)
